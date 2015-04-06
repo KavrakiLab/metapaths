@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<script language="JavaScript" type="text/javascript" src="d3/d3.min.js"></script>
+		<script language="JavaScript" type="text/javascript" src="scripts/allGraphs.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/Pathways.css" />
+	</head>
+
+	<body>
+		<div id="header">
+			All Pathways from D-Glucose (C00031) to L-Tryptophan (C00078)
+		</div>
+		
+		<div id="options">
+			<button class="button" id="refresh" onclick="window.location.href='file:///Users/prudhvi/Dropbox/School/Research/Metapaths/SearchResults.html'">Back to Search Results</button>
+		</div>
+		
+		<div class="graphOptions" id="filteringContainer">
+			<a onclick="toggleOptions(filtering)"><u>Filtering</u></a>
+			<div id="filtering">
+				<table>
+				  <tr>
+				    <td>1. Ignore paths containing these compounds or reactions (e.g. "C00493 RP01132 C00095"):</td>
+				    <td><input type="text" id="ignoredCompounds"></input></td>
+				  </tr>
+				  <tr>
+				    <td>2. Only include paths containing these compounds or reactions (e.g. "C00493 RP01132 C00095"):</td>
+				    <td><input type="text" id="includedCompounds"></input></td>
+				  </tr>
+				  <tr>
+				    <td>3. Ignore paths longer than (enter a positive integer):</td>
+				    <td><input type="number" id="maxLength"></input></td>
+				  </tr>
+				</table>
+			</div>
+			<button class="button" id="filteringButton" onclick="filter()")>Filter Graph</button>
+		</div>
+		
+		<div class="graphOptions" id="stylingContainer">
+			<a onclick="toggleOptions(styling)"><u>Appearance</u></a>
+			<div id="styling">
+				<table>
+					<tr>
+						<td><input type="radio" name="lineStyle" id="lineOpacity" checked> Line Opacity</td>
+						<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Compound Color: </td>
+						<td><input type="color" id="userCompoundColor" value="#26C281"></td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="lineStyle" id="lineWidth"> Line Width</td>
+						<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Reaction Pair Color: </td>
+						<td><input type="color" id="userReactionColor" value="#333333"></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="lineStyle" id="showArrows"> Show Arrows</td>
+						<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Endpoint Color: </td>
+						<td><input type="color" id="userEndpointColor" value="#8c5f9f"></td>
+					</tr>
+				</table>
+			</div>
+
+			<button class="button" id="stylingButton" onclick="applyStyle()")>Apply</button>
+		</div>
+		
+		<div id="map"></div>
+		
+		<div id="graphInfo" class="info">
+			<strong>Graph Info:</strong></br></br>
+			
+			<button class="smallButton columnButton" id="linearizeButton" onclick="linearize()">Linearize</button>
+			
+			</br></br>
+			<div id="pathCount"></div></br>
+			<button class="smallButton columnButton" id="firstPathButton" onclick="viewFirst()">View First Path</button>
+
+			</br></br>
+			Removed Nodes:
+			<div id="removedNodes"></div></br>
+			Included Nodes:
+			<div id="includedNodes"></div></br>
+			<button class="smallButton columnButton" id="resetFilter" onclick="resetFiltering()")>Reset Filtering</button>
+		
+			</br></br></br></br></br></br></br></br>
+			<strong>Instructions:</strong></br>
+			Click and drag a node to fix it's position, double click to release. Right click a node to show more information and options, single click to hide.
+		</div>	
+		
+	</body>
+
+</html>

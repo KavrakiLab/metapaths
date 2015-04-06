@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<script language="JavaScript" type="text/javascript" src="d3/d3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/MetaPaths.css" />
+	</head>
+
+	<body onload="start()">
+		<div id="header">
+			Metabolic Pathway from C00031 to C00078
+		</div>
+		
+	  	
+		<div id="options">
+			<button class="button" id="search" onclick="window.location.href='http://prb2.web.rice.edu/metapaths/SearchResults.html'">Search Results</button>
+			<button class="button" id="allPaths" onclick="window.location.href='http://prb2.web.rice.edu/metapaths/Pathways.html'">View All Paths</button>
+			<button class="button" id="previous" onclick="prevPath()">Previous Path</button>
+			<button class="button" id="refresh" onclick="refresh()">Refresh Graph</button>
+			<button class="button" id="next" onclick="nextPath()">Next Path</button>
+		</div>
+		
+		<script language="JavaScript" type="text/javascript" src="scripts/graph.js"></script>
+	  	
+		<div id="caption">
+      		Click and drag a node to fix it's position. Double click to show more information, single click to hide.
+		</div>
+		
+		
+	</body>
+
+</html>

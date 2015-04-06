@@ -1,0 +1,98 @@
+* {
+	font-family: sans-serif;
+	font-weight: 100;
+	text-align: center;
+}
+
+/* unvisited link */
+a:link {
+    color: #FFF;
+}
+
+/* visited link */
+a:visited {
+    color: #FFF;
+}
+
+/* mouse over link */
+a:hover {
+    color: #64b566;
+}
+
+
+
+#header {
+    color: black;
+	font-size: 1.5em;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+#caption {
+    color: black;
+	font-size: 1em;
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+
+#options {
+	color: black;
+	font-size: 1em;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.button {
+    background-color: #fff;
+	border: 1px solid #000;
+	border-radius: 2px;
+	color: #000;
+    font-size: 0.8em;
+    padding: .5em 1em;
+	margin-right: 5px;
+	margin-left: 5px;
+    cursor: pointer;
+/*    background: #A8D8AA;*/
+/*    color: #156D15;*/
+/*    border: none;*/
+    border: solid black 1px;
+    border-radius: 2px
+}
+
+.button:hover {
+	border-color: #64b566;
+}
+
+.button:active {
+	background-color: #A8D8AA;
+}
+
+div.tooltip {
+	background-color: #060d2f;
+	border: 1px;
+	border-radius: 5px;
+	border-style: solid;
+	border-color: white;
+	color: white;
+	font-size: 0.9em;
+	opacity: 0.1;
+	padding: 2px;
+	position: absolute;
+	width: 200px;
+}
+.graph{
+	background-color: #060d2f;
+	border: 1px solid white;
+	border-radius: 5px;
+	color: white;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.node {
+	
+}
+
+.link {
+	
+}

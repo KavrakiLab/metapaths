@@ -1,0 +1,225 @@
+* {
+	font-family: sans-serif;
+	text-align: center;
+}
+
+/* unvisited link */
+a {
+    color: #000;
+}
+
+/* visited link */
+a:visited {
+    color: #000;
+}
+
+/* mouse over link */
+a:hover {
+    color: #888;
+    cursor: pointer;
+}
+
+
+#header {
+    	color: black;
+	font-size: 1.5em;
+	margin-bottom: 20px;
+	text-align: center;
+	font-weight: 100;
+}
+
+.graphOptions {
+/*	border: 1.5px solid #000;*/
+    	color: black;
+	font-size: 1.2em;
+	margin-left: 2%;
+	margin-right: 2%;
+	padding: 15px;
+	text-align: left;
+	line-height: 200%;
+	font-weight: 100;
+	float: left;
+}
+
+#filtering{
+	display: block;
+	text-align: left;
+	padding-left: 20px;
+	height: 85px;
+}
+
+#styling {
+	display: block;
+	text-align: left;
+	padding-left: 20px;
+	height: 85px;
+}
+
+#graphInfo{
+	font-size: 1em;
+	text-align: left;
+	float: left;
+	line-height: 150%;
+	display: none;
+	width: 14%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+
+.overlay { 
+	fill: none; 
+	pointer-events: all; 
+}
+
+
+
+#caption {
+    color: black;
+	font-size: 1em;
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+
+#options {
+	color: black;
+	font-size: 1.2em;
+	margin-top: 10px;
+}
+
+.button {
+    background-color: #fff;
+	border: 1px solid #000;
+	border-radius: 2px;
+	color: #000;
+    font-size: 0.8em;
+    padding: .5em 1em;
+	margin-right: 5px;
+	margin-left: 5px;
+    cursor: pointer;
+/*    background: #A8D8AA;*/
+/*    color: #156D15;*/
+/*    border: none;*/
+    border: solid black 1px;
+    border-radius: 2px
+}
+
+.button:hover {
+	border-color: #64b566;
+}
+
+.button:active {
+	background-color: #A8D8AA;
+}
+
+
+.smallButton {
+  	background-color: #fff;
+	border: 1px solid #000;
+	border-radius: 2px;
+	color: #000;
+   	font-size: 0.9em;
+    	cursor: pointer;
+	width: 252px;
+}
+
+.smallButton:hover {
+	background-color: #cbe8cc;
+}
+
+.smallButton:active {
+	background-color: #A8D8AA;
+}
+
+.columnButton {
+	width: 120px;
+}
+
+.pathNavButton {
+	width: 90px;
+	margin-right: 5px;
+	display: inline-block;
+}
+
+table {
+	text-align: center;
+	width: auto;
+}
+
+td {
+	text-align: left;
+	font-size: 0.9em;
+}
+
+
+/* Graph Styling*/
+
+#map{ 
+/*	background-color: #060d2f;*/
+	background-color: #fff;
+	margin: 2%;
+	outline: 2px #555 solid;
+	color: white;
+	display: block;
+	visibility: hidden;
+	width: 80%;
+	float: left;
+}
+.tooltip {
+/*	background-color: #060d2f;*/
+	background-color: #333;
+	border: 1px;
+	border-radius: 5px;
+	border-style: solid;
+	border-color: #eee;
+	color: #fff;
+	font-size: 0.9em;
+	font-weight: 400;
+	line-height: 125%;
+	opacity: 0.5;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	position: absolute;
+	text-align: left;
+/*	width: 200px;*/
+}
+
+/* unvisited link */
+.tooltip a {
+    color: #fff;
+}
+
+/* visited link */
+.tooltip a:visited {
+    color: #fff;
+}
+
+/* mouse over link */
+.tooltip a:hover {
+    color: #aaa;
+    cursor: pointer;
+}
+
+.node { 
+	fill: #000;
+	stroke: #555;
+	stroke-width: 2px;
+}
+
+.node-active{ 
+	stroke: #F4D03F;
+	stroke-width: 3px;
+}
+
+.link {
+	stroke-width: 3px; /* The defualt, weight is also set dynamically in JS */
+}
+
+.link-active { 
+	stroke-opacity: 1; 
+}
+
+
+
