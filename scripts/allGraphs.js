@@ -457,45 +457,38 @@ function drawGraph(){
 		var html;
 		var viaPaths; // the number of paths that include the node
 		
-		if(displayedPathIndex == -1){
-			if (d.id == startNode.id){
-				viaPaths = nodesMap[d.id]["outgoing"];
-			} else {
-				viaPaths = nodesMap[d.id]["incoming"];
-			}
+			
+		var node = nodesMap[d.id];
 		
-			html =  "<center>" + 
-		
-				d.id + "</br>" +
-				viaPaths + " incoming links</br></br>" + 
-			
-				"<button class='smallButton' onclick='removeNode("+ '"' + d.id + '"' + ")'>Remove paths through this node</button></br>" +
-				"<button class='smallButton' onclick='includeNode("+ '"' + d.id + '"' + ")'>Include only paths through this node</button>" +
-			
-				"</center>"
-			
-		} else {
-			
-			var node = nodesMap[d.id];
-			
-			html = "";
-			if(d.id[0] == "C"){
-				html =
-				"<strong>" + node.name + '</strong></br></br>' +
-				"Compound: " +
-				'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
-				'<a href=\"' + compoundImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + compoundImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
-			} 
-			else {
-				html = 
-				node.reacName + '</br></br>\n' +
-				"<strong>RPair: </strong>" +
-				'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
-				"<strong>Reaction: </strong>" + node.reacID + '</br></br>\n' +
-				'<strong>EC: </strong>' + node.ec + '</br></br>\n' +
-				'<a href=\"' + reactionImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
-			}
+		html = "";
+		if(d.id[0] == "C"){
+			html =
+			"<strong>" + node.name + '</strong></br></br>' +
+			"Compound: " +
+			'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
+			'<a href=\"' + compoundImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + compoundImgUrl + node.id + '.gif\" ></img>' + '</a></br></br>\n'
+		} 
+		else {
+			html = 
+			node.reacName + '</br></br>\n' +
+			"<strong>RPair: </strong>" +
+			'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
+			"<strong>Reaction: </strong>" + node.reacID + '</br></br>\n' +
+			'<strong>EC: </strong>' + node.ec + '</br></br>\n' +
+			'<a href=\"' + reactionImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
 		}
+		
+		if (displayedPathIndex == -1){
+			if (d.id == startNode.id){
+				html += nodesMap[d.id]["outgoing"] + " outgoing links</br></br>";
+			} else {
+				html += nodesMap[d.id]["incoming"] + " incoming links</br></br>";
+			}
+		
+			html += "<button class='smallButton' onclick='removeNode("+ '"' + d.id + '"' + ")'>Remove paths through this node</button></br>" +
+				"<button class='smallButton' onclick='includeNode("+ '"' + d.id + '"' + ")'>Include only paths through this node</button>";
+		}
+		
 		
 		return html;
 	}
