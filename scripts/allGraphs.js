@@ -2,13 +2,17 @@
 
 // temporary hard coded filenames
 
-// var pathsFilename = "paths/mini/Mini_C31C78Pathways.json";
+// var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
 // var nodesMapFilename = "paths/mini/Mini_C31C78NodesMap.json";
 // var linkWeightsFilename = "paths/mini/Mini_C31C78LinkWeights.json";
 
-var pathsFilename = "paths/full/Full_C31C78Pathways.json";
-var nodesMapFilename = "paths/full/Full_C31C78NodesMap.json";
-var linkWeightsFilename = "paths/full/Full_C31C78LinkWeights.json";
+// var pathwaysFilename = "paths/full/Full_C31C78Pathways.json";
+// var nodesMapFilename = "paths/full/Full_C31C78NodesMap.json";
+// var linkWeightsFilename = "paths/full/Full_C31C78LinkWeights.json";
+
+var pathwaysFilename = localStorage["pathwaysFilename"];
+var nodesMapFilename = localStorage["nodesMapFilename"];
+var linkWeightsFilename = localStorage["linkWeightsFilename"];
 
 /////////////// GLOBAL VARIABLES ///////////////
 
@@ -42,12 +46,11 @@ var reactionImgUrl = "http://www.genome.jp/Fig/rpair/";
 loadPaths();
 
 function loadPaths(){
-	
-	d3.json(pathsFilename, function(error, json) {
+	d3.json(pathwaysFilename, function(error, json) {
 		if (error)
 			return console.warn(error);
 		
-		// console.log("Read in data: ", json);
+		// console.log("Read in pathways: ", json);
 		
 		// store the list of pathways globally
 		allPathways = json;
@@ -61,8 +64,8 @@ function loadPaths(){
 		d3.json(nodesMapFilename, function(error, json) {
 			if (error)
 				return console.warn(error);
-		
-			// console.log("Read in data: ", json);
+					
+			// console.log("Read in nodes map: ", json);
 		
 			// store the nodesMap globally
 			nodesMap = json;
@@ -71,11 +74,11 @@ function loadPaths(){
 				if (error)
 					return console.warn(error);
 		
-				// console.log("Read in data: ", json);
+				// console.log("Read in link weights: ", json);
 		
 				// store the link weights globally
 				linkWeights = json;
-		
+					
 				// now that we have the link weights, we are ready to draw the graph
 				drawGraph();
 		
@@ -87,7 +90,6 @@ function loadPaths(){
 		});
 		
 	});
-	
 }
 
 function setStartAndEnd(){
@@ -238,7 +240,12 @@ function drawGraph(){
 
 	var container = svg.append("g");
 	
-	
+	console.log("Graph: ", graph);
+	for (var i = 0; i < graph.links.length; i++) {
+		if (graph.links[i].target == null || graph.links[i].source == null) {
+			console.log("Bad at index: " + i);
+		}
+	}
 	force.nodes(graph.nodes)
 		.links(graph.links)
 		.start();
