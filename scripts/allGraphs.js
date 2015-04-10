@@ -2,17 +2,17 @@
 
 // temporary hard coded filenames
 
-// var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
-// var nodesMapFilename = "paths/mini/Mini_C31C78NodesMap.json";
-// var linkWeightsFilename = "paths/mini/Mini_C31C78LinkWeights.json";
+var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
+var nodesMapFilename = "paths/mini/Mini_C31C78NodesMap.json";
+var linkWeightsFilename = "paths/mini/Mini_C31C78LinkWeights.json";
 
 // var pathwaysFilename = "paths/full/Full_C31C78Pathways.json";
 // var nodesMapFilename = "paths/full/Full_C31C78NodesMap.json";
 // var linkWeightsFilename = "paths/full/Full_C31C78LinkWeights.json";
 
-var pathwaysFilename = localStorage["pathwaysFilename"];
-var nodesMapFilename = localStorage["nodesMapFilename"];
-var linkWeightsFilename = localStorage["linkWeightsFilename"];
+// var pathwaysFilename = localStorage["pathwaysFilename"];
+// var nodesMapFilename = localStorage["nodesMapFilename"];
+// var linkWeightsFilename = localStorage["linkWeightsFilename"];
 
 /////////////// GLOBAL VARIABLES ///////////////
 
@@ -236,7 +236,8 @@ function drawGraph(){
 		.attr("width", width)
 		.attr("height", height)
 		.style("fill", "none")
-		.style("pointer-events", "all");
+		.style("pointer-events", "all")
+		.attr("id", "graph-rect");
 
 	var container = svg.append("g");
 	
@@ -404,10 +405,14 @@ function drawGraph(){
 	node.on("contextmenu", function(d) {
 		tooltipVisible = true;
 		
+		var tooltipBoundingRect = document.getElementById("map").getBoundingClientRect();
+		// var tooltipYPosition = .top;
+		var tooltipY = window.innerHeight - tooltipBoundingRect.height;
+		
 		// Displays the tooltip
 		tooltip.html(tooltipHTML(d))
-		.style("left", d3.event.pageX + "px")
-		.style("top", d3.event.pageY - 125 + "px")
+		// .style("left", d3.event.pageX + "px")
+		.style("top", 317 + "px")
 		.style('opacity', "0.9");
 		
 		// highlights the selected node
@@ -476,22 +481,19 @@ function drawGraph(){
 			html = "";
 			if(d.id[0] == "C"){
 				html =
-				node.name + '</br></br>' +
-				"<strong>Compound: </strong>" +
-				'<a href=\"' + infoUrl + node.id + '\">' + node.id + '</a></br></br>\n' +
-				'<a href=\"' + compoundImgUrl + node.id + '.gif' + '\">' + '<img src=\"' + compoundImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
-				// '<a href=\"#\" onClick=\"viewNodeImage(\"' + node.id + '\")\"><img src=\"' + compoundImgUrl + node.id +
-				// '.gif\" width=\'175px\'></img>' +
-				// '</a></br></br>\n'
+				"<strong>" + node.name + '</strong></br></br>' +
+				"Compound: " +
+				'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
+				'<a href=\"' + compoundImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + compoundImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
 			} 
 			else {
 				html = 
 				node.reacName + '</br></br>\n' +
 				"<strong>RPair: </strong>" +
-				'<a href=\"' + infoUrl + node.id + '\">' + node.id + '</a></br></br>\n' +
+				'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
 				"<strong>Reaction: </strong>" + node.reacID + '</br></br>\n' +
 				'<strong>EC: </strong>' + node.ec + '</br></br>\n' +
-				'<a href=\"' + reactionImgUrl + node.id + '.gif' + '\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
+				'<a href=\"' + reactionImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
 			}
 		}
 		

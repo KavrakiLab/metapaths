@@ -23,7 +23,7 @@ a:hover {
 #header {
     	color: black;
 	font-size: 1.5em;
-	margin-bottom: 20px;
+	margin: 20px;
 	text-align: center;
 	font-weight: 100;
 }
@@ -157,7 +157,9 @@ td {
 #map{ 
 /*	background-color: #060d2f;*/
 	background-color: #fff;
-	margin: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-top: 20px;
 	outline: 2px #555 solid;
 	color: white;
 	display: block;
@@ -167,12 +169,15 @@ td {
 }
 .tooltip {
 /*	background-color: #060d2f;*/
-	background-color: #333;
-	border: 1px;
+	background-color: #eee;
+/*	border-top: 1px;
+	border-left: 1px;
+	border-right: 2px;
+	border-bottom: 2px;
 	border-radius: 5px;
 	border-style: solid;
-	border-color: #eee;
-	color: #fff;
+	border-color: #333;*/
+	color: #333;
 	font-size: 0.9em;
 	font-weight: 400;
 	line-height: 125%;
@@ -188,17 +193,17 @@ td {
 
 /* unvisited link */
 .tooltip a {
-    color: #fff;
+    color: #333;
 }
 
 /* visited link */
 .tooltip a:visited {
-    color: #fff;
+    color: #333;
 }
 
 /* mouse over link */
 .tooltip a:hover {
-    color: #aaa;
+    color: #777;
     cursor: pointer;
 }
 
