@@ -241,25 +241,27 @@ function drawGraph(){
 
 	var container = svg.append("g");
 	
-	/* TEMPORARILY REMOVE BUGGY LINKS */
-	graph.links.splice(310, 1);
-	graph.links.splice(307, 1);
-	graph.links.splice(285, 1);
-	graph.links.splice(283, 1);
-	graph.links.splice(282, 1);
-	graph.links.splice(268, 1);
-	graph.links.splice(267, 1);
-	graph.links.splice(249, 1);
-	graph.links.splice(248, 1);
-	graph.links.splice(239, 1);
-	graph.links.splice(238, 1);
-	graph.links.splice(226, 1);
-	graph.links.splice(225, 1);
-	graph.links.splice(200, 1);
-	graph.links.splice(199, 1);
-	graph.links.splice(100, 1);
-	graph.links.splice(86, 1);
-	graph.links.splice(3, 1);
+	if (pathwaysFilename.indexOf("C00668") > -1) {
+		/* TEMPORARILY REMOVE BUGGY LINKS */
+		graph.links.splice(310, 1);
+		graph.links.splice(307, 1);
+		graph.links.splice(285, 1);
+		graph.links.splice(283, 1);
+		graph.links.splice(282, 1);
+		graph.links.splice(268, 1);
+		graph.links.splice(267, 1);
+		graph.links.splice(249, 1);
+		graph.links.splice(248, 1);
+		graph.links.splice(239, 1);
+		graph.links.splice(238, 1);
+		graph.links.splice(226, 1);
+		graph.links.splice(225, 1);
+		graph.links.splice(200, 1);
+		graph.links.splice(199, 1);
+		graph.links.splice(100, 1);
+		graph.links.splice(86, 1);
+		graph.links.splice(3, 1);
+	}
 
 	/* DEBUGGING CODE FOR DETECTING BAD LINKS */
 	// for (var i = 0; i < graph.links.length; i++) {
@@ -491,18 +493,25 @@ function drawGraph(){
 		if(d.id[0] == "C"){
 			html =
 			"<strong>" + node.name + '</strong></br></br>' +
-			"Compound: " +
+			"<strong>Compound: </strong>" +
 			'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
 			'<a href=\"' + compoundImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + compoundImgUrl + node.id + '.gif\" ></img>' + '</a></br></br>\n'
 		} 
 		else {
 			html = 
-			node.reacName + '</br></br>\n' +
-			"<strong>RPair: </strong>" +
-			'<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a></br></br>\n' +
-			"<strong>Reaction: </strong>" + node.reacID + '</br></br>\n' +
+			"<strong>" + node.name + 
+			' (<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a>)</strong></br></br>\n' +
+			'<a href=\"' + reactionImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n' +
 			'<strong>EC: </strong>' + node.ec + '</br></br>\n' +
-			'<a href=\"' + reactionImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n'
+			"<strong>Reaction: </strong>" + node.reacName +
+			' (<a href=\"' + infoUrl + node.reacID + '\" target=\"_blank\">' + node.reacID + ')</a></br></br>\n' +
+			"<strong>Equation: </strong>" + node.reacEq + '</br></br>\n';
+			
+			if (node.otherReacIDs.length > 0){
+				html += "<strong>Other Reactions: </strong>" + node.otherReacIDs + '</br></br>\n';
+			}
+			
+			
 		}
 		
 		if (displayedPathIndex == -1){
