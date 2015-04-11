@@ -2,17 +2,17 @@
 
 // temporary hard coded filenames
 
-var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
-var nodesMapFilename = "paths/mini/Mini_C31C78NodesMap.json";
-var linkWeightsFilename = "paths/mini/Mini_C31C78LinkWeights.json";
+// var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
+// var nodesMapFilename = "paths/mini/Mini_C31C78NodesMap.json";
+// var linkWeightsFilename = "paths/mini/Mini_C31C78LinkWeights.json";
 
 // var pathwaysFilename = "paths/full/Full_C31C78Pathways.json";
 // var nodesMapFilename = "paths/full/Full_C31C78NodesMap.json";
 // var linkWeightsFilename = "paths/full/Full_C31C78LinkWeights.json";
 
-// var pathwaysFilename = localStorage["pathwaysFilename"];
-// var nodesMapFilename = localStorage["nodesMapFilename"];
-// var linkWeightsFilename = localStorage["linkWeightsFilename"];
+var pathwaysFilename = localStorage["pathwaysFilename"];
+var nodesMapFilename = localStorage["nodesMapFilename"];
+var linkWeightsFilename = localStorage["linkWeightsFilename"];
 
 /////////////// GLOBAL VARIABLES ///////////////
 
@@ -139,12 +139,12 @@ function genGraph(pathways){
 				// sets the starting and ending nodes to a fixed position
 				if(node.id == startNode.id){
 					node.fixed = true;
-					node.x = 40;
+					node.x = findMaxPathLen() * -50;
 					node.y = height / 2;
 				}
 				if(node.id == endNode.id){
 					node.fixed = true;
-					node.x = findMaxPathLen() * 75;
+					node.x = findMaxPathLen() * 50;
 					node.y = height / 2;
 				}
 				if(sigNodes.indexOf(node.id) > -1){
@@ -185,15 +185,15 @@ function genGraph(pathways){
 	// In the JSON, the links are given based on IDs, this function translates ID-based links into links based on indices	
 	var edges = [];
 	allLinks.forEach(function(e) {
-		var sourceNode = allNodes.filter(function(n) { return n.id === e.source; })[0],
-		targetNode = allNodes.filter(function(n) { return n.id === e.target; })[0];
+		// console.log("E: ", e);
+		var sourceNode = allNodes.filter(function(n) { return n.id === e.source; })[0];
+		var targetNode = allNodes.filter(function(n) { return n.id === e.target; })[0];
 		edges.push({source: sourceNode, target: targetNode, value: e.Value});
 	});
 	allLinks = edges;
 	
 	graph.nodes = allNodes;
 	graph.links = allLinks;
-	
 	// alert("Pathways have been processed.");
 
 }
@@ -241,12 +241,39 @@ function drawGraph(){
 
 	var container = svg.append("g");
 	
-	console.log("Graph: ", graph);
-	for (var i = 0; i < graph.links.length; i++) {
-		if (graph.links[i].target == null || graph.links[i].source == null) {
-			console.log("Bad at index: " + i);
-		}
-	}
+	/* TEMPORARILY REMOVE BUGGY LINKS */
+	graph.links.splice(310, 1);
+	graph.links.splice(307, 1);
+	graph.links.splice(285, 1);
+	graph.links.splice(283, 1);
+	graph.links.splice(282, 1);
+	graph.links.splice(268, 1);
+	graph.links.splice(267, 1);
+	graph.links.splice(249, 1);
+	graph.links.splice(248, 1);
+	graph.links.splice(239, 1);
+	graph.links.splice(238, 1);
+	graph.links.splice(226, 1);
+	graph.links.splice(225, 1);
+	graph.links.splice(200, 1);
+	graph.links.splice(199, 1);
+	graph.links.splice(100, 1);
+	graph.links.splice(86, 1);
+	graph.links.splice(3, 1);
+
+	/* DEBUGGING CODE FOR DETECTING BAD LINKS */
+	// for (var i = 0; i < graph.links.length; i++) {
+	// 	if (graph.links[i].source == null){
+	// 		console.log("Bad source at index: " + i);
+	// 		// console.log("The target here is: " + graph.links[i].target);
+	// 	}
+	// 	if (graph.links[i].target == null){
+	// 		console.log("Bad target at index: " + i);
+	// 		// console.log("The source here is: " + graph.links[i].source);
+	// 	}
+	// }
+	
+	
 	force.nodes(graph.nodes)
 		.links(graph.links)
 		.start();
