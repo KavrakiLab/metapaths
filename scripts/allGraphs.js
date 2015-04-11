@@ -500,17 +500,22 @@ function drawGraph(){
 		else {
 			html = 
 			"<strong>" + node.name + 
-			' (<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a>)</strong></br></br>\n' +
-			'<a href=\"' + reactionImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n' +
-			'<strong>EC: </strong>' + node.ec + '</br></br>\n' +
+			' (<a href=\"' + infoUrl + node.id + '\" target=\"_blank\">' + node.id + '</a>)</strong></br></br>\n';
+			
+			if (d.id.length > 6) {
+				html += '<a href=\"' + reactionImgUrl + node.id + '.gif' + '\" target=\"_blank\">' + '<img src=\"' + reactionImgUrl + node.id + '.gif\" width=\'175px\'></img>' + '</a></br></br>\n';
+			}
+			
+			html += '<strong>EC: </strong>' + node.ec + '</br></br>\n' +
 			"<strong>Reaction: </strong>" + node.reacName +
 			' (<a href=\"' + infoUrl + node.reacID + '\" target=\"_blank\">' + node.reacID + ')</a></br></br>\n' +
 			"<strong>Equation: </strong>" + node.reacEq + '</br></br>\n';
 			
-			if (node.otherReacIDs.length > 0){
-				html += "<strong>Other Reactions: </strong>" + node.otherReacIDs + '</br></br>\n';
+			if (node.otherReacIDs != null){
+				if (node.otherReacIDs.length > 0){
+					html += "<strong>Other Reactions: </strong>" + node.otherReacIDs + '</br></br>\n';
+				}
 			}
-			
 			
 		}
 		
