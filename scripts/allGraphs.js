@@ -1,5 +1,7 @@
 // console.clear(); // clears the in-browser devleoper console on page refresh
 
+/* Temporary hardcoded filenames */ 
+
 // var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
 // var nodesMapFilename = "paths/mini/Mini_C31C78NodesMap.json";
 // var linkWeightsFilename = "paths/mini/Mini_C31C78LinkWeights.json";
@@ -17,6 +19,7 @@ var linkWeightsFilename = localStorage["linkWeightsFilename"];
 var allPathways = [];
 var displayedPaths = [];
 var displayedPathIndex = -1; // the index of the currently displayed path in allPathways. -1 if all of allPathways are being displayed
+var maxDisplayedLength;
 var originalPathways = [];
 var nodesMap = new Object();
 var linkWeights = new Object();
@@ -823,6 +826,8 @@ function includeThese(goodNodes){
 function filterLen(maxPathLen){
 	var newPaths = [];
 	// console.log("Before Filtering: ", pathways);
+	
+	maxDisplayedLength = maxPathLen;
 
 	for(var i = 0; i < allPathways.length; i++){
 		if(allPathways[i].nodes.length < maxPathLen){
@@ -837,6 +842,30 @@ function filterLen(maxPathLen){
 		return allPathways;
 	} else {
 		return newPaths;
+	}
+}
+
+function saveFilters() {
+	/* Saves the current filtering settings to localStorage */
+
+	localStorage.allPathways = allPathways;
+	localStorage.displayedPaths = displayedPaths;
+	localStorage.globalIncludedNodes = globalIncludedNodes;
+	localStorage.globalIgnoredNodes = globalIgnoredNodes;
+	localStorage.maxDisplayedLen = maxDisplayedLength;
+}
+
+function loadFilters() {
+	// Loads user's previously saved filtering options by setting
+	// the fields and calling filter().
+	
+	if (localStorage.displayedPaths != null) {
+		document.getElementById("ignoredCompounds").value = localStorage.globalIgnoredNodes;
+		document.getElementById("includedCompounds").value = localStorage.globalIncludedNodes;
+		document.getElementById("maxLength").value = localStorage.maxDisplayedLen;
+		filter();
+	} else {
+		alert("Could not find previously saved filter settings.")
 	}
 }
 
