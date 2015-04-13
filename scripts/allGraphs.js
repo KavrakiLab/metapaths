@@ -1,7 +1,5 @@
 // console.clear(); // clears the in-browser devleoper console on page refresh
 
-// temporary hard coded filenames
-
 // var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
 // var nodesMapFilename = "paths/mini/Mini_C31C78NodesMap.json";
 // var linkWeightsFilename = "paths/mini/Mini_C31C78LinkWeights.json";
