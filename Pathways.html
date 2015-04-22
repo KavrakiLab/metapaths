@@ -15,18 +15,7 @@
 		</div>
 		
 		<div class="optionsContainer">
-		
-			<div class="graphOptions" id="savingConainer">
-				<a onclick="toggleOptions(saving)"><u>Save / Load Filters</u></a>
-				<div id="saving">
-					<input type="text" id="saveName"></input>
-					</br>
-					<button class="button" id="saveFilters" onclick="saveFilters()">Save</button>
-					<button class="button" id="loadFilters" onclick="loadFilters()">Load</button>
-				</div>
-			
-			</div>
-		
+
 			<div class="graphOptions" id="filteringContainer">
 				<a onclick="toggleOptions(filtering)"><u>Filtering</u></a>
 				<div id="filtering">
@@ -71,6 +60,27 @@
 				</div>
 
 				<button class="button" id="stylingButton" onclick="applyStyle()")>Apply</button>
+			</div>
+			
+			<div class="graphOptions" id="savingConainer">
+				<a onclick="toggleOptions(saving)"><u>Save / Load Filters</u></a>
+				<div id="saving">
+					<table>
+						<tr>
+							<td>Save: </td>
+							<td><input type="file" id="saveOutput"></td>
+						</tr>
+						<tr>
+							<td>Load: </td>
+							<td><input type="file" id="loadInput"></td>
+						</tr>
+						<tr><td>&nbsp</td></tr>
+					</table>
+					
+				</div>
+
+			<button class="button" onclick="saveFilters()">Save</button>
+			<button class="button" onclick="loadFilters()">Load</button>
 			</div>
 		
 		</div>

@@ -872,18 +872,15 @@ function saveFilters() {
 }
 
 function loadFilters() {
-	// Loads user's previously saved filtering options by setting
-	// the fields and calling filter().
+	var fileInput = document.getElementById("loadInput");
+	var file = fileInput.files[0];
 	
-	var saveName = document.getElementById("saveName").value;
+	console.log(file);
 	
-	if (localStorage.displayedPaths != null) {
-		document.getElementById("ignoredCompounds").value = localStorage.globalIgnoredNodes;
-		document.getElementById("includedCompounds").value = localStorage.globalIncludedNodes;
-		document.getElementById("maxLength").value = localStorage.maxDisplayedLen;
-		filter();
+	if (file.type != "application/json") {
+		alert("Incorrect filetype, please upload a json file.")
 	} else {
-		alert("Could not find previously saved filter settings.")
+		
 	}
 }
 
