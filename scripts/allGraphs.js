@@ -1,5 +1,6 @@
 // console.clear(); // clears the in-browser devleoper console on page refresh
 
+
 /* Temporary hardcoded filenames */ 
 
 // var pathwaysFilename = "paths/mini/Mini_C31C78Pathways.json";
@@ -9,6 +10,7 @@
 // var pathwaysFilename = "paths/full/Full_C31C78Pathways.json";
 // var nodesMapFilename = "paths/full/Full_C31C78NodesMap.json";
 // var linkWeightsFilename = "paths/full/Full_C31C78LinkWeights.json";
+
 
 var pathwaysFilename = localStorage["pathwaysFilename"];
 var nodesMapFilename = localStorage["nodesMapFilename"];
@@ -40,6 +42,8 @@ var endpointColor = "#8c5f9f";
 var infoUrl = "http://www.genome.jp/dbget-bin/www_bget?";
 var compoundImgUrl = "http://www.genome.jp/Fig/compound/";
 var reactionImgUrl = "http://www.genome.jp/Fig/rpair/";
+var saves = {};
+
 
 /////////////// DATA LOADING ///////////////
 
@@ -47,6 +51,12 @@ var reactionImgUrl = "http://www.genome.jp/Fig/rpair/";
 loadPaths();
 
 function loadPaths(){
+	if(localStorage.saves == null){
+		saves = {};
+	} else {
+		saves = localStorage.saves;
+	}
+
 	d3.json(pathwaysFilename, function(error, json) {
 		if (error)
 			return console.warn(error);
@@ -847,7 +857,13 @@ function filterLen(maxPathLen){
 
 function saveFilters() {
 	/* Saves the current filtering settings to localStorage */
-
+	console.log("saves: ", saves);
+	
+	var saveName = document.getElementById("saveName").value;
+	console.log(saveName);
+	
+	saves[saveName] = "test";
+	
 	localStorage.allPathways = allPathways;
 	localStorage.displayedPaths = displayedPaths;
 	localStorage.globalIncludedNodes = globalIncludedNodes;
@@ -858,6 +874,8 @@ function saveFilters() {
 function loadFilters() {
 	// Loads user's previously saved filtering options by setting
 	// the fields and calling filter().
+	
+	var saveName = document.getElementById("saveName").value;
 	
 	if (localStorage.displayedPaths != null) {
 		document.getElementById("ignoredCompounds").value = localStorage.globalIgnoredNodes;

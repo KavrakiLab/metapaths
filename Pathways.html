@@ -14,52 +14,65 @@
 			<button class="button" id="refresh" onclick="window.location.href='file:///Users/prudhvi/Dropbox/School/Research/KavrakiLab/metapaths/SearchResults.html'">Back to Search Results</button>
 		</div>
 		
-		<div class="graphOptions" id="filteringContainer">
-			<a onclick="toggleOptions(filtering)"><u>Filtering</u></a>
-			<div id="filtering">
-				<table>
-				  <tr>
-				    <td>1. Ignore paths containing these compounds or reactions (e.g. "C00493 RP01132 C00095"):</td>
-				    <td><input type="text" id="ignoredCompounds"></input></td>
-				  </tr>
-				  <tr>
-				    <td>2. Only include paths containing these compounds or reactions (e.g. "C00493 RP01132 C00095"):</td>
-				    <td><input type="text" id="includedCompounds"></input></td>
-				  </tr>
-				  <tr>
-				    <td>3. Ignore paths longer than (enter a positive integer):</td>
-				    <td><input type="number" id="maxLength"></input></td>
-				  </tr>
-				</table>
-			</div>
-			<button class="button" id="filteringButton" onclick="filter()")>Filter Graph</button>
-			<button class="button" id="saveFilters" onclick="saveFilters()">Save Filters</button>
-			<button class="button" id="loadFilters" onclick="loadFilters()">Load Previous Filters</button>
-		</div>
+		<div class="optionsContainer">
 		
-		<div class="graphOptions" id="stylingContainer">
-			<a onclick="toggleOptions(styling)"><u>Appearance</u></a>
-			<div id="styling">
-				<table>
-					<tr>
-						<td><input type="radio" name="lineStyle" id="lineOpacity" checked> Line Opacity</td>
-						<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Compound Color: </td>
-						<td><input type="color" id="userCompoundColor" value="#26C281"></td>
-					</tr>
-					<tr>
-						<td><input type="radio" name="lineStyle" id="lineWidth"> Line Width</td>
-						<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Reaction Pair Color: </td>
-						<td><input type="color" id="userReactionColor" value="#333333"></td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" name="lineStyle" id="showArrows"> Show Arrows</td>
-						<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Endpoint Color: </td>
-						<td><input type="color" id="userEndpointColor" value="#8c5f9f"></td>
-					</tr>
-				</table>
+			<div class="graphOptions" id="savingConainer">
+				<a onclick="toggleOptions(saving)"><u>Save / Load Filters</u></a>
+				<div id="saving">
+					<input type="text" id="saveName"></input>
+					</br>
+					<button class="button" id="saveFilters" onclick="saveFilters()">Save</button>
+					<button class="button" id="loadFilters" onclick="loadFilters()">Load</button>
+				</div>
+			
 			</div>
+		
+			<div class="graphOptions" id="filteringContainer">
+				<a onclick="toggleOptions(filtering)"><u>Filtering</u></a>
+				<div id="filtering">
+					<table>
+					  <tr>
+					    <td>1. Ignore paths containing these compounds or reactions:</td>
+					    <td><input type="text" id="ignoredCompounds" placeholder="C00493 RP01132"></input></td>
+					  </tr>
+					  <tr>
+					    <td>2. Only include paths containing these compounds or reactions:</td>
+					    <td><input type="text" id="includedCompounds" placeholder="C00493 RP01132"></input></td>
+					  </tr>
+					  <tr>
+					    <td>3. Ignore paths longer than (enter a positive integer):</td>
+					    <td><input type="number" id="maxLength"></input></td>
+					  </tr>
+					</table>
+				</div>
+				<button class="button" id="filteringButton" onclick="filter()")>Filter Graph</button>
+			</div>
+		
+			<div class="graphOptions" id="stylingContainer">
+				<a onclick="toggleOptions(styling)"><u>Appearance</u></a>
+				<div id="styling">
+					<table>
+						<tr>
+							<td><input type="radio" name="lineStyle" id="lineOpacity" checked> Line Opacity</td>
+							<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Compound Color: </td>
+							<td><input type="color" id="userCompoundColor" value="#26C281"></td>
+						</tr>
+						<tr>
+							<td><input type="radio" name="lineStyle" id="lineWidth"> Line Width</td>
+							<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Reaction Pair Color: </td>
+							<td><input type="color" id="userReactionColor" value="#333333"></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="lineStyle" id="showArrows"> Show Arrows</td>
+							<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Endpoint Color: </td>
+							<td><input type="color" id="userEndpointColor" value="#8c5f9f"></td>
+						</tr>
+					</table>
+				</div>
 
-			<button class="button" id="stylingButton" onclick="applyStyle()")>Apply</button>
+				<button class="button" id="stylingButton" onclick="applyStyle()")>Apply</button>
+			</div>
+		
 		</div>
 		
 		<div id="map"></div>
