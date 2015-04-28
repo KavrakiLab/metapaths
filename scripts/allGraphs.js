@@ -51,6 +51,15 @@ var saves = {};
 loadPaths();
 
 function loadPaths(){
+	
+	// Check for the various File API support.
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+	  // Great success! All the File APIs are supported.
+	} else {
+	  alert('The File APIs are not fully supported in this browser. Saving and loading will not work.');
+	}
+	
+	
 	if(localStorage.saves == null){
 		saves = {};
 	} else {
@@ -876,12 +885,27 @@ function loadFilters() {
 	var file = fileInput.files[0];
 	
 	console.log(file);
-	
-	if (file.type != "application/json") {
+	if (file == null){
+		alert("Please choose a valid file.")
+	} else if (file.type != "application/json") {
 		alert("Incorrect filetype, please upload a json file.")
 	} else {
+		var reader = new FileReader();
+
+		reader.readAsText(file);
+		
+		reader.onload = function () {
+			var readJSON = JSON.parse(reader.result);
+			console.log(readJSON);
+		}
 		
 	}
+}
+
+function readReceived(e) {
+	lines = e.target.result;
+	var newArr = JSON.parse(lines);
+	console.log("Newarr: ", newArr);
 }
 
 function resetFiltering(){
@@ -963,16 +987,3 @@ function applyStyle(){
 	reloadGraph(displayedPaths);
 }
 
-// function viewNodeImage(nodeID){
-// 	window.open(compoundImgUrl + 'c00031.gif',
-// 	'MyWindow',
-// 	'toolbar=no',
-// 	'location=no',
-// 	'directories=no',
-// 	'status=no',
-// 	'menubar=no',
-// 	'scrollbars=yes',
-// 	'resizable=yes',
-// 	'width=300',
-// 	'height=300');
-// }
