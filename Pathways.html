@@ -2,7 +2,6 @@
 	<head>
 		<script language="JavaScript" type="text/javascript" src="d3/d3.min.js"></script>
 		<script language="JavaScript" type="text/javascript" src="scripts/allGraphs.js"></script>
-		<script language="JavaScript" type="text/javascript" src="scripts/FileSaver.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="styles/Pathways.css" />
 	</head>
 
@@ -12,7 +11,7 @@
 		</div>
 		
 		<div id="options">
-			<button class="button" id="refresh" onclick="window.location.href='file:///Users/prudhvi/Dropbox/School/Research/KavrakiLab/metapaths/SearchResults.html'">Back to Search Results</button>
+			<button class="button" id="refresh" onclick="window.location.href='SearchResults.html'">Back to Search Results</button>
 		</div>
 		
 		<div class="optionsContainer">
@@ -64,14 +63,15 @@
 			</div>
 			
 			<div class="graphOptions" id="savingConainer">
-				<a onclick="toggleOptions(saving)"><u>Save / Load</u></a>
+				<a onclick="toggleOptions(saving)"><u>Save / Load Filters</u></a>
 				<div id="saving">
 					<table>
 						<tr>
-							<td><button class="button" onclick="save()">Save</button></td>
+							<td>Save: </td>
+							<td><input type="file" id="saveOutput"></td>
 						</tr>
 						<tr>
-							<td><button class="button" onclick="load()">Load</button></td>
+							<td>Load: </td>
 							<td><input type="file" id="loadInput"></td>
 						</tr>
 						<tr><td>&nbsp</td></tr>
@@ -79,8 +79,8 @@
 					
 				</div>
 
-			
-			
+			<button class="button" onclick="saveFilters()">Save</button>
+			<button class="button" onclick="loadFilters()">Load</button>
 			</div>
 		
 		</div>
