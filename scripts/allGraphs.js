@@ -864,27 +864,31 @@ function filterLen(maxPathLen){
 	}
 }
 
-function saveFilters() {
+function save(pathwayName) {
 	/* Saves the current filtering settings to localStorage */
-	console.log("saves: ", saves);
 	
-	var saveName = document.getElementById("saveName").value;
-	console.log(saveName);
+	var saveData = [];
 	
-	saves[saveName] = "test";
+	saveData[0] = allPathways;
+	saveData[1] = displayedPaths;
+	saveData[2] = globalIncludedNodes;
+	saveData[3] = globalIgnoredNodes;
+	saveData[4] = maxDisplayedLength;
 	
-	localStorage.allPathways = allPathways;
-	localStorage.displayedPaths = displayedPaths;
-	localStorage.globalIncludedNodes = globalIncludedNodes;
-	localStorage.globalIgnoredNodes = globalIgnoredNodes;
-	localStorage.maxDisplayedLen = maxDisplayedLength;
+	var saveDataString = JSON.stringify(saveData);
+	console.log("Save string: ", saveDataString);
+	
+	var saveBlob = new Blob([saveDataString], {type: 'application/json'});
+	
+	var saveName = startNode.id + "_" + endNode.id + ".json"
+	
+	saveAs(saveBlob, saveName);
 }
 
-function loadFilters() {
+function load() {
 	var fileInput = document.getElementById("loadInput");
 	var file = fileInput.files[0];
 	
-	console.log(file);
 	if (file == null){
 		alert("Please choose a valid file.")
 	} else if (file.type != "application/json") {
@@ -896,7 +900,14 @@ function loadFilters() {
 		
 		reader.onload = function () {
 			var readJSON = JSON.parse(reader.result);
-			console.log(readJSON);
+			
+			allPathways = readJSON[0];
+			displayedPaths = readJSON[1];
+			globalIncludedNodes = readJSON[2];
+			globalIgnoredNodes = readJSON[3];
+			maxDisplayedLength = readJSON[4];
+			
+			reloadGraph(displayedPaths);
 		}
 		
 	}
