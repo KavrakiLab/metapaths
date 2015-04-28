@@ -2,6 +2,7 @@
 	<head>
 		<script language="JavaScript" type="text/javascript" src="d3/d3.min.js"></script>
 		<script language="JavaScript" type="text/javascript" src="scripts/allGraphs.js"></script>
+		<script language="JavaScript" type="text/javascript" src="scripts/FileSaver.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="styles/Pathways.css" />
 	</head>
 
@@ -63,15 +64,14 @@
 			</div>
 			
 			<div class="graphOptions" id="savingConainer">
-				<a onclick="toggleOptions(saving)"><u>Save / Load Filters</u></a>
+				<a onclick="toggleOptions(saving)"><u>Save / Load</u></a>
 				<div id="saving">
 					<table>
 						<tr>
-							<td>Save: </td>
-							<td><input type="file" id="saveOutput"></td>
+							<td><button class="button" onclick="save()">Save</button></td>
 						</tr>
 						<tr>
-							<td>Load: </td>
+							<td><button class="button" onclick="load()">Load</button></td>
 							<td><input type="file" id="loadInput"></td>
 						</tr>
 						<tr><td>&nbsp</td></tr>
@@ -79,8 +79,7 @@
 					
 				</div>
 
-			<button class="button" onclick="saveFilters()">Save</button>
-			<button class="button" onclick="loadFilters()">Load</button>
+			
 			</div>
 		
 		</div>
