@@ -644,6 +644,7 @@ function viewFirst(){
 	displayedPathIndex = 0;
 	// hide filtering options, since they are not needed for a single path
 	document.getElementById("filteringContainer").style.display = "none"; 
+	document.getElementById("clusterContainer").style.display = "none"; 
 	
 	/* Clears current graph, loads the first path, draws the path */
 	displayedPaths = [];
@@ -702,6 +703,7 @@ function viewAll(){
 	
 	// show filtering options, since we are now viewing all the paths
 	document.getElementById("filteringContainer").style.display = "block";
+	document.getElementById("clusterContainer").style.display = "block"; 
 	document.getElementById("firstPathButton").style.display = "block";
 	
 	reloadGraph(allPathways);
@@ -741,7 +743,7 @@ function linearize() {
 	reloadGraph(displayedPaths);
 }
 
-/////////////// FILTERING FUNCTIONS ///////////////
+/////////////// PATHWAY FUNCTIONS ///////////////
 
 function filter(){
 	var ignoredNodesString = document.getElementById("ignoredCompounds").value;
@@ -913,6 +915,27 @@ function load() {
 	}
 }
 
+function loadCluster(){
+	// Temporary dummy cluster dict {clusterID : [Array of included pathways]}
+	var clusterDict = {1:[1,2,3,24,45,12,75,34], 2:[2,83,4,43,44,65,14], 3:[31,44,34,4,29,90,20,11,38,51], 4:[114,514,65,16,51,94,14]};
+	
+	// Retrive the selected cluster
+	var clusterID = document.getElementById("clusterID").value;
+	
+	var clusterPaths = clusterDict[clusterID];
+	
+	allPathways = [];
+	
+	for (var i = 0; i < clusterPaths.length; i++){
+		allPathways.push(originalPathways[clusterPaths[i]]);
+	}
+	
+	displayedPaths = allPathways;
+	globalIncludedNodes = [];
+	globalIgnoredNodes = [];
+	reloadGraph(allPathways);
+}
+
 function readReceived(e) {
 	lines = e.target.result;
 	var newArr = JSON.parse(lines);
@@ -937,7 +960,9 @@ function reloadGraph(pathsToReload){
 	// reload with new data
 	genGraph(pathsToReload);
 	drawGraph();
+	// setGraphInfoHtml();
 }
+
 
 /////////////// PAGE FUNCTIONS ///////////////
 

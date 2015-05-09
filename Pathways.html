@@ -37,6 +37,29 @@
 				</div>
 				<button class="button" id="filteringButton" onclick="filter()")>Filter Graph</button>
 			</div>
+			
+			<div class="graphOptions" id="clusterContainer">
+				<a onclick="toggleOptions(clustering)"><u>Clusters</u></a>
+				<div id="clustering">
+					<table>
+						<tr>
+							<td>View specific cluster:
+							<select id="clusterID">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							</td>
+						</tr>
+						<tr><td>&nbsp</td></tr>
+						<tr><td>&nbsp</td></tr>
+						<tr><td>&nbsp</td></tr>
+					</table>
+					<button class="button" id="clusterButton" onclick="loadCluster()")>Load Cluster</button>
+				</div>
+				
+			</div>
 		
 			<div class="graphOptions" id="stylingContainer">
 				<a onclick="toggleOptions(styling)"><u>Appearance</u></a>
@@ -68,18 +91,16 @@
 				<div id="saving">
 					<table>
 						<tr>
-							<td><button class="button" onclick="save()">Save</button></td>
-						</tr>
-						<tr>
 							<td><button class="button" onclick="load()">Load</button></td>
 							<td><input type="file" id="loadInput"></td>
+						</tr>
+						<tr>
+							<td><button class="button" onclick="save()">Save</button></td>
 						</tr>
 						<tr><td>&nbsp</td></tr>
 					</table>
 					
 				</div>
-
-			
 			</div>
 		
 		</div>
