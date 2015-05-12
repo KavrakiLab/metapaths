@@ -34,7 +34,7 @@ var sigNodes = [];
 var edgeType = "lineOpacity"; // The style for dispalying edges. Either line width or line opacity
 var showArrows = false; // Hide arrows by default, user can toggle them back on
 var margin = {top: -5, right: -5, bottom: -5, left: -5};
-var width = (window.innerWidth * .8) - 20;
+var width = (window.innerWidth * .8) - 3;
 var height = window.innerHeight - 60;
 var compoundColor = "#26C281";
 var reactionColor = "#333";
@@ -461,7 +461,7 @@ function drawGraph(){
 		// Displays the tooltip
 		tooltip.html(tooltipHTML(d))
 		// .style("left", d3.event.pageX + "px")
-		.style("top", 317 + "px")
+		.style("top", 221 + "px")
 		.style('opacity', "0.9");
 		
 		// highlights the selected node
@@ -644,7 +644,8 @@ function viewFirst(){
 	displayedPathIndex = 0;
 	// hide filtering options, since they are not needed for a single path
 	document.getElementById("filteringContainer").style.display = "none"; 
-	document.getElementById("clusterContainer").style.display = "none"; 
+	document.getElementById("clusterContainer").style.display = "none";
+	document.getElementById("savingContainer").style.display = "none"; 
 	
 	/* Clears current graph, loads the first path, draws the path */
 	displayedPaths = [];
@@ -704,6 +705,7 @@ function viewAll(){
 	// show filtering options, since we are now viewing all the paths
 	document.getElementById("filteringContainer").style.display = "block";
 	document.getElementById("clusterContainer").style.display = "block"; 
+	document.getElementById("savingContainer").style.display = "block"; 
 	document.getElementById("firstPathButton").style.display = "block";
 	
 	reloadGraph(allPathways);
@@ -969,10 +971,8 @@ function reloadGraph(pathsToReload){
 function toggleOptions(option){
 	if(document.getElementById(option.id).style.display == 'block'){
 		document.getElementById(option.id).style.display = 'none';
-		document.getElementById(option.id + "Button").style.visibility = "hidden";	
 	} else {
 		document.getElementById(option.id).style.display = 'block';
-		document.getElementById(option.id + "Button").style.visibility = "visible";
 	}
 }
 
@@ -980,7 +980,7 @@ function setGraphInfoHtml(){
 	if(displayedPathIndex == -1){ // if we are viewing all paths
 		document.getElementById("graphInfo").style.display = "block";
 		document.getElementById("pathCount").style.display = "inline";
-		document.getElementById("pathCount").innerHTML = "Displaying <u>" + allPathways.length + "</u> paths";
+		document.getElementById("pathCount").innerHTML = "Displaying <strong>" + allPathways.length + "</strong> paths.";
 	
 		document.getElementById("removedNodes").innerHTML = globalIgnoredNodes.join(", ");
 		document.getElementById("includedNodes").innerHTML = globalIncludedNodes.join(", ");
@@ -995,7 +995,7 @@ function setGraphInfoHtml(){
 		// insert the new location and path navigation buttons
 		html += "Displaying path <strong>" + curPathNumber + "</strong> of " + "<strong>" + allPathways.length + "</strong> paths</br>";
 		html += "<button class='smallButton columnButton pathNavButton' id='viewPrevButton' onclick='viewPrevPath()'>Previous</button>";
-		html += "<button class='smallButton columnButton pathNavButton' id='viewNextButton' onclick='viewNextPath()'>Next</button></br>";
+		html += "<button class='smallButton columnButton pathNavButton' id='viewNextButton' onclick='viewNextPath()'>Next</button>";
 		html += "<button class='smallButton columnButton pathNavButton' id='viewAllButton' onclick='viewAll()'>View All</button>";
 		html += "</br></br>";
 		html += "Path length: <strong>" + displayedPaths[0].links.length + "</strong>";

@@ -1,6 +1,6 @@
 * {
-	font-family: sans-serif;
-	text-align: center;
+/*	font-family: sans-serif;*/
+	font-family: 'Lato', sans-serif;
 }
 
 /* unvisited link */
@@ -23,55 +23,52 @@ a:hover {
 #header {
     	color: black;
 	font-size: 1.5em;
-	margin: 20px;
-	text-align: center;
-	font-weight: 100;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 2%;
+	text-align: left;
+	font-weight: 300;
 }
 
 .graphOptions {
-/*	border: 1.5px solid #000;*/
     	color: black;
-	font-size: 1.2em;
-	margin-left: 1%;
-	margin-right: 1%;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	font-size: 0.95em;
 	text-align: left;
-	line-height: 200%;
-	font-weight: 100;
+	line-height: 150%;
 	float: left;
+	width: 14%;
+	margin-top: 20px;
+	margin-right: 2%;
+	font-weight: 300;
 }
 
 .optionsContainer {
 /*	width: 80%;*/
+/*	float: right;*/
 }
 
-
-#filtering{
-	display: block;
-	text-align: left;
-	padding-left: 20px;
-	height: 85px;
+#styling, #clustering, #saving {
+	display: none;
 }
 
-#styling {
-	display: block;
-	text-align: left;
-	padding-left: 20px;
-	height: 85px;
-}
 
 #graphInfo{
-	font-size: 1em;
 	text-align: left;
-	float: left;
-	line-height: 150%;
-	display: none;
-	width: 14%;
-	margin-top: 2%;
-	margin-bottom: 2%;
+	display: block;
+	margin-left: 2%;
+	margin-right: 2%;
+	margin-top: 20px;
+	font-weight: 300;
 }
 
+.infoContainer {
+	width: 100%;
+}
+
+.infoRow {
+/*	line-height: 150%;*/
+	text-align: left;
+}
 
 .overlay { 
 	fill: none; 
@@ -94,20 +91,18 @@ a:hover {
 }
 
 .button {
-    background-color: #fff;
+	background-color: #fff;
 	border: 1px solid #000;
 	border-radius: 2px;
 	color: #000;
-    font-size: 0.8em;
-    padding: .5em 1em;
-	margin-right: 5px;
-	margin-left: 5px;
-    cursor: pointer;
-/*    background: #A8D8AA;*/
-/*    color: #156D15;*/
-/*    border: none;*/
-    border: solid black 1px;
-    border-radius: 2px
+	font-size: 0.9em;
+	font-weight: 400;
+	padding: .5em 1em;
+/*	margin-right: 5px;
+	margin-left: 5px;*/
+	cursor: pointer;
+	border: solid black 1px;
+	border-radius: 2px
 }
 
 .button:hover {
@@ -126,7 +121,7 @@ a:hover {
 	color: #000;
    	font-size: 0.9em;
     	cursor: pointer;
-	width: 252px;
+	width: 100%;
 }
 
 .smallButton:hover {
@@ -147,15 +142,7 @@ a:hover {
 	display: inline-block;
 }
 
-table {
-	text-align: center;
-	width: auto;
-}
 
-td {
-	text-align: left;
-	font-size: 0.9em;
-}
 
 
 /* Graph Styling*/
