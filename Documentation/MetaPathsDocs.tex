@@ -1,0 +1,240 @@
+\documentclass{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{setspace}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=black]{hyperref}
+\usepackage{color}
+
+\begin{document}
+
+	\begin{center}
+		\doublespacing
+
+		\LARGE{Metabolic Pathway Visualization}
+
+		\Large{Documentation and Design}
+
+		\large{DRAFT: \today}
+
+		\rule{6.5in}{0.75pt}
+	\end{center}
+
+	\tableofcontents
+	% \newpage
+	\onehalfspace
+
+	\section{Visualization} % (fold)
+	\label{sec:visualization}
+		\noindent The visualization can be accessed here:
+		\url{http://prb2.web.rice.edu/metapaths/SearchResults.html} \\
+
+		\noindent Pathways are represented as a graph consisting of compound
+		nodes (green) and reaction pair nodes (black), connected by links.
+		The start and end nodes are colored purple.
+
+		\begin{itemize}
+			\item{Edge weight can represented with line thickness or opacity.}
+			\item{Edge arrows can be toggled on or off.}
+			\item{Pathways can be filtered by ignoring/including certain nodes
+				or by specifying a maximum path length.}
+			\item{Nodes can be filtered by typing their ID into the appropriate
+				field, or by right-clicking on the desired node and clicking
+				the button.}
+			\item{Right-clicking a node when view a single path will display
+				more information about the selected compound or reaction pair.}
+			\item{Right-clicking a node when viewing multiple paths will
+				also provide filtering options.}
+			\item{Pre-specified clusters can be viewed by selecting a cluster
+				ID.}
+			\item{The graph can be ``linearized'' to increase the legibility of
+			the graph. This feature flattens the graph so that the most
+			significant path is horizontal and the rest are free floating.}
+			\item{Paths can be viewed one at a time, with the ability to
+				navigate between each single path.}
+			\item{Nodes can be moved by clicking and dragging to a desired
+				position. They can be released from this fixed position by
+				double-clicking.}
+			\item{Node colors can be specified using the color picker, or by
+				providing a hexadecimal color code (for browsers that don't 
+				support the GUI color picker).}
+		\end{itemize}
+	% section visualization (end)
+
+
+	\section{Code Structure} % (fold)
+		\label{sub:code_structure}
+		The JavaScript code for the visualization consists of the following
+		sections:
+
+			\subsection{Data Loading}{
+			This section contains the functions which load the input files
+			specified below, and make their data available to use for all
+			functions. The start and end nodes are also noted and stored.
+			}
+			\subsection{Graph Generation}{
+			This section initializes a \texttt{D3} force directed graph.
+			\texttt{SVG} elements are created for the graph, nodes, and links.
+			Properties of the graph are set, including: size, gravity, force,
+			node and link colors, link weights, etc. Next, functions that
+			enable interactivity with graph elements, such as dragging
+			behavior, displaying tooltips, etc. are created and attached to
+			mouse actions.
+
+				\begin{center}\begin{tabular}{|p{1.75cm}|p{1.75cm}|p{10.5cm}|}
+					\hline
+					\textbf{Field} & \textbf{Value} & \textbf{Description}\\
+					\hline
+
+					Charge* 	& -100 & The charge strength of nodes. A
+					negative value indicates node repulsion, positive indicates
+					node attraction.\\
+
+					\hline
+
+					Colors 		& Various & Node colors, highlight colors and
+					edge colors are set here. These will be made user
+					configurable in the future.\\
+
+					\hline
+
+					Gravity* 	& 0.01 & Inward force, directed toward the
+					center of the graph. Serves to prevent nodes escaping the
+					viewable area. This value is set very low to avoid
+					excessive clumping of nodes, which hinders viewablity and
+					access to nodes. \\
+
+					\hline
+
+					Size 		& Viewport size & Sets the size of the
+					visualization.\\
+
+					\hline
+
+					Zoom* 		& [0.1, 10] & The zoomable scale range for the
+					graph. In this case, zooming in to 1/10 of the starting
+					scale and zooming out up to 10 times the original scale
+					value is allowed.\\
+
+					\hline
+
+				\end{tabular}\end{center}
+
+				* Detailed documentation on these, and all other \texttt{D3}
+				properties that were used, can be found here:
+
+				\indent\url{https://github.com/mbostock/d3/wiki/Force-Layout}
+			}
+
+			\subsection{Graph Operations}{
+			This section contains functions that manipulate the graph,
+			including: adding/removing nodes, viewing single paths, viewing
+			all paths, etc.
+			}
+
+			\subsection{Pathway Functions}{
+			The functions in this section process the user's filter requests,
+			load clusters, and save the graph. When a user filters the
+			pathways, their request is parsed and a function corresponding to
+			the filter action they requested is called to execute the 
+			filtering. The existing graph is cleared and the filtered pathways 
+			are then displayed. Clusters are loaded by looking up the user
+			specified cluster ID in the \texttt{ClusterMap} and loading up the
+			indicated pathways.
+			}
+
+			\subsection{Page Functions}{
+			This section contains functions that manage parts of the page's
+			\texttt{HTML}. These functions are called when the graph changes,
+			so that information on the page (such as path length, ignored
+			nodes, etc.) can be updated to reflect the changes to the graph.
+			}
+
+		% subsection code_structure (end)
+
+
+
+	\section{Input Files} % (fold)
+		\label{sub:input_files}
+
+			\subsection{AllPathways}
+			\texttt{AllPathways} is the primary data structure that contains
+			all of the information necessary to plot each pathway. It is an
+			array of of JavaScript objects, each of which represents a single
+			pathway. Each \texttt{pathway} object contains a \texttt{nodes}
+			array and a \texttt{links} array. Each \texttt{node} in the
+			\texttt{nodes} array contains the properties of that node. Each
+			\texttt{link} in the \texttt{links} array contains a mapping of
+			\texttt{source} and \texttt{target} compounds.\\
+
+			\noindent \textbf{Node:}\\
+				\texttt{
+					\indent fixed: 	true,\\
+					\indent index:	0,\\
+					\indent x:	40,\\
+					\indent y:	365\\
+				}
+			\noindent \textbf{Link:}\\
+				\texttt{
+					\indent source: "C00031",\\
+					\indent target:	"RP00060",\\
+				}
+
+			\subsection{NodesMap}
+			\texttt{NodesMap} contains an entry for each unique node
+			(compounds and reaction pairs) that are present in any of the
+			pathways being visualized. Each entry contains contains information
+			about the node, but some fields (ec, reacID and reacName) are only
+			pertinent to reaction pairs.\\
+
+			\noindent \textbf{C00031:}\\
+				\texttt{
+					\indent ec:	"" \\
+					\indent id:	"C00031",\\
+					\indent incoming: 1,\\
+					\indent name:	"D-Glucose",\\
+					\indent outgoing: 1,\\
+					\indent pathways: [0,1,2,3,4,...],\\
+					\indent reacID:	"",\\
+					\indent reacName: "",\\
+				}
+			\noindent \textbf{RP00060:}\\
+				\texttt{
+					\indent ec:	"2.7.1.1" \\
+					\indent id:	"RP00060",\\
+					\indent incoming: 5,\\
+					\indent name:	"",\\
+					\indent outgoing: 5,\\
+					\indent pathways: [1,2,4,7,9],\\
+					\indent reacID:	"R00299",\\
+					\indent reacName: "ATP:D-glucose 6-phosphotransferase",\\
+				}
+
+			\subsection{LinkWeights}
+			Each entry in \texttt{LinkWeights} is a comma delimited string of
+			the two compound IDs comprising that link, which is mapped to its
+			weight. The weight is defined as the number of pathways that this
+			link appears in.\\
+
+			\noindent \textbf{Link Weight:}\\
+				\indent \{\texttt{
+					 "RP02140,C00463": 3
+				}\}
+
+			\subsection{ClusterMap}
+			The \texttt{ClusterMap} maps cluster IDs to a set of pathways
+			contained in that cluster. In the example below, the first entry
+			indicates that Cluster 1 contains pathways 1, 2, 3, 24, 45, 12, 75,
+			and 34. The pathway number indicates the index of the pathway in
+			the \texttt{AllPathways} array.\\
+
+			\noindent \textbf{Clusters:}\\
+				\texttt{
+					\indent 1:[1,2,3,24,45,12,75,34],\\
+					\indent 2:[2,83,4,43,44,65,14],\\
+					\indent 3:[31,44,34,4,29,90,20,11,38,51],\\
+					\indent 4:[114,514,65,16,51,94,14]\\
+				}
+
+		% subsection input_files (end)
+
+
+\end{document}
