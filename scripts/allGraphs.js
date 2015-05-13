@@ -461,7 +461,7 @@ function drawGraph(){
 		// Displays the tooltip
 		tooltip.html(tooltipHTML(d))
 		// .style("left", d3.event.pageX + "px")
-		.style("top", 221 + "px")
+		.style("top", 155 + "px")
 		.style('opacity', "0.9");
 		
 		// highlights the selected node
