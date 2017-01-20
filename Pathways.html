@@ -1,125 +1,142 @@
 <html>
 	<head>
 		<script language="JavaScript" type="text/javascript" src="scripts/d3/d3.min.js"></script>
-		<script language="JavaScript" type="text/javascript" src="scripts/allGraphs.js"></script>
-		<script language="JavaScript" type="text/javascript" src="scripts/FileSaver.min.js"></script>
-		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'><link rel="stylesheet" type="text/css" href="styles/Pathways.css" />
+		<script language="JavaScript" type="text/javascript" src="scripts/filesaver/FileSaver.min.js"></script>
+		<script language="JavaScript" type="text/javascript" src="scripts/jquery/jquery-latest.min.js"></script>
+		<script language="JavaScript" type="text/javascript" src="scripts/bootstrap/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/bootstrap/bootstrap.min.css" />
+		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+
+		 <script language="JavaScript" type="text/javascript" src="scripts/allGraphs.js"></script> 
+		<link rel="stylesheet" type="text/css" href="styles/Pathways.css" />
 	</head>
 
 	<body>
-		<div id="header">
-			All pathways from D-Glucose (C00031) to L-Tryptophan (C00078)
-		</div>
+		<div class="row"><div class="col-md-8 col-md-offset-2">
+			<h1>All pathways from D-Glucose (C00031) to L-Tryptophan (C00078)</h1>
+		</div></div>
 		
-		<div id="graphInfo" class="info">
-			<!-- <div id="options">
-				<button class="button" id="refresh" onclick="window.location.href='SearchResults.html'">Back to Search Results</button>
-				Instructions:
-				Click and drag a node to fix it's position, double click to release. Right click a node to show more information and options, single click to hide.
-			</div> -->
+		<div class="row">
+			<div class="col-md-3">
+
+				<div class="optionsContainer">
 			
-			<table class="infoContainer">
-			<tr>
-				<td class="infoRow">
-					Removed Nodes
-				</td>
-				<td class="infoRow">
-					Included Nodes
-				</td>
-				<td class="infoRow">
-					<button class="smallButton columnButton" id="linearizeButton" onclick="linearize()">Linearize</button>
-				</td>
+					<div class="graphOptions">
+						<strong>Graph Info</strong>
+						</br></br>
+						<div id="pathCount"></div>
+						</br>
+						<button class="smallButton" id="firstPathButton" onclick="viewFirst()">View First Path</button>
+					</div>
+					
+					<div class="graphOptions" id="filteringContainer">
+						<a onclick="toggleOptions(filtering)"><u><strong>Filtering</strong></u></a>
+						<div id="filtering">
+							Ignore paths containing these compounds or reactions:
+							</br>
+							<input type="text" id="ignoredCompounds" placeholder="C00493 RP01132"></input>
+							</br></br>
+							
+							Only include paths containing these compounds or reactions:
+							</br>
+							<input type="text" id="includedCompounds" placeholder="C00493 RP01132"></input>
+							</br></br>
+							
+							Ignore paths longer than (enter a positive integer):
+							</br>
+							<input type="number" id="maxLength"></input>
+							</br></br>
+							
+							<button class="smallButton" id="filteringButton" onclick="filter()")>Filter Graph</button>
+						</div>
+					</div>
+					
+					<div class="graphOptions" id="clusterContainer">
+						<a onclick="toggleOptions(clustering)"><u><strong>Clusters</strong></u></a>
+						<div id="clustering">
+							View specific cluster:
+							<select id="clusterID">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							</br></br>
+							<button class="smallButton" id="clusterButton" onclick="loadCluster()")>Load Cluster</button>
+						</div>
+					</div>
 				
-			</tr>
-			<tr>
-				<td><div id="removedNodes"></div></td>
-				<td><div id="includedNodes"></div></td>
-				<td><button class="smallButton columnButton" id="resetFilter" onclick="resetFiltering()")>Reset Filtering</button></td>
-			</tr>
-			</table>
-			
-			
-		</div>
-		
-		
-		<div id="map"></div>
-		
-		<div class="optionsContainer">
-			
-			<div class="graphOptions">
-				<strong>Graph Info</strong>
-				</br></br>
-				<div id="pathCount"></div>
-				</br>
-				<button class="smallButton" id="firstPathButton" onclick="viewFirst()">View First Path</button>
-			</div>
-			
-			<div class="graphOptions" id="filteringContainer">
-				<a onclick="toggleOptions(filtering)"><u><strong>Filtering</strong></u></a>
-				<div id="filtering">
-					Ignore paths containing these compounds or reactions:
-					</br>
-					<input type="text" id="ignoredCompounds" placeholder="C00493 RP01132"></input>
-					</br></br>
+					<div class="graphOptions" id="stylingContainer">
+						<a onclick="toggleOptions(styling)"><u><strong>Appearance</strong></u></a>
+						<div id="styling">
+							Line Style:</br>
+							&nbsp&nbsp&nbsp&nbsp&nbsp<input type="radio" name="lineStyle" id="lineOpacity" checked> Line Opacity</br>
+							&nbsp&nbsp&nbsp&nbsp&nbsp<input type="radio" name="lineStyle" id="lineWidth"> Line Width</br>
+							&nbsp&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name="lineStyle" id="showArrows"> Show Arrows</br>
+							</br>
+							Colors:</br>
+							&nbsp&nbsp&nbsp&nbsp&nbspCompound: </br>
+							&nbsp&nbsp&nbsp&nbsp&nbsp<input type="color" id="userCompoundColor" value="#26C281"></br>
+							&nbsp&nbsp&nbsp&nbsp&nbspReaction Pair: </br>
+							&nbsp&nbsp&nbsp&nbsp&nbsp<input type="color" id="userReactionColor" value="#333333"></br>
+							&nbsp&nbsp&nbsp&nbsp&nbspEndpoint: </br>
+							&nbsp&nbsp&nbsp&nbsp&nbsp<input type="color" id="userEndpointColor" value="#8c5f9f"></br>
+							</br>
+							
+							<button class="smallButton" id="stylingButton" onclick="applyStyle()")>Apply</button>
+						</div>
+					</div>
 					
-					Only include paths containing these compounds or reactions:
-					</br>
-					<input type="text" id="includedCompounds" placeholder="C00493 RP01132"></input>
-					</br></br>
-					
-					Ignore paths longer than (enter a positive integer):
-					</br>
-					<input type="number" id="maxLength"></input>
-					</br></br>
-					
-					<button class="smallButton" id="filteringButton" onclick="filter()")>Filter Graph</button>
+					<div class="graphOptions" id="savingContainer">
+						<a onclick="toggleOptions(saving)"><u><strong>Save Graph</strong></u></a>
+						<div id="saving">
+							<button class="smallButton" onclick="save()">Save</button>
+						</div>
+					</div>
+				
+				</div>
+
+				<div class="col-md-8">
+					<div id="map"></div>
+
+					<div id="graphInfo" class="info">
+						<div id="options">
+							<button class="button" id="refresh" onclick="window.location.href='SearchResults.html'">Back to Search Results</button>
+							Instructions:
+							Click and drag a node to fix it's position, double click to release. Right click a node to show more information and options, single click to hide.
+						</div>
+						
+						<table class="infoContainer">
+						<tr>
+							<td class="infoRow">
+								Removed Nodes
+							</td>
+							<td class="infoRow">
+								Included Nodes
+							</td>
+							<td class="infoRow">
+								<button class="smallButton columnButton" id="linearizeButton" onclick="linearize()">Linearize</button>
+							</td>
+							
+						</tr>
+						<tr>
+							<td><div id="removedNodes"></div></td>
+							<td><div id="includedNodes"></div></td>
+							<td><button class="smallButton columnButton" id="resetFilter" onclick="resetFiltering()")>Reset Filtering</button></td>
+						</tr>
+						</table>
+						
+						
+					</div>
 				</div>
 			</div>
-			
-			<div class="graphOptions" id="clusterContainer">
-				<a onclick="toggleOptions(clustering)"><u><strong>Clusters</strong></u></a>
-				<div id="clustering">
-					View specific cluster:
-					<select id="clusterID">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-					</select>
-					</br></br>
-					<button class="smallButton" id="clusterButton" onclick="loadCluster()")>Load Cluster</button>
-				</div>
-			</div>
+
+
+
 		
-			<div class="graphOptions" id="stylingContainer">
-				<a onclick="toggleOptions(styling)"><u><strong>Appearance</strong></u></a>
-				<div id="styling">
-					Line Style:</br>
-					&nbsp&nbsp&nbsp&nbsp&nbsp<input type="radio" name="lineStyle" id="lineOpacity" checked> Line Opacity</br>
-					&nbsp&nbsp&nbsp&nbsp&nbsp<input type="radio" name="lineStyle" id="lineWidth"> Line Width</br>
-					&nbsp&nbsp&nbsp&nbsp&nbsp<input type="checkbox" name="lineStyle" id="showArrows"> Show Arrows</br>
-					</br>
-					Colors:</br>
-					&nbsp&nbsp&nbsp&nbsp&nbspCompound: </br>
-					&nbsp&nbsp&nbsp&nbsp&nbsp<input type="color" id="userCompoundColor" value="#26C281"></br>
-					&nbsp&nbsp&nbsp&nbsp&nbspReaction Pair: </br>
-					&nbsp&nbsp&nbsp&nbsp&nbsp<input type="color" id="userReactionColor" value="#333333"></br>
-					&nbsp&nbsp&nbsp&nbsp&nbspEndpoint: </br>
-					&nbsp&nbsp&nbsp&nbsp&nbsp<input type="color" id="userEndpointColor" value="#8c5f9f"></br>
-					</br>
-					
-					<button class="smallButton" id="stylingButton" onclick="applyStyle()")>Apply</button>
-				</div>
-			</div>
-			
-			<div class="graphOptions" id="savingContainer">
-				<a onclick="toggleOptions(saving)"><u><strong>Save Graph</strong></u></a>
-				<div id="saving">
-					<button class="smallButton" onclick="save()">Save</button>
-				</div>
-			</div>
 		
-		</div>
+		
+		
 		
 	</body>
 
