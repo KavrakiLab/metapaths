@@ -1,51 +1,87 @@
 <html>
 	<head>
+		<script language="JavaScript" type="text/javascript" src="scripts/jquery/jquery-latest.min.js"></script>
+		<script language="JavaScript" type="text/javascript" src="scripts/bootstrap/bootstrap.min.js"></script>
 		<script language="JavaScript" type="text/javascript" src="scripts/results.js"></script>
-		<link rel="stylesheet" type="text/css" href="styles/SearchResults.css" />
+		<link rel="stylesheet" type="text/css" href="styles/bootstrap/bootstrap.css" />
 	</head>
 
 	<body>
-		<div class="header">
-			Last 10 LPAT Search Results
+		<div class="row col-md-6 col-md-offset-3">
+			<h1>Metabolic Pathway Search</h1>
+			<br><br>
 		</div>
-		
-		<div class="results">
-			<table align="center">
-			  <tr>
-			    <td class="colHead">Start Compound</td>
-			    <td class="colHead">Target Compound</td>
-				<td class="colHead">Carbon Tracking</td>
-				<td class="colHead">Results</td>
-			  </tr>
-			  <tr>
-			    <td>D-Glucose</br>(C00031)</td>
-			    <td>L-Tryptophan</br>(C00078)</td>
-				<td>*View all pathways</td>
-				<td><a href="Pathways.html" onClick="viewAllPaths('C00031_C00078')" class="button">View</button></td>
-			  </tr>
-			  <tr>
-			    <td>D-glucose-6-phosphate</br>(C0668)</td>
-			    <td>Cephalosporin C</br>(C00916)</td>
-				<td>View all pathways</td>
-				<td><a href="Pathways.html" onClick="viewAllPaths('C00668_C00916')" class="button">View</button></td>
-			  </tr>
-			  <tr>
-			    <td>-</br></td>
-			    <td>-</br></td>
-				<td>-</td>
-				<td><a href="#" class="button">-</button></td>
-			  </tr><tr>
-			    <td>-</br></td>
-			    <td>-</br></td>
-				<td>-</td>
-				<td><a href="#" class="button">-</button></td>
-			  </tr><tr>
-			    <td>-</br></td>
-			    <td>-</br></td>
-				<td>-</td>
-				<td><a href="#" class="button">-</button></td>
-			  </tr>
-			</table>
+
+
+		<div class="row col-md-6 col-md-offset-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Search Configuration</h3>
+				</div>
+				<div class="panel-body">
+					<div class="input-group">
+						<label for="start-compound">Start Compound</label>
+						<input type="text" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
+						 id="start-compound" data-content="Enter the KEGG ID of the desired start compound" placeholder="C00022"/>
+					</div>
+
+					<div class="input-group">
+						<label for="target-compound">Target Compound</label>
+						<input type="text" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
+						 id="target-compound" data-content="Enter the KEGG ID of the desired target compound" placeholder="C00047"/>
+					</div>
+
+					<div class="input-group">
+						<label for="num-atoms">Number of Conserved of Atoms</label>
+						<input type="number" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
+						 id="num-atoms" data-content="Enter the minimum number of atoms (at least 1) that should be conserved in discovered pathways" placeholder="3"/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row col-md-6 col-md-offset-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Previous Searches</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-hover">
+						<thead><tr>
+							<th>Start</th>
+							<th>Target</th>
+							<th>Conserved Atoms</th>
+							<th>Results</th>
+						</tr></thead>
+						<tbody>
+							<tr>
+								<td>C00022</td>
+								<td>C00047</td>
+								<td>3</td>
+								<td><button class="btn btn-default">View</button></td>
+							</tr>
+							<tr>
+								<td>C00022</td>
+								<td>C00047</td>
+								<td>3</td>
+								<td><button class="btn btn-default">View</button></td>
+							</tr>
+							<tr>
+								<td>C00022</td>
+								<td>C00047</td>
+								<td>3</td>
+								<td><button class="btn btn-default">View</button></td>
+							</tr>
+							<tr>
+								<td>C00022</td>
+								<td>C00047</td>
+								<td>3</td>
+								<td><button class="btn btn-default">View</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</body>
 

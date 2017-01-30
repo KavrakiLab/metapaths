@@ -1,3 +1,7 @@
+$(function () {
+  $('[data-toggle="popover"]').popover({container: 'body'});
+})
+
 function viewAllPaths(nodesString) {
 	var pathwaysFilename = "paths/" + nodesString + "_Pathways.json";
 	var nodesMapFilename = "paths/" + nodesString + "_NodesMap.json";
