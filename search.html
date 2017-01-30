@@ -23,18 +23,37 @@
 						<label for="start-compound">Start Compound</label>
 						<input type="text" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
 						 id="start-compound" data-content="Enter the KEGG ID of the desired start compound" placeholder="C00022"/>
-					</div>
+					</div><br>
 
 					<div class="input-group">
 						<label for="target-compound">Target Compound</label>
 						<input type="text" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
 						 id="target-compound" data-content="Enter the KEGG ID of the desired target compound" placeholder="C00047"/>
-					</div>
+					</div><br>
 
 					<div class="input-group">
 						<label for="num-atoms">Number of Conserved of Atoms</label>
 						<input type="number" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
-						 id="num-atoms" data-content="Enter the minimum number of atoms (at least 1) that should be conserved in discovered pathways" placeholder="3"/>
+						 id="num-atoms" data-content="Enter the minimum number of atoms (at least 1) that should be conserved in discovered pathways" placeholder="3">
+						Atom Tracking</input>
+					</div><br>
+
+					<div class="input-group">
+						<label for="algorithm">Algorithm</label>
+						<br>
+						<select id="algorithm">
+							<option>Atom Tracking</option>
+							<option>MetaGraph Construction & Search</option>
+						</select>
+					</div><br>
+
+					<a data-toggle="collapse" href="#collapsible-options" aria-expanded="false" aria-controls="collapsible-options">
+						View more options
+					</a>
+
+
+					<div class="collapse" id="collapsible-options">
+						More options
 					</div>
 				</div>
 			</div>
