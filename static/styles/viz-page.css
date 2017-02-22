@@ -1,0 +1,16 @@
+
+.nodes circle {
+  pointer-events: all;
+  r: 10px;
+  stroke: none;
+  stroke-width: 40px;
+}
+
+.links line {
+  stroke: #aaa;
+  stroke-width: 4px;
+}
+
+#viz {
+    background-color: #ededed;
+}
