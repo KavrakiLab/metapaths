@@ -1,0 +1,35 @@
+<h2 id="metabolic-pathway-visualization">Metabolic Pathway Visualization</h2>
+<p>Two use cases:</p>
+<ol style="list-style-type: decimal">
+<li><p>User uploads their metabolic pathway data in some specified and supported format. The front-end JS code parses their data and generate a visualization.</p>
+<p>The uploaded data could be one of the following:</p>
+<ul>
+<li>Pathways which were exported from the app itself</li>
+<li>Pathways which were output by LPAT/BPAT or hub algorithm</li>
+<li>Pathways which were output by metagraphs algorithm</li>
+</ul></li>
+<li><p>The user configures and executes a pathway search. The results may not be instantaneous so some sort of callback or link generated for them to get their results would be needed.</p></li>
+</ol>
+<p>Algorithm output would reside on the server and be accessible at the visualization link.</p>
+<p>Implementation Tasks:</p>
+<ol style="list-style-type: decimal">
+<li>Need to define a schema for the input
+<ul>
+<li>Preferably JSON for easy usage with D3</li>
+<li>Need to figure out what data is available from each source and how to support or visualize that data?</li>
+</ul></li>
+<li>Write parsers for the different supported metapaths data (LPAT/BPAT/HUBs/MG) to convert to the data scheme</li>
+<li>Implement visualization
+<ul>
+<li>Will the viz look different based what type of input was given? --&gt; This could get complicated</li>
+<li>What are the minimum required features?</li>
+<li>What amount of information should be pulled from external sources?</li>
+</ul></li>
+<li>Implement back-end
+<ul>
+<li>Receive and execute pathway searches</li>
+<li>Output data into the viz scheme or into the native format and then converted to the viz scheme</li>
+<li>Make results available via a URL</li>
+<li>User notification system when search is complete (email)</li>
+</ul></li>
+</ol>
