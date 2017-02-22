@@ -13,17 +13,27 @@ function upload() {
         var reader = new FileReader();
 
         // Define what to do when the file is read
-        reader.onload = function(event) {
-            // Get the file contents which are stored in the event's result
-            // by readAsText() when it completes
-            var file_contents = event.target.result;
-
-            // Parse the text into a JSON object
-            var graph_json = JSON.parse(file_contents);
-            console.log(graph_json);
+        reader.onload = function(event){
+            // Get the file contents which are stored in the event's result by
+            // readAsText() when it completes
+            validate_and_vizualize(event.target.result);
         }
 
         // Read the file
         reader.readAsText(graph_file);
+    }
+}
+
+function validate_and_vizualize(file_contents) {
+    try {
+        var graph = JSON.parse(file_contents);
+
+        // Store the file contents so that it is available to the visualization page
+        localStorage.setItem("graph-data", JSON.stringify(graph));
+
+        // Navigate to the visualization page
+        location.assign("/visualize");
+    } catch (exception) {
+        alert("An error occured, please verify the file and try again.\n\n" + exception);
     }
 }
