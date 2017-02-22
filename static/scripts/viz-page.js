@@ -1,14 +1,22 @@
-var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
+try {
+    var graph_string = localStorage.getItem("graph-data");
+    var graph = JSON.parse(graph_string);
+    load_viz(graph);
+} catch (exception) {
+    alert("An error occured. Please retry the last operation.\n\n" + exception);
+    location.assign("/");
+}
 
-var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-10000))
-    .force("center", d3.forceCenter(width / 2, height / 2));
 
-d3.json("static/sample-data.json", function(error, graph) {
-    if (error) throw error;
+function load_viz(graph) {
+    var svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height");
+
+    var simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("charge", d3.forceManyBody().strength(-10000))
+        .force("center", d3.forceCenter(width / 2, height / 2));
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -47,22 +55,25 @@ d3.json("static/sample-data.json", function(error, graph) {
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
     } // ticked
-}); // d3.json
 
-function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
+
+
+
+
+    function dragstarted(d) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+        if (!d3.event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
 }
-
-function dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-}
-
-function dragended(d) {
-    if (!d3.event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-}
-
