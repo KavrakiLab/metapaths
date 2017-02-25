@@ -9,9 +9,14 @@ try {
 
 
 function load_viz(graph) {
-    var svg = d3.select("svg"),
-            width = +svg.attr("width"),
-            height = +svg.attr("height");
+
+    var svg = d3.select("svg");
+            width = $("#viz-column")[0].offsetWidth,
+            height = $("#viz-column")[0].offsetHeight;
+
+    // Let the viz fill up the available column space
+    $("#viz")[0].style.width = width;
+    $("#viz")[0].style.height = height;
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
