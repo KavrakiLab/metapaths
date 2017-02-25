@@ -14,3 +14,12 @@
 #viz {
     background-color: #ededed;
 }
+
+#options-column {
+    padding-left: 30px;
+}
+
+#viz-column {
+    height: 100vh;
+    padding: 0px;
+}

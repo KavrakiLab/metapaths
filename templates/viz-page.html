@@ -8,13 +8,34 @@
     </head>
     <body>
         <div class="row">
-            <div class=" col-md-3">
-                <h1>Metabolic Pathway Visualization</h1>
-                <br><br>
+
+            <div class="col-md-3" id="options-column">
+                <h3>Metabolic Pathway Visualization</h3>
+                <h4><a href="/">&#8617;</a></h4>
+                <br>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Some Options</h3>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Other Options</h3>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+
+
             </div>
-            <div class="col-md-9">
+
+            <div class="col-md-9" id="viz-column">
                 <!-- Create a canvas for the visualization -->
-                <svg id="viz" width="720" height="720"></svg>
+                <svg id="viz"></svg>
 
                 <!-- Load the visualization code -->
                 <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>
