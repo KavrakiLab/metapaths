@@ -13,6 +13,18 @@
                 <h3>Metabolic Pathway Visualization</h3>
                 <h4><a href="/">&#8617;</a></h4>
                 <br>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Load Visualization</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <label>Upload Graph Data</label>
+                            <input id="graph-data" onchange="upload()" type="file" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
+                             data-content="Select a previously exported metabolic pathway graph in JSON format.">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -35,7 +47,7 @@
 
             <div class="col-md-9" id="viz-column">
                 <!-- Create a canvas for the visualization -->
-                <svg id="viz"></svg>
+                <svg id="viz" hidden=true></svg>
 
                 <!-- Load the visualization code -->
                 <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>

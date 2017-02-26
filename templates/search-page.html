@@ -18,12 +18,7 @@
                     <h3 class="panel-title">Load Visualization</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="input-group">
-                        <label>Upload Graph Data</label>
-                        <input id="graph-data" type="file" class="form-control">
-                    </div>
-                    <br>
-                    <button class="btn btn-success" onclick="upload()">Upload & Visualize</button>
+                    <button class="btn btn-success" onclick="upload()">Upload & visualize existing metabolic pathway data</button>
                 </div>
             </div>
         </div>
@@ -63,10 +58,12 @@
                         </select>
                     </div><br>
 
+                    <button class="btn btn-primary" onclick="search()">Execute pathway search</button>
+                    <br><br>
+
                     <a data-toggle="collapse" href="#collapsible-options" aria-expanded="false" aria-controls="collapsible-options">
                         View more options
                     </a>
-
 
                     <div class="collapse" id="collapsible-options">
                         More options
