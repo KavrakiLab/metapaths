@@ -35,7 +35,7 @@ function validate_and_vizualize(file_contents) {
 
         load_viz(graph);
 
-        stylize();
+        stylize(graph.info);
 
         // Make the viz visible
         $("#viz")[0].style.display = "block";
@@ -115,7 +115,16 @@ function load_viz(graph) {
     }
 }
 
-function stylize() {
+function stylize(graph_info) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
+
+    $("#title")[0].innerHTML = generate_title(graph_info);
+    $("#title")[0].style.visibility = "visible";
+}
+
+function generate_title(graph_info) {
+    var title = graph_info.start + " &#8594; " + graph_info.target;
+    title += " (" + graph_info.atoms + " atoms)"   
+    return title;
 }
