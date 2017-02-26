@@ -46,7 +46,8 @@
 {
     "info" : {
         "start" : "C00668",
-        "target" : "C00916"
+        "target" : "C00916",
+        "atoms" : 3
     },
     "nodes":[
         {
