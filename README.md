@@ -1,6 +1,6 @@
 ## Metabolic Pathway Visualization
 
-Two use cases:
+### Two use cases:
 
 1. User uploads their metabolic pathway data in some specified and supported
    format. The front-end JS code parses their data and generate a
@@ -20,7 +20,7 @@ Two use cases:
    visualization link.
 
 
-Implementation Tasks:
+### Implementation Tasks:
 
 1. Need to define a schema for the input
     * Preferably JSON for easy usage with D3
@@ -39,3 +39,29 @@ Implementation Tasks:
       converted to the viz scheme
     * Make results available via a URL
     * User notification system when search is complete (email)
+
+
+### Data File Specification
+```
+{
+    "info" : {
+        "start" : "C00668",
+        "target" : "C00916"
+    },
+    "nodes":[
+        {
+            "id":"C00668",
+            "name" : "alpha-D-Glucose" // Should name be included or queried during runtime?
+        },
+        ...
+    ],
+    "links":[
+        {
+            "source":"RP02454",
+            "target":"C05345",
+            "weight" : 3
+        },
+        ...
+    ]
+}
+```

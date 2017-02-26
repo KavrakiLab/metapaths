@@ -5,7 +5,6 @@ $(function () {
 
 
 function upload() {
-    console.log("asdf");
     var graph_file = $('#graph-data')[0].files[0];
 
     if (graph_file == null) {
@@ -14,7 +13,6 @@ function upload() {
         alert("Invalid filtype selected! Graph data must be in JSON format.");
     } else {
         try {
-            console.log("Trying to read file");
             var reader = new FileReader();
             // Define what to do when the file is read
             reader.onload = function(event){
@@ -25,7 +23,7 @@ function upload() {
 
             reader.readAsText(graph_file);
         } catch (exception) {
-            alert("An error occured. Please retry the last operation.\n\n" + exception);
+            alert("An error occurred. Please retry the last operation.\n\n" + exception);
         }
     }
 }
@@ -34,9 +32,15 @@ function upload() {
 function validate_and_vizualize(file_contents) {
     try {
         var graph = JSON.parse(file_contents);
+
         load_viz(graph);
+
+        stylize();
+
+        // Make the viz visible
+        $("#viz")[0].style.display = "block";
     } catch (exception) {
-        alert("An error occured, please verify the file and try again.\n\n" + exception);
+        alert("An error occurred, please verify the file and try again.\n\n" + exception);
     }
 }
 
@@ -49,9 +53,6 @@ function load_viz(graph) {
     // Let the viz fill up the available column space
     $("#viz")[0].style.width = width;
     $("#viz")[0].style.height = height;
-
-    $("#viz")[0].style.display = "block";
-    console.log(width, height);
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -96,10 +97,6 @@ function load_viz(graph) {
             .attr("cy", function(d) { return d.y; });
     } // ticked
 
-
-
-
-
     function dragstarted(d) {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
         d.fx = d.x;
@@ -116,4 +113,8 @@ function load_viz(graph) {
         d.fx = null;
         d.fy = null;
     }
+}
+
+function stylize() {
+    
 }
