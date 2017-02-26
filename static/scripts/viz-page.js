@@ -1,12 +1,44 @@
-try {
-    var graph_string = localStorage.getItem("graph-data");
-    var graph = JSON.parse(graph_string);
-    load_viz(graph);
-} catch (exception) {
-    alert("An error occured. Please retry the last operation.\n\n" + exception);
-    location.assign("/");
+$(function () {
+    $('[data-toggle="popover"]').popover({container: 'body'});
+    $("#graph-data")[0].focus()
+});
+
+
+function upload() {
+    console.log("asdf");
+    var graph_file = $('#graph-data')[0].files[0];
+
+    if (graph_file == null) {
+        alert("Select a proper file to visualize.");
+    } else if (graph_file.type != "application/json") {
+        alert("Invalid filtype selected! Graph data must be in JSON format.");
+    } else {
+        try {
+            console.log("Trying to read file");
+            var reader = new FileReader();
+            // Define what to do when the file is read
+            reader.onload = function(event){
+                // Get the file contents which are stored in the event's result by
+                // readAsText() when it completes
+                validate_and_vizualize(event.target.result);
+            }
+
+            reader.readAsText(graph_file);
+        } catch (exception) {
+            alert("An error occured. Please retry the last operation.\n\n" + exception);
+        }
+    }
 }
 
+
+function validate_and_vizualize(file_contents) {
+    try {
+        var graph = JSON.parse(file_contents);
+        load_viz(graph);
+    } catch (exception) {
+        alert("An error occured, please verify the file and try again.\n\n" + exception);
+    }
+}
 
 function load_viz(graph) {
 
@@ -18,9 +50,12 @@ function load_viz(graph) {
     $("#viz")[0].style.width = width;
     $("#viz")[0].style.height = height;
 
+    $("#viz")[0].style.display = "block";
+    console.log(width, height);
+
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-10000))
+        .force("charge", d3.forceManyBody().strength(-10))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
     var link = svg.append("g")
