@@ -116,5 +116,6 @@ function load_viz(graph) {
 }
 
 function stylize() {
-    
+    // Hide the upload panel
+    $("#load-panel")[0].style.display = "none";
 }

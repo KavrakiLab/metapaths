@@ -17,6 +17,8 @@
 
 #options-column {
     padding-left: 30px;
+    height: 100vh;
+    overflow: scroll;
 }
 
 #viz-column {
