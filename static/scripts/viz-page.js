@@ -4,7 +4,7 @@ $(function () {
 });
 
 // TODO: this line for testing only, remove
- validate_and_vizualize('{ "info" : { "start" : "A", "target" : "C", "atoms" : 3 }, "nodes": [ {"id": "A"}, {"id": "B"}, {"id": "C"} ], "links": [ {"source": "A", "target": "B", "value": 6}, {"source": "B", "target": "C", "value": 1} ] }');
+// validate_and_vizualize('{ "info" : { "start" : "A", "target" : "C", "atoms" : 3 }, "nodes": [ {"id": "A"}, {"id": "B"}, {"id": "C"} ], "links": [ {"source": "A", "target": "B", "value": 6}, {"source": "B", "target": "C", "value": 1} ] }');
 
 function upload() {
     var graph_file = $('#graph-data')[0].files[0];
@@ -42,7 +42,7 @@ function validate_and_vizualize(file_contents) {
         attach_watchers(graph);
 
         // Make the viz visible
-        $("#viz")[0].style.display = "block";
+        $("#viz")[0].style.visibility = "visible";
     } catch (exception) {
         alert("An error occurred, please verify the file and try again.\n\n" + exception);
     }
@@ -133,7 +133,10 @@ function stylize(graph_info) {
     $("#load-panel")[0].style.display = "none";
 
     $("#title")[0].innerHTML = generate_title(graph_info);
-    $("#title")[0].style.visibility = "visible";
+
+    // Show the info panel and options
+    $("#info-panel")[0].style.visibility = "visible";
+    $("#options-column")[0].style.visibility = "visible";
 }
 
 
@@ -173,6 +176,8 @@ function attach_watchers(graph) {
     });
 }
 
+
 function update_info_panel(node_id) {
-    $("#info-panel")[0].innerHTML = node_id;
+    // TODO: what other data should be displayed here?
+    $("#info-panel-body")[0].innerHTML = node_id;
 }

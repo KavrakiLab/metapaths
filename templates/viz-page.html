@@ -9,10 +9,9 @@
     <body>
         <div class="row">
 
-            <div class="col-md-3" id="options-column">
+            <div class="col-md-3">
                 <h3>Metabolic Pathway Visualization</h3>
                 <h4><a href="/">&#8617;</a></h4>
-                <h4 id="title" style="visibility: hidden"></h4>
 
                 <div class="panel panel-default" id="load-panel">
                     <div class="panel-heading">
@@ -25,92 +24,71 @@
                              data-content="Select a previously exported metabolic pathway graph in JSON format.">
                         </div>
                     </div>
-                </div>
+                </div> <!-- load-panel -->
 
-                <div class="panel panel-default">
+                <div class="panel panel-success" id="info-panel" style="visibility: hidden">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Interactive Information</h3>
+                        <h3 class="panel-title" id="title"></h3>
                     </div>
-                    <div class="panel-body" id="info-panel">
+                    <div class="panel-body" id="info-panel-body">
                         Click on an elements in the graph for more information.
                     </div>
-                </div>
+                </div> <!-- info-panel -->
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Other Options</h3>
+                <div id="options-column" style="visibility: hidden">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Other Options</h3>
+                        </div>
+                        <div class="panel-body">
+                            alsdfjlaksjdf
+                            <br>
+                            as
+                            dfa
+                            <br>
+                            sfd
+                            adsfj
+                            af
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        alsdfjlaksjdf
-                        <br>
-                        as
-                        dfa
-                        <br>
-                        sfd
-                        adsfj
-                        af
-                    </div>
-                </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Other Options</h3>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Other Options</h3>
+                        </div>
+                        <div class="panel-body">
+                            alsdfjlaksjdf <br> as dfa <br> sfd adsfj af
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        alsdfjlaksjdf
-                        <br>
-                        as
-                        dfa
-                        <br>
-                        sfd
-                        adsfj
-                        af
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Other Options</h3>
+                        </div>
+                        <div class="panel-body">
+                            alsdfjlaksjdf <br> as dfa <br> sfd adsfj af
+                        </div>
                     </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Other Options</h3>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Other Options</h3>
+                        </div>
+                        <div class="panel-body">
+                            alsdfjlaksjdf <br> as dfa <br> sfd adsfj af
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        alsdfjlaksjdf
-                        <br>
-                        as
-                        dfa
-                        <br>
-                        sfd
-                        adsfj
-                        af
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Other Options</h3>
-                    </div>
-                    <div class="panel-body">
-                        alsdfjlaksjdf
-                        <br>
-                        as
-                        dfa
-                        <br>
-                        sfd
-                        adsfj
-                        af
-                    </div>
-                </div>
+                </div> <!-- options-column -->
 
 
-            </div>
+            </div> <!-- col-md-3options-column -->
 
             <div class="col-md-9" id="viz-column">
-                <div class="tooltip">asdfasdf</div>
                 <!-- Create a canvas for the visualization -->
-                <svg id="viz" hidden=true></svg>
+                <svg id="viz" style="visibility: hidden"></svg>
 
                 <!-- Load the visualization code -->
                 <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>
             </div>
+
         </div>
     </body>
 

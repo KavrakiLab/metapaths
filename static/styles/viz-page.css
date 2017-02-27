@@ -15,9 +15,17 @@
     background-color: #ededed;
 }
 
-#options-column {
+.col-md-3 {
     padding-left: 30px;
     height: 100vh;
+}
+
+#info-panel {
+    height: 25vh;
+}
+
+#options-column {
+    height: 50vh;
     overflow: scroll;
 }
 
