@@ -3,6 +3,8 @@ $(function () {
     $("#graph-data")[0].focus()
 });
 
+// TODO: this line for testing only, remove
+ validate_and_vizualize('{ "info" : { "start" : "A", "target" : "C", "atoms" : 3 }, "nodes": [ {"id": "A"}, {"id": "B"}, {"id": "C"} ], "links": [ {"source": "A", "target": "B", "value": 6}, {"source": "B", "target": "C", "value": 1} ] }');
 
 function upload() {
     var graph_file = $('#graph-data')[0].files[0];
@@ -33,15 +35,11 @@ function validate_and_vizualize(file_contents) {
     try {
         var graph_data = JSON.parse(file_contents);
 
-        load_viz(graph_data);
+        var graph = load_viz(graph_data);
 
-        var graph = {
-            "nodes" : d3.selectAll("circle").data(),
-            "links" : d3.selectAll("line").data(),
-            "info" : graph_data.info
-        }
+        stylize(graph.info);
 
-        stylize(graph);
+        attach_watchers(graph);
 
         // Make the viz visible
         $("#viz")[0].style.display = "block";
@@ -49,6 +47,7 @@ function validate_and_vizualize(file_contents) {
         alert("An error occurred, please verify the file and try again.\n\n" + exception);
     }
 }
+
 
 function load_viz(graph_data) {
 
@@ -120,21 +119,30 @@ function load_viz(graph_data) {
         d.fx = null;
         d.fy = null;
     }
+
+        return {
+            "node" : node,
+            "link" : link,
+            "info" : graph_data.info
+        }
 }
 
-function stylize(graph) {
+
+function stylize(graph_info) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
 
-    $("#title")[0].innerHTML = generate_title(graph.info);
+    $("#title")[0].innerHTML = generate_title(graph_info);
     $("#title")[0].style.visibility = "visible";
 }
+
 
 function generate_title(graph_info) {
     var title = graph_info.start + " &#8594; " + graph_info.target;
     title += " (" + graph_info.atoms + " atoms)"
     return title;
 }
+
 
 function get_node_color(graph_info, node) {
     if (node.id === graph_info.start) {
@@ -144,4 +152,27 @@ function get_node_color(graph_info, node) {
     } else {
         return "#555";
     }
+}
+
+
+function attach_watchers(graph) {
+    graph.node.on("click", function(node) {
+        update_info_panel(node.id);
+    });
+
+    graph.node.on("dblclick", function(node) {
+        console.log("dblclick", node);
+    });
+
+    graph.node.on("mouseover", function(node) {
+        console.log("mouseover", node);
+    });
+
+    graph.node.on("mouseout", function(node) {
+        console.log("mouseout", node);
+    });
+}
+
+function update_info_panel(node_id) {
+    $("#info-panel")[0].innerHTML = node_id;
 }
