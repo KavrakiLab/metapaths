@@ -1,12 +1,17 @@
 {
-  "nodes": [
-    {"id": "A"},
-    {"id": "B"},
-    {"id": "C"}
-  ],
-  "links": [
-    {"source": "A", "target": "B", "value": 6},
-    {"source": "A", "target": "C", "value": 1}
-  ]
+    "info" : {
+        "start" : "A",
+        "target" : "C",
+        "atoms" : 3
+    },
+    "nodes": [
+        {"id": "A"},
+        {"id": "B"},
+        {"id": "C"}
+    ],
+    "links": [
+        {"source": "A", "target": "B", "value": 6},
+        {"source": "B", "target": "C", "value": 1}
+    ]
 }
 

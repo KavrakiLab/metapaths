@@ -31,11 +31,17 @@ function upload() {
 
 function validate_and_vizualize(file_contents) {
     try {
-        var graph = JSON.parse(file_contents);
+        var graph_data = JSON.parse(file_contents);
 
-        load_viz(graph);
+        load_viz(graph_data);
 
-        stylize(graph.info);
+        var graph = {
+            "nodes" : d3.selectAll("circle").data(),
+            "links" : d3.selectAll("line").data(),
+            "info" : graph_data.info
+        }
+
+        stylize(graph);
 
         // Make the viz visible
         $("#viz")[0].style.display = "block";
@@ -44,11 +50,11 @@ function validate_and_vizualize(file_contents) {
     }
 }
 
-function load_viz(graph) {
+function load_viz(graph_data) {
 
     var svg = d3.select("svg");
-            width = $("#viz-column")[0].offsetWidth,
-            height = $("#viz-column")[0].offsetHeight;
+    width = $("#viz-column")[0].offsetWidth,
+    height = $("#viz-column")[0].offsetHeight;
 
     // Let the viz fill up the available column space
     $("#viz")[0].style.width = width;
@@ -62,28 +68,29 @@ function load_viz(graph) {
     var link = svg.append("g")
         .attr("class", "links")
         .selectAll("line")
-        .data(graph.links)
+        .data(graph_data.links)
         .enter().append("line");
 
     var node = svg.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
-        .data(graph.nodes)
+        .data(graph_data.nodes)
         .enter().append("circle")
+        .style("fill", function(node){return get_node_color(graph_data.info, node)})
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
 
     node.append("title")
-        .text(function(d) { return d.id; });
+        .text(function(node) { return node.id; });
 
     simulation
-        .nodes(graph.nodes)
+        .nodes(graph_data.nodes)
         .on("tick", ticked);
 
     simulation.force("link")
-        .links(graph.links);
+        .links(graph_data.links);
 
     function ticked() {
         link
@@ -115,16 +122,26 @@ function load_viz(graph) {
     }
 }
 
-function stylize(graph_info) {
+function stylize(graph) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
 
-    $("#title")[0].innerHTML = generate_title(graph_info);
+    $("#title")[0].innerHTML = generate_title(graph.info);
     $("#title")[0].style.visibility = "visible";
 }
 
 function generate_title(graph_info) {
     var title = graph_info.start + " &#8594; " + graph_info.target;
-    title += " (" + graph_info.atoms + " atoms)"   
+    title += " (" + graph_info.atoms + " atoms)"
     return title;
+}
+
+function get_node_color(graph_info, node) {
+    if (node.id === graph_info.start) {
+        return "#0f0";
+    } else if (node.id === graph_info.target) {
+        return "#f00";
+    } else {
+        return "#555";
+    }
 }
