@@ -49,20 +49,34 @@
         "target" : "C00916",
         "atoms" : 3
     },
-    "nodes":[
-        {
-            "id":"C00668",
-            "name" : "alpha-D-Glucose" // Should name be included or queried during runtime?
+    "pathways" : [
+        { // Pathway 1
+            "nodes":[
+                {
+                    "id":"C00668",
+                    "type" : 0      // Type 0 indicates a regular compound
+                },
+                {
+                    "id":"C00022",
+                    "type" : 1    // Type 1 indicates a hub compound
+                },
+                ...
+            ],
+            "links":[
+                {
+                    "source":"RP02454",
+                    "target":"C05345",
+                    "weight" : 3
+                },
+                ...
+            ]
         },
-        ...
-    ],
-    "links":[
-        {
-            "source":"RP02454",
-            "target":"C05345",
-            "weight" : 3
+        { // Pathway 2
+            "nodes" : [...],
+            "links" : [...],
         },
         ...
     ]
+
 }
 ```
