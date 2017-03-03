@@ -44,39 +44,44 @@
 ### Data File Specification
 ```
 {
-    "info" : {
-        "start" : "C00668",
-        "target" : "C00916",
-        "atoms" : 3
-    },
-    "pathways" : [
-        { // Pathway 1
-            "nodes":[
-                {
-                    "id":"C00668",
-                    "type" : 0      // Type 0 indicates a regular compound
-                },
-                {
-                    "id":"C00022",
-                    "type" : 1    // Type 1 indicates a hub compound
-                },
-                ...
-            ],
-            "links":[
-                {
-                    "source":"RP02454",
-                    "target":"C05345",
-                    "weight" : 3
-                },
-                ...
-            ]
+  "info" : {
+    "start" : "C00668",
+    "target" : "C00916"
+  },
+  "pathways" : [
+    { // Pathway 1
+      "atoms" : 3, // The number of atoms conserved in this pathway
+      "nodes":[
+        {
+          "id":"C00668",
+          "type" : 0 // Type 0 indicates a regular compound
         },
-        { // Pathway 2
-            "nodes" : [...],
-            "links" : [...],
+        {
+          "id":"C00022",
+          "type" : 1 // Type 1 indicates a hub compound
         },
         ...
-    ]
-
+      ],
+      "links":[
+        {
+          "source":"RP02454",
+          "target":"C05345",
+          "hublinks" : [] // Empty since this is not a hub-to-hub link
+        },
+        {
+          "source":"C00022",
+          "target":"C00036",
+          "hublinks" : [RP04274,C03248,RP03811,C03981,RP09148]
+        }
+        ...
+      ]
+    },
+    { // Pathway 2
+      "atoms" : int,
+      "nodes" : [...],
+      "links" : [...],
+    },
+    ...
+  ]
 }
 ```
