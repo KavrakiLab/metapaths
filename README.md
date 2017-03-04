@@ -44,44 +44,46 @@
 ### Data File Specification
 ```
 {
-  "info" : {
-    "start" : "C00668",
-    "target" : "C00916"
-  },
-  "pathways" : [
-    { // Pathway 1
-      "atoms" : 3, // The number of atoms conserved in this pathway
-      "nodes":[
-        {
-          "id":"C00668",
-          "type" : 0 // Type 0 indicates a regular compound
-        },
-        {
-          "id":"C00022",
-          "type" : 1 // Type 1 indicates a hub compound
-        },
-        ...
-      ],
-      "links":[
-        {
-          "source":"RP02454",
-          "target":"C05345",
-          "hublinks" : [] // Empty since this is not a hub-to-hub link
-        },
-        {
-          "source":"C00022",
-          "target":"C00036",
-          "hublinks" : [RP04274,C03248,RP03811,C03981,RP09148]
-        }
-        ...
-      ]
+    "info" : {
+        "start" : "C00022",
+        "target" : "C00036"
     },
-    { // Pathway 2
-      "atoms" : int,
-      "nodes" : [...],
-      "links" : [...],
-    },
-    ...
-  ]
+    "pathways" : [
+        { // Pathway 1
+            "atoms" : 3,
+            "nodes": [
+                {"id" : "C00031"},
+                {"id" : "C00492"}
+            ],
+            "hub_nodes" : [
+                {"id" : "C00022"},
+                {"id" : "C00036"}
+            ],
+            "internal_nodes" : [
+                {"id" : "RP04274"},
+                {"id" : "C03248"},
+                {"id" : "RP03811"},
+                {"id" : "C03981"},
+                {"id" : "RP09148"}
+            ],
+            "links" : [
+                {"source": "C00031", "target": "C00022"},
+                {"source": "C00036", "target": "C00492"}
+            ],
+            "hub_links": [
+                {"source": "C00022", "target": "C00036"}
+            ],
+            "internal_links": [
+                {"source": "C00022", "target": "RP04274"},
+                {"source": "RP04274", "target": "C03248"},
+                {"source": "C03248", "target": "RP03811"},
+                {"source": "C03981", "target": "RP09148"},
+                {"source": "RP09148", "target": "C00036"}
+            ]
+        },
+        { // Pathway 2 },
+        { // Pathway 3 },
+        ...
+    ]
 }
 ```

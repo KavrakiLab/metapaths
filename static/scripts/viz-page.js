@@ -33,13 +33,19 @@ function upload() {
 
 function validate_and_vizualize(file_contents) {
     try {
-        var graph_data = JSON.parse(file_contents);
+        // The pathway info from file
+        var json_pathways = JSON.parse(file_contents);
 
-        var graph = load_viz(graph_data);
+        // The aggreate data of the nodes and links from the pathways
+        var data_graph = collect_pathways_into_graph(json_pathways);
 
-        stylize(graph.info);
+        var viz_graph = load_viz(data_graph);
 
-        attach_watchers(graph);
+        // get_kegg_data(data_graph);
+
+        stylize(json_pathways.info);
+
+        attach_watchers(viz_graph);
 
         // Make the viz visible
         $("#viz")[0].style.visibility = "visible";
@@ -49,7 +55,27 @@ function validate_and_vizualize(file_contents) {
 }
 
 
-function load_viz(graph_data) {
+function collect_pathways_into_graph(json_pathways) {
+    var nodes  = [];
+    var links = [];
+
+    console.log(json_pathways);
+    json_pathways.pathways.forEach(function (pathway, index, array) {
+        nodes = nodes.concat(pathway.nodes);
+        nodes = nodes.concat(pathway.hub_nodes);
+        links = links.concat(pathway.links);
+        links = links.concat(pathway.hub_links);
+    });
+
+    return {
+        "nodes" : nodes,
+        "links" : links,
+    };
+}
+
+
+function load_viz(data_graph) {
+    console.log(data_graph);
 
     var svg = d3.select("svg");
     width = $("#viz-column")[0].offsetWidth,
@@ -67,15 +93,14 @@ function load_viz(graph_data) {
     var link = svg.append("g")
         .attr("class", "links")
         .selectAll("line")
-        .data(graph_data.links)
+        .data(data_graph.links)
         .enter().append("line");
 
     var node = svg.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
-        .data(graph_data.nodes)
+        .data(data_graph.nodes)
         .enter().append("circle")
-        .style("fill", function(node){return get_node_color(graph_data.info, node)})
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -85,11 +110,11 @@ function load_viz(graph_data) {
         .text(function(node) { return node.id; });
 
     simulation
-        .nodes(graph_data.nodes)
+        .nodes(data_graph.nodes)
         .on("tick", ticked);
 
     simulation.force("link")
-        .links(graph_data.links);
+        .links(data_graph.links);
 
     function ticked() {
         link
@@ -120,11 +145,8 @@ function load_viz(graph_data) {
         d.fy = null;
     }
 
-        return {
-            "node" : node,
-            "link" : link,
-            "info" : graph_data.info
-        }
+    // TODO
+    return {"node" : node, "link" : link};
 }
 
 
@@ -158,21 +180,21 @@ function get_node_color(graph_info, node) {
 }
 
 
-function attach_watchers(graph) {
-    graph.node.on("click", function(node) {
+function attach_watchers(viz_graph) {
+    viz_graph.node.on("click", function(node) {
         update_info_panel(node.id);
     });
 
-    graph.node.on("dblclick", function(node) {
-        console.log("dblclick", node);
+    viz_graph.node.on("dblclick", function(node) {
+        // console.log("dblclick", node);
     });
 
-    graph.node.on("mouseover", function(node) {
-        console.log("mouseover", node);
+    viz_graph.node.on("mouseover", function(node) {
+        // console.log("mouseover", node);
     });
 
-    graph.node.on("mouseout", function(node) {
-        console.log("mouseout", node);
+    viz_graph.node.on("mouseout", function(node) {
+        // console.log("mouseout", node);
     });
 }
 
@@ -181,3 +203,19 @@ function update_info_panel(node_id) {
     // TODO: what other data should be displayed here?
     $("#info-panel-body")[0].innerHTML = node_id;
 }
+
+
+function get_kegg_data(graph) {
+    var KEGG_REST_URL = "http://rest.kegg.jp/get/";
+
+    graph.nodes.forEach(function (node, index, array) {
+        // TODO
+        $.get(KEGG_REST_URL + node.id, function (data) {
+            console.log(data);
+        });
+    });
+}
+
+
+
+
