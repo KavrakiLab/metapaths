@@ -1,9 +1,17 @@
 
 .nodes circle {
+  cursor: pointer;
   pointer-events: all;
   r: 10px;
   stroke: none;
   stroke-width: 40px;
+}
+
+.hub_nodes {
+  pointer-events: all;
+  r: 10px;
+  stroke: #555;
+  stroke-width: 2px;
 }
 
 .links line {
