@@ -143,6 +143,7 @@ function load_viz(data_graph) {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
         d.fx = d.x;
         d.fy = d.y;
+        d.fixed = true;
     }
 
     function dragged(d) {
@@ -152,11 +153,8 @@ function load_viz(data_graph) {
 
     function dragended(d) {
         if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
     }
 
-    // TODO
     return {"node" : node, "link" : link};
 }
 
@@ -179,17 +177,22 @@ function stylize(data_graph, viz_graph, start, target) {
 }
 
 
-
 function generate_title(start, target) {
     var title = start + " &#8594; " + target;
     return title;
 }
 
+
 function style_nodes(viz_graph, start, target, hub_nodes) {
     console.log(hub_nodes);
+
+    // Color the nodes based on the type
     viz_graph.node.style("fill", function(node){
         return get_node_color(node, start, target, hub_nodes)
     });
+
+    // Show the pointer/hand cursor to indicate that nodes are clickable
+    viz_graph.node.style("cursor", "pointer");
 }
 
 
@@ -212,7 +215,7 @@ function attach_watchers(viz_graph) {
     });
 
     viz_graph.node.on("dblclick", function(node) {
-        // console.log("dblclick", node);
+        release_node(node);
     });
 
     viz_graph.node.on("mouseover", function(node) {
@@ -242,5 +245,11 @@ function get_kegg_data(graph) {
     });
 }
 
+
+function release_node(node) {
+    node.fixed = false;
+    node.fx = null;
+    node.fy = null;
+}
 
 
