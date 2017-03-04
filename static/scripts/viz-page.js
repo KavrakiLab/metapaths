@@ -4,7 +4,7 @@ $(function () {
 });
 
 // TODO: this line for testing only, remove
-// validate_and_vizualize('{ "info" : { "start" : "A", "target" : "C", "atoms" : 3 }, "nodes": [ {"id": "A"}, {"id": "B"}, {"id": "C"} ], "links": [ {"source": "A", "target": "B", "value": 6}, {"source": "B", "target": "C", "value": 1} ] }');
+validate_and_vizualize('{ "info" : { "start" : "C00031", "target" : "C00492" }, "pathways" : [ { "atoms" : 3, "nodes": [ {"id" : "C00031"}, {"id" : "C00492"} ], "hub_nodes" : [ {"id" : "C00022"}, {"id" : "C00036"} ], "internal_nodes" : [ {"id" : "RP04274"}, {"id" : "C03248"}, {"id" : "RP03811"}, {"id" : "C03981"}, {"id" : "RP09148"} ], "links" : [ {"source": "C00031", "target": "C00022"}, {"source": "C00036", "target": "C00492"} ], "hub_links": [ {"source": "C00022", "target": "C00036"} ], "internal_links": [ {"source": "C00022", "target": "RP04274"}, {"source": "RP04274", "target": "C03248"}, {"source": "C03248", "target": "RP03811"}, {"source": "C03981", "target": "RP09148"}, {"source": "RP09148", "target": "C00036"} ] } ] } ');
 
 function upload() {
     var graph_file = $('#graph-data')[0].files[0];
@@ -86,7 +86,6 @@ function collect_pathways_into_graph(json_pathways) {
 
 
 function load_viz(data_graph) {
-    console.log(data_graph);
 
     var svg = d3.select("svg");
     width = $("#viz-column")[0].offsetWidth,
@@ -112,6 +111,7 @@ function load_viz(data_graph) {
         .selectAll("circle")
         .data(data_graph.nodes)
         .enter().append("circle")
+        .attr("id", function(node) {return node.id;})
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -184,15 +184,28 @@ function generate_title(start, target) {
 
 
 function style_nodes(viz_graph, start, target, hub_nodes) {
-    console.log(hub_nodes);
 
     // Color the nodes based on the type
     viz_graph.node.style("fill", function(node){
         return get_node_color(node, start, target, hub_nodes)
     });
 
-    // Show the pointer/hand cursor to indicate that nodes are clickable
-    viz_graph.node.style("cursor", "pointer");
+    viz_graph.node.data().forEach(function (node, index, array) {
+        var mid_y = $("#viz-column")[0].offsetHeight / 2;
+        var end_x = $("#viz-column")[0].offsetWidth - 50;
+        if (node.id === start) {
+            node.fixed = true;
+            node.fx = 50;
+            node.fy = mid_y;
+        } else if (node.id === target) {
+            node.fixed = true;
+            node.fx = end_x;
+            node.fy = mid_y;
+        } else if (hub_nodes.includes(node.id)) {
+
+        }
+    });
+
 }
 
 
