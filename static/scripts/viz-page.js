@@ -43,7 +43,7 @@ function validate_and_vizualize(file_contents) {
 
         // get_kegg_data(data_graph);
 
-        stylize(json_pathways.info);
+        stylize(data_graph, viz_graph, json_pathways.info.start, json_pathways.info.target);
 
         attach_watchers(viz_graph);
 
@@ -59,17 +59,28 @@ function collect_pathways_into_graph(json_pathways) {
     var nodes  = [];
     var links = [];
 
-    console.log(json_pathways);
+    // Subset of nodes and links which are hubs
+    var hub_nodes = [];
+    var hub_links = [];
+
     json_pathways.pathways.forEach(function (pathway, index, array) {
         nodes = nodes.concat(pathway.nodes);
         nodes = nodes.concat(pathway.hub_nodes);
         links = links.concat(pathway.links);
         links = links.concat(pathway.hub_links);
+
+        pathway.hub_nodes.forEach(function (hub_node, index, array) {
+            hub_nodes.push(hub_node.id);
+        });
+
+        hub_links = hub_links.concat(pathway.hub_links);
     });
 
     return {
         "nodes" : nodes,
         "links" : links,
+        "hub_nodes" : hub_nodes,
+        "hub_links" : hub_links
     };
 }
 
@@ -150,11 +161,17 @@ function load_viz(data_graph) {
 }
 
 
-function stylize(graph_info) {
+function stylize(data_graph, viz_graph, start, target) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
 
-    $("#title")[0].innerHTML = generate_title(graph_info);
+    $("#title")[0].innerHTML = generate_title(start, target);
+
+
+    style_nodes(viz_graph, start, target, data_graph.hub_nodes);
+
+
+
 
     // Show the info panel and options
     $("#info-panel")[0].style.visibility = "visible";
@@ -162,18 +179,27 @@ function stylize(graph_info) {
 }
 
 
-function generate_title(graph_info) {
-    var title = graph_info.start + " &#8594; " + graph_info.target;
-    title += " (" + graph_info.atoms + " atoms)"
+
+function generate_title(start, target) {
+    var title = start + " &#8594; " + target;
     return title;
 }
 
+function style_nodes(viz_graph, start, target, hub_nodes) {
+    console.log(hub_nodes);
+    viz_graph.node.style("fill", function(node){
+        return get_node_color(node, start, target, hub_nodes)
+    });
+}
 
-function get_node_color(graph_info, node) {
-    if (node.id === graph_info.start) {
+
+function get_node_color(node, start, target, hub_nodes) {
+    if (node.id === start) {
         return "#0f0";
-    } else if (node.id === graph_info.target) {
+    } else if (node.id === target) {
         return "#f00";
+    } else if (hub_nodes.includes(node.id) == true) {
+        return "#efc406";
     } else {
         return "#555";
     }
@@ -215,7 +241,6 @@ function get_kegg_data(graph) {
         });
     });
 }
-
 
 
 
