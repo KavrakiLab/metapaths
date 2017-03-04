@@ -1,7 +1,7 @@
 {
     "info" : {
-        "start" : "C00022",
-        "target" : "C00036"
+        "start" : "C00031",
+        "target" : "C00492"
     },
     "pathways" : [
         {
