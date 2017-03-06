@@ -86,7 +86,9 @@ function collect_pathways_into_graph(json_pathways) {
         "nodes" : nodes,
         "links" : links,
         "hub_nodes" : hub_nodes,
-        "hub_links" : hub_links
+        "hub_links" : hub_links,
+        "start" : json_pathways.info.start,
+        "target" : json_pathways.info.target
     };
 }
 
@@ -118,6 +120,17 @@ function load_viz(data_graph) {
         .data(data_graph.nodes)
         .enter().append("circle")
         .attr("id", function(node) {return node.id;})
+        .attr("class", function(node) {
+            if (node.id === data_graph.start) {
+                return "start-node";
+            } else if (node.id === data_graph.target) {
+                return "target-node";
+            } else if (data_graph.hub_nodes.includes(node.id)) {
+                return "hub-node";
+            } else {
+                return "node";
+            }
+        })
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
@@ -191,11 +204,6 @@ function generate_title(start, target) {
 
 function style_nodes(viz_graph, start, target, hub_nodes) {
 
-    // Color the nodes based on the type
-    viz_graph.node.style("fill", function(node){
-        return get_node_color(node, start, target, hub_nodes)
-    });
-
     viz_graph.node.data().forEach(function (node, index, array) {
         var mid_y = $("#viz-column")[0].offsetHeight / 2;
         var end_x = $("#viz-column")[0].offsetWidth - 50;
@@ -212,19 +220,6 @@ function style_nodes(viz_graph, start, target, hub_nodes) {
         }
     });
 
-}
-
-
-function get_node_color(node, start, target, hub_nodes) {
-    if (node.id === start) {
-        return "#0f0";
-    } else if (node.id === target) {
-        return "#f00";
-    } else if (hub_nodes.includes(node.id) == true) {
-        return "#efc406";
-    } else {
-        return "#555";
-    }
 }
 
 
@@ -264,11 +259,11 @@ function attach_watchers(viz_graph) {
     });
 
     viz_graph.node.on("mouseover", function(node) {
-        // console.log("mouseover", node);
+        $("#" + node.id)[0].style.stroke = "#aaa";
     });
 
     viz_graph.node.on("mouseout", function(node) {
-        // console.log("mouseout", node);
+        $("#" + node.id)[0].style.stroke = "";
     });
 
     function release_node(node) {
