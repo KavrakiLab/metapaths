@@ -2,16 +2,25 @@
 .nodes circle {
   cursor: pointer;
   pointer-events: all;
-  r: 10px;
-  stroke: none;
-  stroke-width: 40px;
+  r: 14px;
+  stroke-width: 3px;
 }
 
-.hub_nodes {
-  pointer-events: all;
-  r: 10px;
-  stroke: #555;
-  stroke-width: 2px;
+.start-node {
+    fill: #0f0;
+}
+
+.target-node {
+    fill: #f00;
+}
+
+.hub-node {
+    fill: #efc406;
+    r: 18px !important;
+}
+
+.node {
+    fill: #555;
 }
 
 .links line {
