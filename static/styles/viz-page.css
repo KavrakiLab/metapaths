@@ -24,9 +24,8 @@
 }
 
 .links line {
-    cursor: pointer;
     pointer-events: all;
-    stroke: #aaa;
+    stroke: #555;
 }
 
 .link {
@@ -34,6 +33,7 @@
 }
 
 .hub-link {
+    cursor: pointer;
     stroke-dasharray: 10 10;
     stroke-width: 6px;
 }
