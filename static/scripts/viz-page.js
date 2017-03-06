@@ -46,6 +46,7 @@ function validate_and_vizualize(file_contents) {
         var data_graph = collect_pathways_into_graph(json_pathways);
 
         var viz_graph = load_viz(data_graph);
+        console.log("viz_graph", viz_graph);
 
         get_kegg_data(data_graph);
 
@@ -187,6 +188,11 @@ function load_viz(data_graph) {
         if (!d3.event.active) simulation.alphaTarget(0);
     }
 
+    link.data().forEach(function (l, index, array) {
+        l.id = get_link_id(l);
+        l.isHub = data_graph.hub_links.includes(l.id);
+    })
+
     return {"node" : node, "link" : link};
 }
 
@@ -289,25 +295,31 @@ function attach_node_watchers(viz_graph) {
 
 function attach_link_watchers(viz_graph) {
     viz_graph.link.on("click", function(link) {
-        alert("View internal hub paths between " + link.source.id + " and " + link.target.id);
+        if (link.isHub) {
+            alert("View internal hub paths between " + link.source.id + " and " + link.target.id);
+        }
     });
 
     viz_graph.link.on("dblclick", function(link) {
     });
 
     viz_graph.link.on("mouseover", function(link) {
-        $("#" + get_link_id(link))[0].style.strokeWidth = 10;
+        if (link.isHub) {
+            $("#" + link.id)[0].style.strokeWidth = 10;
+        }
     });
 
     viz_graph.link.on("mouseout", function(link) {
-        $("#" + get_link_id(link))[0].style.strokeWidth = 6;
+        if (link.isHub) {
+            $("#" + link.id)[0].style.strokeWidth = 6;
+        }
     });
 }
 
 
 function update_info_panel(id) {
     var entry = kegg_data[id];
-    console.log(entry);
+    console.log("entry", entry);
 
     var name = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>" + entry.name + "</a><br>";
     var image = "<img src='" + KEGG_FIGURE_URL + id + ".gif'></img><br>"
@@ -316,13 +328,15 @@ function update_info_panel(id) {
     $("#info-panel-body")[0].innerHTML = name + image + complete;
 }
 
+
 function get_link_id(link) {
-    if (typeof(link.source) == "object") {
+    if (typeof(link.source) === "object") {
         return link.source.id + "-" + link.target.id;
     } else {
         return link.source + "-" + link.target;
     }
 }
+
 
 function detail_popup(id) {
     // TODO: better way of doing this
