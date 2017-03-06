@@ -234,8 +234,8 @@ function get_kegg_data(data_graph) {
         compounds.push(node.id);
     });
 
+    // TODO: only get info that is needed
     var request_url = KEGG_REST_URL + compounds.join(",") + ".json";
-
 
     $.get(request_url).done(function (response) {
         response.forEach(function(entry, index, array) {
@@ -282,13 +282,15 @@ function attach_watchers(viz_graph) {
 function update_info_panel(id) {
     var entry = kegg_data[id];
 
-    var html = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>"
-        + entry.name + " (" + id +  ")</a>\n\n";
+    var name = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>" + entry.name + "</a><br>";
+    var image = "<img src='" + KEGG_FIGURE_URL + id + ".gif'></img><br>"
+    var complete = "<a onclick=detail_popup('" + id +"')>View more</a>";
 
-
-    $("#info-panel-body")[0].innerHTML = html;
+    $("#info-panel-body")[0].innerHTML = name + image + complete;
 }
 
 
-
-
+function detail_popup(id) {
+    // TODO: better way of doing this
+    alert(JSON.stringify(kegg_data[id], null, 2));
+}

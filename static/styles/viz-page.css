@@ -28,8 +28,9 @@
     height: 100vh;
 }
 
-#info-panel {
+#info-panel-body {
     height: 25vh;
+    overflow: scroll;
 }
 
 #options-column {
