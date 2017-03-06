@@ -41,3 +41,10 @@ def search():
     # TODO: Generate a graph_id
     # TODO: Execute the search (async?)
     # TODO: Return the graph_id in the reponse
+
+@app.route('/help')
+def help():
+    """
+    Loads the help page
+    """
+    return render_template('help-page.html')
