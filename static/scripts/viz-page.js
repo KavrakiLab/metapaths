@@ -1,3 +1,7 @@
+/* Globals */
+var KEGG_REST_URL = "http://togows.org/entry/kegg-compound/";
+var kegg_data = {};
+
 $(function () {
     $('[data-toggle="popover"]').popover({container: 'body'});
     $("#graph-data")[0].focus()
@@ -41,7 +45,7 @@ function validate_and_vizualize(file_contents) {
 
         var viz_graph = load_viz(data_graph);
 
-        // get_kegg_data(data_graph);
+        get_kegg_data(data_graph);
 
         stylize(data_graph, viz_graph, json_pathways.info.start, json_pathways.info.target);
 
@@ -222,6 +226,31 @@ function get_node_color(node, start, target, hub_nodes) {
 }
 
 
+function get_kegg_data(data_graph) {
+    var compounds = [];
+    data_graph.nodes.forEach(function(node, index, array) {
+        compounds.push(node.id);
+    });
+
+    var request_url = KEGG_REST_URL + compounds.join(",") + ".json";
+
+
+    $.get(request_url).done(function (response) {
+        response.forEach(function(entry, index, array) {
+            // KEGG Data is a global object
+            kegg_data[entry.entry_id] = entry;
+        });
+
+        initialize_info_panel(kegg_data);
+    });
+
+}
+
+function initialize_info_panel(kegg_data) {
+    $("#info-panel-body")[0].innerHTML = "Click on elements in the graph for more information.";
+}
+
+
 function attach_watchers(viz_graph) {
     viz_graph.node.on("click", function(node) {
         update_info_panel(node.id);
@@ -238,31 +267,21 @@ function attach_watchers(viz_graph) {
     viz_graph.node.on("mouseout", function(node) {
         // console.log("mouseout", node);
     });
+
+    function release_node(node) {
+        node.fixed = false;
+        node.fx = null;
+        node.fy = null;
+    }
 }
 
 
 function update_info_panel(node_id) {
     // TODO: what other data should be displayed here?
-    $("#info-panel-body")[0].innerHTML = node_id;
+    console.log(kegg_data);
+    $("#info-panel-body")[0].innerHTML = node_id + "\n" + kegg_data[node_id].name;
 }
 
 
-function get_kegg_data(graph) {
-    var KEGG_REST_URL = "http://rest.kegg.jp/get/";
-
-    graph.nodes.forEach(function (node, index, array) {
-        // TODO
-        $.get(KEGG_REST_URL + node.id, function (data) {
-            console.log(data);
-        });
-    });
-}
-
-
-function release_node(node) {
-    node.fixed = false;
-    node.fx = null;
-    node.fy = null;
-}
 
 
