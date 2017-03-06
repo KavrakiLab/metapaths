@@ -24,8 +24,16 @@
 }
 
 .links line {
-  stroke: #aaa;
-  stroke-width: 4px;
+    stroke: #aaa;
+}
+
+.link {
+    stroke-width: 4px;
+}
+
+.hub-link {
+    stroke-dasharray: 10 10;
+    stroke-width: 6px;
 }
 
 #viz {
