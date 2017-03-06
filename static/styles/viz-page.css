@@ -1,9 +1,9 @@
 
 .nodes circle {
-  cursor: pointer;
-  pointer-events: all;
-  r: 14px;
-  stroke-width: 3px;
+    cursor: pointer;
+    pointer-events: all;
+    r: 14px;
+    stroke-width: 3px;
 }
 
 .start-node {
@@ -24,6 +24,8 @@
 }
 
 .links line {
+    cursor: pointer;
+    pointer-events: all;
     stroke: #aaa;
 }
 

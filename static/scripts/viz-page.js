@@ -82,7 +82,7 @@ function collect_pathways_into_graph(json_pathways) {
         });
 
         pathway.hub_links.forEach(function (hub_link, index, array) {
-            hub_links.push(hub_link.source + "," + hub_link.target);
+            hub_links.push(get_link_id(hub_link));
         });
     });
 
@@ -118,10 +118,9 @@ function load_viz(data_graph) {
         .selectAll("line")
         .data(data_graph.links)
         .enter().append("line")
-        .attr("id", function(link) {return link.source + "," + link.target;})
+        .attr("id", function(link) {return get_link_id(link);})
         .attr("class", function(link) {
-            var link_id = link.source + "," + link.target;
-            if (data_graph.hub_links.includes(link_id)) {
+            if (data_graph.hub_links.includes(get_link_id(link))) {
                 return "hub-link";
             } else {
                 return "link";
@@ -290,16 +289,18 @@ function attach_node_watchers(viz_graph) {
 
 function attach_link_watchers(viz_graph) {
     viz_graph.link.on("click", function(link) {
-        console.log(link);
+        alert("View internal hub paths between " + link.source.id + " and " + link.target.id);
     });
 
     viz_graph.link.on("dblclick", function(link) {
     });
 
     viz_graph.link.on("mouseover", function(link) {
+        $("#" + get_link_id(link))[0].style.strokeWidth = 10;
     });
 
     viz_graph.link.on("mouseout", function(link) {
+        $("#" + get_link_id(link))[0].style.strokeWidth = 6;
     });
 }
 
@@ -315,6 +316,13 @@ function update_info_panel(id) {
     $("#info-panel-body")[0].innerHTML = name + image + complete;
 }
 
+function get_link_id(link) {
+    if (typeof(link.source) == "object") {
+        return link.source.id + "-" + link.target.id;
+    } else {
+        return link.source + "-" + link.target;
+    }
+}
 
 function detail_popup(id) {
     // TODO: better way of doing this
