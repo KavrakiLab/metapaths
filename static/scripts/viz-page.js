@@ -51,7 +51,9 @@ function validate_and_vizualize(file_contents) {
 
         stylize(data_graph, viz_graph, json_pathways.info.start, json_pathways.info.target);
 
-        attach_watchers(viz_graph);
+        attach_node_watchers(viz_graph);
+
+        attach_link_watchers(viz_graph);
 
         // Make the viz visible
         $("#viz")[0].style.visibility = "visible";
@@ -94,6 +96,7 @@ function collect_pathways_into_graph(json_pathways) {
 
 
 function load_viz(data_graph) {
+    console.log(data_graph);
 
     var svg = d3.select("svg");
     width = $("#viz-column")[0].offsetWidth,
@@ -112,7 +115,14 @@ function load_viz(data_graph) {
         .attr("class", "links")
         .selectAll("line")
         .data(data_graph.links)
-        .enter().append("line");
+        .enter().append("line")
+        .attr("class", function(link) {
+            if (data_graph.hub_links.includes(link)) {
+                return "hub-link";
+            } else {
+                return "link";
+            }
+        });
 
     var node = svg.append("g")
         .attr("class", "nodes")
@@ -249,7 +259,7 @@ function initialize_info_panel(kegg_data) {
 }
 
 
-function attach_watchers(viz_graph) {
+function attach_node_watchers(viz_graph) {
     viz_graph.node.on("click", function(node) {
         update_info_panel(node.id);
     });
@@ -272,6 +282,22 @@ function attach_watchers(viz_graph) {
         node.fy = null;
     }
 }
+
+function attach_link_watchers(viz_graph) {
+    viz_graph.link.on("click", function(link) {
+        console.log(link);
+    });
+
+    viz_graph.link.on("dblclick", function(link) {
+    });
+
+    viz_graph.link.on("mouseover", function(link) {
+    });
+
+    viz_graph.link.on("mouseout", function(link) {
+    });
+}
+
 
 
 function update_info_panel(id) {
