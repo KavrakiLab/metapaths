@@ -81,7 +81,9 @@ function collect_pathways_into_graph(json_pathways) {
             hub_nodes.push(hub_node.id);
         });
 
-        hub_links = hub_links.concat(pathway.hub_links);
+        pathway.hub_links.forEach(function (hub_link, index, array) {
+            hub_links.push(hub_link.source + "," + hub_link.target);
+        });
     });
 
     return {
@@ -116,8 +118,10 @@ function load_viz(data_graph) {
         .selectAll("line")
         .data(data_graph.links)
         .enter().append("line")
+        .attr("id", function(link) {return link.source + "," + link.target;})
         .attr("class", function(link) {
-            if (data_graph.hub_links.includes(link)) {
+            var link_id = link.source + "," + link.target;
+            if (data_graph.hub_links.includes(link_id)) {
                 return "hub-link";
             } else {
                 return "link";
@@ -283,6 +287,7 @@ function attach_node_watchers(viz_graph) {
     }
 }
 
+
 function attach_link_watchers(viz_graph) {
     viz_graph.link.on("click", function(link) {
         console.log(link);
@@ -299,9 +304,9 @@ function attach_link_watchers(viz_graph) {
 }
 
 
-
 function update_info_panel(id) {
     var entry = kegg_data[id];
+    console.log(entry);
 
     var name = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>" + entry.name + "</a><br>";
     var image = "<img src='" + KEGG_FIGURE_URL + id + ".gif'></img><br>"
