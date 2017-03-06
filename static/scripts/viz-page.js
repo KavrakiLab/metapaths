@@ -1,5 +1,7 @@
 /* Globals */
 var KEGG_REST_URL = "http://togows.org/entry/kegg-compound/";
+var KEGG_ENTRY_URL = "http://www.kegg.jp/dbget-bin/www_bget?";
+var KEGG_FIGURE_URL = "http://www.kegg.jp/Fig/compound/";
 var kegg_data = {};
 
 $(function () {
@@ -246,6 +248,7 @@ function get_kegg_data(data_graph) {
 
 }
 
+
 function initialize_info_panel(kegg_data) {
     $("#info-panel-body")[0].innerHTML = "Click on elements in the graph for more information.";
 }
@@ -276,10 +279,14 @@ function attach_watchers(viz_graph) {
 }
 
 
-function update_info_panel(node_id) {
-    // TODO: what other data should be displayed here?
-    console.log(kegg_data);
-    $("#info-panel-body")[0].innerHTML = node_id + "\n" + kegg_data[node_id].name;
+function update_info_panel(id) {
+    var entry = kegg_data[id];
+
+    var html = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>"
+        + entry.name + " (" + id +  ")</a>\n\n";
+
+
+    $("#info-panel-body")[0].innerHTML = html;
 }
 
 
