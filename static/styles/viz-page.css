@@ -38,6 +38,8 @@
     stroke-width: 6px;
 }
 
+.node-label {}
+
 #viz {
     background-color: #ededed;
 }
