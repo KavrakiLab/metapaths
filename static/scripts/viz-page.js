@@ -153,6 +153,13 @@ function load_viz(data_graph) {
     node.append("title")
         .text(function(node) { return node.id; });
 
+    var label = svg.append("g")
+        .selectAll("text")
+        .data(data_graph.nodes)
+        .enter().append("text")
+            .attr("class", "node-label")
+            .text(function(d) { return d.id });
+
     simulation
         .nodes(data_graph.nodes)
         .on("tick", ticked);
@@ -170,6 +177,9 @@ function load_viz(data_graph) {
         node
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
+        label
+            .attr("dx", function(d) { return d.x - 24; })
+            .attr("dy", function(d) { return d.y - 24; });
     } // ticked
 
     function dragstarted(d) {
