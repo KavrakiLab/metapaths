@@ -10,7 +10,7 @@ $(function () {
 });
 
 // TODO: this line for testing only, remove
-validate_and_vizualize('{ "info" : { "start" : "C00031", "target" : "C00492" }, "pathways" : [ { "atoms" : 3, "nodes": [ {"id" : "C00031"}, {"id" : "C00492"} ], "hub_nodes" : [ {"id" : "C00022"}, {"id" : "C00036"} ], "internal_nodes" : [ {"id" : "RP04274"}, {"id" : "C03248"}, {"id" : "RP03811"}, {"id" : "C03981"}, {"id" : "RP09148"} ], "links" : [ {"source": "C00031", "target": "C00022"}, {"source": "C00036", "target": "C00492"} ], "hub_links": [ {"source": "C00022", "target": "C00036"} ], "internal_links": [ {"source": "C00022", "target": "RP04274"}, {"source": "RP04274", "target": "C03248"}, {"source": "C03248", "target": "RP03811"}, {"source": "C03981", "target": "RP09148"}, {"source": "RP09148", "target": "C00036"} ] } ] } ');
+validate_and_visualize('{ "info" : { "start" : "C00031", "target" : "C00492" }, "pathways" : [ { "atoms" : 3, "nodes": [ {"id" : "C00031"}, {"id" : "C00492"} ], "hub_nodes" : [ {"id" : "C00022"}, {"id" : "C00036"} ], "internal_nodes" : [ {"id" : "RP04274"}, {"id" : "C03248"}, {"id" : "RP03811"}, {"id" : "C03981"}, {"id" : "RP09148"} ], "links" : [ {"source": "C00031", "target": "C00022"}, {"source": "C00036", "target": "C00492"} ], "hub_links": [ {"source": "C00022", "target": "C00036"} ], "internal_links": [ {"source": "C00022", "target": "RP04274"}, {"source": "RP04274", "target": "C03248"}, {"source": "C03248", "target": "RP03811"}, {"source": "C03981", "target": "RP09148"}, {"source": "RP09148", "target": "C00036"} ] } ] } ');
 
 function upload() {
     var graph_file = $('#graph-data')[0].files[0];
@@ -26,7 +26,7 @@ function upload() {
             reader.onload = function(event){
                 // Get the file contents which are stored in the event's result by
                 // readAsText() when it completes
-                validate_and_vizualize(event.target.result);
+                validate_and_visualize(event.target.result);
             }
 
             reader.readAsText(graph_file);
@@ -37,7 +37,7 @@ function upload() {
 }
 
 
-function validate_and_vizualize(file_contents) {
+function validate_and_visualize(file_contents) {
     try {
         // The pathway info from file
         var json_pathways = JSON.parse(file_contents);
@@ -61,7 +61,7 @@ function validate_and_vizualize(file_contents) {
     } catch (exception) {
         alert("An error occurred, please verify the file and try again.\n\n" + exception);
     }
-} // validate_and_vizualize
+} // validate_and_visualize
 
 
 function collect_pathways_into_graph(json_pathways) {
@@ -109,7 +109,7 @@ function load_viz(data_graph) {
         .on("end", dragended);
 
     var zoom = d3.zoom()
-        .scaleExtent([1,10])
+        .scaleExtent([0.1,10])
         .on("zoom", function() {
             container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
         });
