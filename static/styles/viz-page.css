@@ -10,13 +10,25 @@
     fill: #0f0;
 }
 
-.target-node {
+.goal-node {
     fill: #f00;
 }
 
 .hub-node {
     fill: #efc406;
     r: 18px !important;
+}
+
+.hub-start-node {
+    fill: #0f0;
+}
+
+.hub-target-node {
+    fill: #f00;
+}
+
+.internal-node {
+    fill: #d2f;
 }
 
 .node {
@@ -38,15 +50,30 @@
     stroke-width: 6px;
 }
 
+.internal-link {
+}
+
 .node-label {}
 
 #viz {
     background-color: #ededed;
 }
 
+#hub {
+    background-color: #dedede;
+}
+
 .col-md-3 {
     padding-left: 30px;
     height: 100vh;
+}
+
+.modal-lg {
+    width: 80%;
+}
+
+.modal-body {
+    height: 70vh;
 }
 
 .toolbar {
