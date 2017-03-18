@@ -10,7 +10,7 @@ $(function () {
 });
 
 // TODO: this line for testing only, remove
-var sample_data = '{ "info": {  "start": "C00031",  "target": "C00492" }, "pathways": [{  "atoms": 3,  "nodes": [{   "id": "C00031"  }, {   "id": "C00492"  }],  "hub_nodes": [{   "id": "C00022"  }, {   "id": "C00036"  }],  "links": [{   "source": "C00031",   "target": "C00022"  }, {   "source": "C00036",   "target": "C00492"  }],  "hub_links": [{   "source": "C00022",   "target": "C00036",   "internal_nodes": [{    "id": "RP04274"   }, {    "id": "C03248"   }, {    "id": "RP03811"   }, {    "id": "C03981"   }, {    "id": "RP09148"   }],   "internal_links": [{    "source": "C00022",    "target": "RP04274"   }, {    "source": "RP04274",    "target": "C03248"   }, {    "source": "C03248",    "target": "RP03811"   }, {    "source": "C03981",    "target": "RP09148"   }, {    "source": "RP09148",    "target": "C00036"   }]  }] }]}'
+var sample_data = '{ "info": {  "start": "C00031",  "goal": "C00492" }, "pathways": [{  "atoms": 3,  "nodes": [{   "id": "C00031"  }, {   "id": "C00492"  }],  "hub_nodes": [{   "id": "C00022"  }, {   "id": "C00036"  }],  "links": [{   "source": "C00031",   "target": "C00022"  }, {   "source": "C00036",   "target": "C00492"  }],  "hub_links": [{   "source": "C00022",   "target": "C00036",   "internal_nodes": [{    "id": "RP04274"   }, {    "id": "C03248"   }, {    "id": "RP03811"   }, {    "id": "C03981"   }, {    "id": "RP09148"   }],   "internal_links": [{    "source": "C00022",    "target": "RP04274"   }, {    "source": "RP04274",    "target": "C03248"   }, {    "source": "C03248",    "target": "RP03811"   }, {    "source": "C03981",    "target": "RP09148"   }, {    "source": "RP09148",    "target": "C00036"   }]  }] }]}'
 validate_and_visualize(sample_data);
 
 function upload() {
@@ -51,7 +51,7 @@ function validate_and_visualize(file_contents) {
 
         get_kegg_data(data_graph);
 
-        stylize(data_graph, viz_graph, json_pathways.info.start, json_pathways.info.target);
+        stylize(data_graph, viz_graph, json_pathways.info.start, json_pathways.info.goal);
 
         attach_node_watchers(viz_graph);
 
@@ -107,7 +107,7 @@ function collect_pathways_into_graph(json_pathways) {
         "hub_links" : hub_links,
         "internals" : internals,
         "start" : json_pathways.info.start,
-        "target" : json_pathways.info.target
+        "goal" : json_pathways.info.goal
     };
 } // collect_pathways_into_graph
 
@@ -128,7 +128,7 @@ function load_viz(data_graph) {
             container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
         });
 
-    var svg = d3.select("svg")
+    var svg = d3.select("#viz")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -172,8 +172,8 @@ function load_viz(data_graph) {
         .attr("class", function(node) {
             if (node.id === data_graph.start) {
                 return "start-node";
-            } else if (node.id === data_graph.target) {
-                return "target-node";
+            } else if (node.id === data_graph.goal) {
+                return "goal-node";
             } else if (data_graph.hub_nodes.includes(node.id)) {
                 return "hub-node";
             } else {
@@ -239,14 +239,14 @@ function load_viz(data_graph) {
 } // load_viz
 
 
-function stylize(data_graph, viz_graph, start, target) {
+function stylize(data_graph, viz_graph, start, goal) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
 
-    $("#title")[0].innerHTML = generate_title(start, target);
+    $("#title")[0].innerHTML = generate_title(start, goal);
 
 
-    style_nodes(viz_graph, start, target, data_graph.hub_nodes);
+    style_nodes(viz_graph, start, goal, data_graph.hub_nodes);
 
 
 
@@ -257,13 +257,13 @@ function stylize(data_graph, viz_graph, start, target) {
 }
 
 
-function generate_title(start, target) {
-    var title = start + " &#8594; " + target;
+function generate_title(start, goal) {
+    var title = start + " &#8594; " + goal;
     return title;
 }
 
 
-function style_nodes(viz_graph, start, target, hub_nodes) {
+function style_nodes(viz_graph, start, goal, hub_nodes) {
 
     viz_graph.node.data().forEach(function (node, index, array) {
         var mid_y = $("#viz-column")[0].offsetHeight / 2;
@@ -272,7 +272,7 @@ function style_nodes(viz_graph, start, target, hub_nodes) {
             node.fixed = true;
             node.fx = 50;
             node.fy = mid_y;
-        } else if (node.id === target) {
+        } else if (node.id === goal) {
             node.fixed = true;
             node.fx = end_x;
             node.fy = mid_y;
@@ -339,7 +339,7 @@ function attach_link_watchers(viz_graph, data_graph) {
     viz_graph.link.on("click", function(link) {
         if (link.isHub) {
             // from viz-modal.js
-            open_modal(data_graph);
+            open_modal(link);
         }
     });
 
