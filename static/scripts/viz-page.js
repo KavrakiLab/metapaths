@@ -324,7 +324,11 @@ function attach_node_watchers(viz_graph) {
 function attach_link_watchers(viz_graph) {
     viz_graph.link.on("click", function(link) {
         if (link.isHub) {
-            alert("View internal hub paths between " + link.source.id + " and " + link.target.id);
+            // viz-modal.js
+            open_modal({
+                source: link.source.id,
+                target: link.target.id
+            });
         }
     });
 
