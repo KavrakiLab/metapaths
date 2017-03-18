@@ -7,9 +7,9 @@
    visualization.
 
     The uploaded data could be one of the following:
-       * Pathways which were exported from the app itself
-       * Pathways which were output by LPAT/BPAT or hub algorithm
-       * Pathways which were output by metagraphs algorithm
+    * Pathways which were exported from the app itself
+    * Pathways which were output by LPAT/BPAT or hub algorithm
+    * Pathways which were output by metagraphs algorithm
 
 2. The user configures and executes a pathway search. The results may not be
    instantaneous so some sort of callback or link generated for them to
