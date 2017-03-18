@@ -10,7 +10,8 @@ $(function () {
 });
 
 // TODO: this line for testing only, remove
-validate_and_visualize('{ "info" : { "start" : "C00031", "target" : "C00492" }, "pathways" : [ { "atoms" : 3, "nodes": [ {"id" : "C00031"}, {"id" : "C00492"} ], "hub_nodes" : [ {"id" : "C00022"}, {"id" : "C00036"} ], "internal_nodes" : [ {"id" : "RP04274"}, {"id" : "C03248"}, {"id" : "RP03811"}, {"id" : "C03981"}, {"id" : "RP09148"} ], "links" : [ {"source": "C00031", "target": "C00022"}, {"source": "C00036", "target": "C00492"} ], "hub_links": [ {"source": "C00022", "target": "C00036"} ], "internal_links": [ {"source": "C00022", "target": "RP04274"}, {"source": "RP04274", "target": "C03248"}, {"source": "C03248", "target": "RP03811"}, {"source": "C03981", "target": "RP09148"}, {"source": "RP09148", "target": "C00036"} ] } ] } ');
+var sample_data = '{ "info": {  "start": "C00031",  "target": "C00492" }, "pathways": [{  "atoms": 3,  "nodes": [{   "id": "C00031"  }, {   "id": "C00492"  }],  "hub_nodes": [{   "id": "C00022"  }, {   "id": "C00036"  }],  "links": [{   "source": "C00031",   "target": "C00022"  }, {   "source": "C00036",   "target": "C00492"  }],  "hub_links": [{   "source": "C00022",   "target": "C00036",   "internal_nodes": [{    "id": "RP04274"   }, {    "id": "C03248"   }, {    "id": "RP03811"   }, {    "id": "C03981"   }, {    "id": "RP09148"   }],   "internal_links": [{    "source": "C00022",    "target": "RP04274"   }, {    "source": "RP04274",    "target": "C03248"   }, {    "source": "C03248",    "target": "RP03811"   }, {    "source": "C03981",    "target": "RP09148"   }, {    "source": "RP09148",    "target": "C00036"   }]  }] }]}'
+validate_and_visualize(sample_data);
 
 function upload() {
     var graph_file = $('#graph-data')[0].files[0];
@@ -54,7 +55,7 @@ function validate_and_visualize(file_contents) {
 
         attach_node_watchers(viz_graph);
 
-        attach_link_watchers(viz_graph);
+        attach_link_watchers(viz_graph, data_graph);
 
         // Make the viz visible
         $("#viz")[0].style.visibility = "visible";
@@ -72,6 +73,9 @@ function collect_pathways_into_graph(json_pathways) {
     var hub_nodes = [];
     var hub_links = [];
 
+    // Contains the internal nodes and links between hubs; Key = hub link id
+    var internals = {};
+
     json_pathways.pathways.forEach(function (pathway, index, array) {
         nodes = nodes.concat(pathway.nodes);
         nodes = nodes.concat(pathway.hub_nodes);
@@ -83,15 +87,25 @@ function collect_pathways_into_graph(json_pathways) {
         });
 
         pathway.hub_links.forEach(function (hub_link, index, array) {
-            hub_links.push(get_link_id(hub_link));
+            var hub_link_id = get_link_id(hub_link);
+            hub_links.push(hub_link_id);
+
+            console.log(hub_link);
+            internals[hub_link_id] = {
+                "internal_nodes" : hub_link.internal_nodes,
+                "internal_links" : hub_link.internal_links
+            }
         });
     });
+
+    console.log(internals);
 
     return {
         "nodes" : nodes,
         "links" : links,
         "hub_nodes" : hub_nodes,
         "hub_links" : hub_links,
+        "internals" : internals,
         "start" : json_pathways.info.start,
         "target" : json_pathways.info.target
     };
@@ -321,14 +335,11 @@ function attach_node_watchers(viz_graph) {
 }
 
 
-function attach_link_watchers(viz_graph) {
+function attach_link_watchers(viz_graph, data_graph) {
     viz_graph.link.on("click", function(link) {
         if (link.isHub) {
-            // viz-modal.js
-            open_modal({
-                source: link.source.id,
-                target: link.target.id
-            });
+            // from viz-modal.js
+            open_modal(data_graph);
         }
     });
 
