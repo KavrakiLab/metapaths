@@ -61,7 +61,7 @@ function validate_and_vizualize(file_contents) {
     } catch (exception) {
         alert("An error occurred, please verify the file and try again.\n\n" + exception);
     }
-}
+} // validate_and_vizualize
 
 
 function collect_pathways_into_graph(json_pathways) {
@@ -95,26 +95,42 @@ function collect_pathways_into_graph(json_pathways) {
         "start" : json_pathways.info.start,
         "target" : json_pathways.info.target
     };
-}
+} // collect_pathways_into_graph
 
 
 function load_viz(data_graph) {
-    console.log(data_graph);
+    var margin = {top: -5, right: -5, bottom: -5, left: -5},
+        width = $("#viz-column")[0].offsetWidth - margin.left - margin.right,
+        height = $("#viz-column")[0].offsetHeight - margin.top - margin.bottom;
 
-    var svg = d3.select("svg");
-    width = $("#viz-column")[0].offsetWidth,
-    height = $("#viz-column")[0].offsetHeight;
+    var drag = d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended);
 
-    // Let the viz fill up the available column space
-    $("#viz")[0].style.width = width;
-    $("#viz")[0].style.height = height;
+    var zoom = d3.zoom()
+        .scaleExtent([1,10])
+        .on("zoom", function() {
+            container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
+        });
 
-    var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-10))
-        .force("center", d3.forceCenter(width / 2, height / 2));
+    var svg = d3.select("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.right + ")")
+            .call(zoom)
+            .on("dblclick.zoom", null); // disable dblclick to zoom, since dblclick is used to release fixed nodes
 
-    var link = svg.append("g")
+    var rect = svg.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "none")
+        .style("pointer-events", "all");
+
+    var container = svg.append("g");
+
+    var link = container.append("g")
         .attr("class", "links")
         .selectAll("line")
         .data(data_graph.links)
@@ -128,7 +144,12 @@ function load_viz(data_graph) {
             }
         });
 
-    var node = svg.append("g")
+    link.data().forEach(function (l, index, array) {
+        l.id = get_link_id(l);
+        l.isHub = data_graph.hub_links.includes(l.id);
+    })
+
+    var node = container.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
         .data(data_graph.nodes)
@@ -145,20 +166,22 @@ function load_viz(data_graph) {
                 return "node";
             }
         })
-        .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended));
+        .call(drag);
 
     node.append("title")
         .text(function(node) { return node.id; });
 
-    var label = svg.append("g")
+    var label = container.append("g")
         .selectAll("text")
         .data(data_graph.nodes)
         .enter().append("text")
             .attr("class", "node-label")
             .text(function(d) { return d.id });
+
+    var simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("charge", d3.forceManyBody().strength(-10))
+        .force("center", d3.forceCenter(width / 2, height / 2));
 
     simulation
         .nodes(data_graph.nodes)
@@ -198,13 +221,8 @@ function load_viz(data_graph) {
         if (!d3.event.active) simulation.alphaTarget(0);
     }
 
-    link.data().forEach(function (l, index, array) {
-        l.id = get_link_id(l);
-        l.isHub = data_graph.hub_links.includes(l.id);
-    })
-
     return {"node" : node, "link" : link};
-}
+} // load_viz
 
 
 function stylize(data_graph, viz_graph, start, target) {
