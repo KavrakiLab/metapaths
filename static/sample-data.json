@@ -27,14 +27,20 @@
                         {"id" : "C03248"},
                         {"id" : "RP03811"},
                         {"id" : "C03981"},
-                        {"id" : "RP09148"}
+                        {"id" : "RP09148"},
+                        {"id" : "RP00000"},
+                        {"id" : "C00000"}
                     ],
                     "internal_links": [
                         {"source": "C00022", "target": "RP04274"},
+                        {"source": "C00022", "target": "RP00000"},
+                        {"source": "RP00000", "target": "C03981"},
                         {"source": "RP04274", "target": "C03248"},
                         {"source": "C03248", "target": "RP03811"},
                         {"source": "C03981", "target": "RP09148"},
-                        {"source": "RP09148", "target": "C00036"}
+                        {"source": "RP09148", "target": "C00036"},
+                        {"source": "RP03811", "target": "C00000"},
+                        {"source": "C00000", "target": "RP09148"}
                     ]
                 }
             ]

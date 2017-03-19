@@ -10,7 +10,7 @@ $(function () {
 });
 
 // TODO: this line for testing only, remove
-var sample_data = '{ "info": {  "start": "C00031",  "goal": "C00492" }, "pathways": [{  "atoms": 3,  "nodes": [{   "id": "C00031"  }, {   "id": "C00492"  }],  "hub_nodes": [{   "id": "C00022"  }, {   "id": "C00036"  }],  "links": [{   "source": "C00031",   "target": "C00022"  }, {   "source": "C00036",   "target": "C00492"  }],  "hub_links": [{   "source": "C00022",   "target": "C00036",   "internal_nodes": [{    "id": "RP04274"   }, {    "id": "C03248"   }, {    "id": "RP03811"   }, {    "id": "C03981"   }, {    "id": "RP09148"   }],   "internal_links": [{    "source": "C00022",    "target": "RP04274"   }, {    "source": "RP04274",    "target": "C03248"   }, {    "source": "C03248",    "target": "RP03811"   }, {    "source": "C03981",    "target": "RP09148"   }, {    "source": "RP09148",    "target": "C00036"   }]  }] }]}'
+var sample_data = '{    "info" : {        "start" : "C00031",        "goal" : "C00492"    },    "pathways" : [        {            "atoms" : 3,            "nodes": [                {"id" : "C00031"},                {"id" : "C00492"}            ],            "hub_nodes" : [                {"id" : "C00022"},                {"id" : "C00036"}            ],            "links" : [                {"source": "C00031", "target": "C00022"},                {"source": "C00036", "target": "C00492"}            ],            "hub_links": [                {                    "source": "C00022",                    "target": "C00036",                    "internal_nodes" : [                        {"id" : "RP04274"},                        {"id" : "C03248"},                        {"id" : "RP03811"},                        {"id" : "C03981"},                        {"id" : "RP09148"},                        {"id" : "RP00000"},                        {"id" : "C00000"}                    ],                    "internal_links": [                        {"source": "C00022", "target": "RP04274"},                        {"source": "C00022", "target": "RP00000"},                        {"source": "RP00000", "target": "C03981"},                        {"source": "RP04274", "target": "C03248"},                        {"source": "C03248", "target": "RP03811"},                        {"source": "C03981", "target": "RP09148"},                        {"source": "RP09148", "target": "C00036"},                        {"source": "RP03811", "target": "C00000"},                        {"source": "C00000", "target": "RP09148"}                    ]                }            ]        }    ]}'
 validate_and_visualize(sample_data);
 
 function upload() {
@@ -19,7 +19,7 @@ function upload() {
     if (graph_file == null) {
         alert("Select a proper file to visualize.");
     } else if (graph_file.type != "application/json") {
-        alert("Invalid filtype selected! Graph data must be in JSON format.");
+        alert("Invalid file type selected! Graph data must be in JSON format.");
     } else {
         try {
             var reader = new FileReader();
