@@ -13,8 +13,8 @@ function open_modal(hub_info) {
 
 
 function load_hub_viz(hub_info) {
-    var margin = {top: -5, right: -5, bottom: -5, left: -5};
-    var width = $("#hub-modal").width() - margin.left - margin.right;
+    var margin = {top: 0, right: 0, bottom: 0, left: 0};
+    var width = $("#hub-modal").width() - margin.left - margin.right + 46;
     var height = $("#hub-modal-body").height() - margin.top - margin.bottom;
 
     var drag = d3.drag()
@@ -28,8 +28,6 @@ function load_hub_viz(hub_info) {
             container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
         });
 
-    console.log(width);
-    console.log(height);
     var svg = d3.select("#hub")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -70,9 +68,9 @@ function load_hub_viz(hub_info) {
         .enter().append("circle")
         .attr("id", function(node) {return node.id;})
         .attr("class", function(node) {
-            if (node.id === hub_info.start) {
+            if (node.id === hub_info.source.id) {
                 return "hub-source-node";
-            } else if (node.id === hub_info.goal) {
+            } else if (node.id === hub_info.target.id) {
                 return "hub-target-node";
             } else {
                 return "internal-node";
@@ -87,7 +85,7 @@ function load_hub_viz(hub_info) {
         .selectAll("text")
         .data(internal_nodes)
         .enter().append("text")
-            .attr("class", "node-label")
+            .attr("class", "internal-node-label")
             .text(function(d) { return d.id });
 
     var simulation = d3.forceSimulation()
