@@ -5,10 +5,13 @@ function open_modal(hub_info) {
     console.log(hub_info);
    $("#hub-modal-title")[0].innerText = "Internal Hub Paths: " + hub_info.id;
 
-    // Show the hub visualization
-   $("#hub-modal").modal();
    load_hub_viz(hub_info);
 
+    // Show the hub visualization
+   $("#hub-modal").modal({
+       backdrop: "static",
+       keyboard: false
+   });
 }
 
 
@@ -60,7 +63,6 @@ function load_hub_viz(hub_info) {
     internal_nodes.push(hub_info.source);
     internal_nodes.push(hub_info.target);
 
-    console.log(internal_nodes);
     var node = container.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
@@ -69,8 +71,14 @@ function load_hub_viz(hub_info) {
         .attr("id", function(node) {return node.id;})
         .attr("class", function(node) {
             if (node.id === hub_info.source.id) {
+                node.fixed = true;
+                node.fx = 50;
+                node.fy = height / 2;
                 return "hub-source-node";
             } else if (node.id === hub_info.target.id) {
+                node.fixed = true;
+                node.fx = width - 50;
+                node.fy = height / 2;
                 return "hub-target-node";
             } else {
                 return "internal-node";
@@ -130,6 +138,11 @@ function load_hub_viz(hub_info) {
     function dragended(d) {
         if (!d3.event.active) simulation.alphaTarget(0);
     }
+
+    $('#hub-modal').on('hidden.bs.modal', function (e) {
+        // When the hub view is hidden, clear it
+        d3.select("#hub").selectAll("*").remove();
+    });
 
     return {"node" : node, "link" : link};
 } // load_hub_viz
