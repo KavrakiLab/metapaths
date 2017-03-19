@@ -46,12 +46,12 @@
 
 .hub-link {
     cursor: pointer;
-    stroke-dasharray: 10 10;
+    stroke-dasharray: 10 5;
     stroke-width: 6px;
 }
 
 .internal-link {
-
+    stroke-width: 3px;
 }
 
 
