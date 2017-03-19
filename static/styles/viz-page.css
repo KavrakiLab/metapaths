@@ -19,16 +19,16 @@
     r: 18px !important;
 }
 
-.hub-start-node {
-    fill: #0f0;
+.hub-source-node {
+    fill: #0a0;
 }
 
 .hub-target-node {
-    fill: #f00;
+    fill: #a00;
 }
 
 .internal-node {
-    fill: #d2f;
+    fill: #999;
 }
 
 .node {
@@ -51,16 +51,16 @@
 }
 
 .internal-link {
+
 }
 
-.node-label {}
 
 #viz {
     background-color: #ededed;
 }
 
 #hub {
-    background-color: #dedede;
+    background-color: #ededed;
 }
 
 .col-md-3 {
@@ -74,6 +74,7 @@
 
 .modal-body {
     height: 70vh;
+    padding: 0px;
 }
 
 .toolbar {
