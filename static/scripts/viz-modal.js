@@ -60,8 +60,8 @@ function load_hub_viz(hub_info) {
     })
 
     var internal_nodes = hub_info.internal_nodes;
-    internal_nodes.push(hub_info.source);
-    internal_nodes.push(hub_info.target);
+    internal_nodes.push(simple_clone(hub_info.source));
+    internal_nodes.push(simple_clone(hub_info.target));
 
     var node = container.append("g")
         .attr("class", "nodes")
@@ -98,7 +98,7 @@ function load_hub_viz(hub_info) {
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-10))
+        .force("charge", d3.forceCollide(50))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
     simulation
@@ -147,3 +147,6 @@ function load_hub_viz(hub_info) {
     return {"node" : node, "link" : link};
 } // load_hub_viz
 
+function simple_clone(original) {
+    return JSON.parse(JSON.stringify(original));
+}
