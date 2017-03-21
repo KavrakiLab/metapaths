@@ -193,7 +193,7 @@ function load_viz(data_graph) {
             .text(function(d) { return d.id });
 
     var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(-5).strength(1.0))
         .force("charge", d3.forceCollide(50))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -296,7 +296,9 @@ function get_kegg_data(data_graph) {
     $.get(request_url).done(function (response) {
         response.forEach(function(entry, index, array) {
             // KEGG Data is a global object
-            kegg_data[entry.entry_id] = entry;
+            if (entry != null) { // TODO: is this check needed?
+                kegg_data[entry.entry_id] = entry;
+            }
         });
 
         initialize_info_panel(kegg_data);

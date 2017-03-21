@@ -97,7 +97,7 @@ function load_hub_viz(hub_info) {
             .text(function(d) { return d.id });
 
     var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(-5).strength(1.0))
         .force("charge", d3.forceCollide(50))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
