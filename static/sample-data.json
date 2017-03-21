@@ -12,16 +12,16 @@
             ],
             "hub_nodes" : [
                 {"id" : "C00022"},
-                {"id" : "C00036"}
+                {"id" : "C00024"}
             ],
             "links" : [
                 {"source": "C00031", "target": "C00022"},
-                {"source": "C00036", "target": "C00492"}
+                {"source": "C00024", "target": "C00492"}
             ],
             "hub_links": [
                 {
                     "source": "C00022",
-                    "target": "C00036",
+                    "target": "C00024",
                     "internal_nodes" : [
                         {"id" : "RP04274"},
                         {"id" : "C03248"},
@@ -38,7 +38,7 @@
                         {"source": "RP04274", "target": "C03248"},
                         {"source": "C03248", "target": "RP03811"},
                         {"source": "C03981", "target": "RP09148"},
-                        {"source": "RP09148", "target": "C00036"},
+                        {"source": "RP09148", "target": "C00024"},
                         {"source": "RP03811", "target": "C00000"},
                         {"source": "C00000", "target": "RP09148"}
                     ]

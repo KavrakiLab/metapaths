@@ -1,11 +1,9 @@
-/* TODO: the same modal is used for different hub views; need a way to clear
-   out previously viewed hub and update with the requested one */
+function open_modal(hub_link) {
+    console.log(hub_link);
+    // $("#hub-modal-title")[0].innerText = "Internal Hub Paths: " + hub_link.id;
+    hub_info = get_hub_info(hub_link.source.id, hub_link.target.id)
 
-function open_modal(hub_info) {
-    console.log(hub_info);
-   $("#hub-modal-title")[0].innerText = "Internal Hub Paths: " + hub_info.id;
-
-   load_hub_viz(hub_info);
+    // load_hub_viz(hub_info);
 
     // Show the hub visualization
    $("#hub-modal").modal({
@@ -14,6 +12,13 @@ function open_modal(hub_info) {
    });
 }
 
+function get_hub_info(hub_src, hub_dst) {
+    var request_url = "/get_hub_paths/" + hub_src + "/" + hub_dst;
+
+    $.get(request_url).done(function (response) {
+        console.log(response);
+    });
+}
 
 function load_hub_viz(hub_info) {
     var margin = {top: 0, right: 0, bottom: 0, left: 0};
