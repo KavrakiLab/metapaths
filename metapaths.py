@@ -1,5 +1,5 @@
-import re, json, MySQLdb
-from flask import Flask, render_template
+import re, MySQLdb
+from flask import Flask, render_template, jsonify
 app = Flask(__name__)
 
 
@@ -9,31 +9,9 @@ graphs = {}
 db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="hubdb")
 
 
-@app.route('/')
-def search_page():
-    """
-    Loads the main page
-    """
-    return render_template('search-page.html')
-
-
-@app.route('/visualize')
-def visualize():
-    """
-    Loads the visualization page
-    """
-    return render_template('viz-page.html')
-
-
-def get_hub_paths(hub_src, hub_dst):
-    """
-    Returns visualization formatted JSON describing the pathways between the
-    two hub compounds
-    """
-    cursor = db.cursor()
-    cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + "")
-    return hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
-
+#
+# Helpers
+#
 
 def extract_pathways(string_pathways):
     pathways = []
@@ -67,8 +45,38 @@ def hub_paths_to_json(hub_src, hub_dst, string_pathways):
         "info" : {"start" : hub_dst, "target" : hub_dst},
         "pathways" : pathways
     }
-    return json.dumps(hub)
+    return jsonify(hub)
 
+
+#
+# Routes
+#
+
+@app.route('/')
+def search_page():
+    """
+    Loads the main page
+    """
+    return render_template('search-page.html')
+
+
+@app.route('/visualize')
+def visualize():
+    """
+    Loads the visualization page
+    """
+    return render_template('viz-page.html')
+
+
+@app.route('/get_hub_paths/<hub_src>/<hub_dst>')
+def get_hub_paths(hub_src, hub_dst):
+    """
+    Returns visualization formatted JSON describing the pathways between the
+    two hub compounds
+    """
+    cursor = db.cursor()
+    cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + "")
+    return hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
 
 
 @app.route('/load_graph/<graph_id>')
