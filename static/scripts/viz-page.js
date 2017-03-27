@@ -73,9 +73,6 @@ function collect_pathways_into_graph(json_pathways) {
     var hub_nodes = [];
     var hub_links = [];
 
-    // Contains the internal nodes and links between hubs; Key = hub link id
-    var internals = {};
-
     json_pathways.pathways.forEach(function (pathway, index, array) {
         nodes = nodes.concat(pathway.nodes);
         nodes = nodes.concat(pathway.hub_nodes);
@@ -89,23 +86,14 @@ function collect_pathways_into_graph(json_pathways) {
         pathway.hub_links.forEach(function (hub_link, index, array) {
             var hub_link_id = get_link_id(hub_link);
             hub_links.push(hub_link_id);
-
-            console.log(hub_link);
-            internals[hub_link_id] = {
-                "internal_nodes" : hub_link.internal_nodes,
-                "internal_links" : hub_link.internal_links
-            }
         });
     });
-
-    console.log(internals);
 
     return {
         "nodes" : nodes,
         "links" : links,
         "hub_nodes" : hub_nodes,
         "hub_links" : hub_links,
-        "internals" : internals,
         "start" : json_pathways.info.start,
         "goal" : json_pathways.info.goal
     };

@@ -3,35 +3,63 @@ var full_viz = null
 function init_hub_view(hub_link) {
     console.log(hub_link);
 
-    // Hide the full visualization
-    full_viz = $("#viz").remove()
-
-    // Create an SVG for the hub
-    d3.select("#viz-column").append("svg").attr("id", "hub")
-
-    $("#hub-btns")[0].style.visibility = "visible";
-
-    hub_info = get_hub_info(hub_link.source.id, hub_link.target.id)
-
-    // Create the hub graph
-    var hub_graph = load_hub_viz(hub_link);
-
-    // Get KEGG data for any new compounds and add to the global kegg_data dict
-    get_kegg_data(hub_link.internal_nodes);
-
-    // Attach the same node watchers as for the full viz
-    attach_node_watchers(hub_graph);
-}
-
-function get_hub_info(hub_src, hub_dst) {
-    var request_url = "/get_hub_paths/" + hub_src + "/" + hub_dst;
+    var request_url = "/get_hub_paths/" + hub_link.source.id + "/" + hub_link.target.id;
 
     $.get(request_url).done(function (response) {
-        console.log(response);
+        var hub_data_graph = extract_hub_data_graph(response);
+        console.log(hub_data_graph);
+
+        var hub_viz_graph = load_hub_viz(hub_data_graph);
+
+        // Get KEGG data for any new compounds and add to the global kegg_data dict
+        get_kegg_data(hub_data_graph.nodes);
+
+        // Attach the same node watchers as for the full viz
+        attach_node_watchers(hub_viz_graph);
+
+        show_hub_view();
+    }).fail(function() {
+        alert("ERROR: Failed to retrieve hub information.");
     });
 }
 
-function load_hub_viz(hub_info) {
+function extract_hub_data_graph(hub_info) {
+    console.log(hub_info);
+    var hub_data_graph = {};
+
+    var node_set = new Set();
+    var link_set = new Set();
+
+    hub_info.pathways.forEach(function (pathway, index, array) {
+        for (var n of pathway.nodes) {
+            node_set.add(n);
+        }
+        for (var l of pathway.links) {
+            link_set.add(l);
+        }
+    });
+
+    var nodes = []
+    var links = []
+        for (var n of node_set) {
+            nodes.push({ "id" : n });
+        }
+        for (var l of link_set) {
+            ends = l.split(",");
+            links.push({ "source" : ends[0], "target" : ends[1] });
+        }
+
+    return {
+        "nodes" : nodes,
+        "links" : links,
+        "source" : hub_info.info.source,
+        "target" : hub_info.info.target
+    };
+
+    return hub_data_graph;
+}
+
+function load_hub_viz(hub_data_graph) {
     var margin = {top: -5, right: -5, bottom: -5, left: -5},
         width = $("#viz-column")[0].offsetWidth - margin.left - margin.right,
         height = $("#viz-column")[0].offsetHeight - margin.top - margin.bottom;
@@ -46,6 +74,9 @@ function load_hub_viz(hub_info) {
         .on("zoom", function() {
             container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
         });
+
+    // Create an SVG for the hub
+    d3.select("#viz-column").append("svg").attr("id", "hub")
 
     var svg = d3.select("#hub")
         .attr("width", width + margin.left + margin.right)
@@ -66,7 +97,7 @@ function load_hub_viz(hub_info) {
     var link = container.append("g")
         .attr("class", "links")
         .selectAll("line")
-        .data(hub_info.internal_links)
+        .data(hub_data_graph.links)
         .enter().append("line")
         .attr("id", function(link) {return get_link_id(link);})
         .attr("class", "internal-link");
@@ -75,23 +106,19 @@ function load_hub_viz(hub_info) {
         l.id = get_link_id(l);
     })
 
-    var internal_nodes = hub_info.internal_nodes;
-    internal_nodes.push(simple_clone(hub_info.source));
-    internal_nodes.push(simple_clone(hub_info.target));
-
     var node = container.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
-        .data(internal_nodes)
+        .data(hub_data_graph.nodes)
         .enter().append("circle")
         .attr("id", function(node) {return node.id;})
         .attr("class", function(node) {
-            if (node.id === hub_info.source.id) {
+            if (node.id === hub_data_graph.source) {
                 node.fixed = true;
                 node.fx = 50;
                 node.fy = height / 2;
                 return "hub-source-node";
-            } else if (node.id === hub_info.target.id) {
+            } else if (node.id === hub_data_graph.target) {
                 node.fixed = true;
                 node.fx = width - 50;
                 node.fy = height / 2;
@@ -107,7 +134,7 @@ function load_hub_viz(hub_info) {
 
     var label = container.append("g")
         .selectAll("text")
-        .data(internal_nodes)
+        .data(hub_data_graph.nodes)
         .enter().append("text")
             .attr("class", "internal-node-label")
             .text(function(d) { return d.id });
@@ -118,11 +145,11 @@ function load_hub_viz(hub_info) {
         .force("center", d3.forceCenter(width / 2, height / 2));
 
     simulation
-        .nodes(internal_nodes)
+        .nodes(hub_data_graph.nodes)
         .on("tick", ticked);
 
     simulation.force("link")
-        .links(hub_info.internal_links);
+        .links(hub_data_graph.links);
 
     function ticked() {
         link
@@ -169,6 +196,13 @@ function apply_hub_edits() {
     // TODO
 
     close_hub_view();
+}
+
+function show_hub_view() {
+    // Hide the full visualization
+    full_viz = $("#viz").remove()
+
+    $("#hub-btns")[0].style.visibility = "visible";
 }
 
 function close_hub_view() {
