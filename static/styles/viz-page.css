@@ -47,7 +47,7 @@
 .hub-link {
     cursor: pointer;
     stroke-dasharray: 10 5;
-    stroke-width: 6px;
+    stroke-width: 8px;
 }
 
 .internal-link {
@@ -94,4 +94,9 @@
 #viz-column {
     height: 100vh;
     padding: 0px;
+}
+
+#hub-btns {
+    margin: 10px;
+    position: absolute;
 }
