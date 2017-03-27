@@ -16,7 +16,6 @@
 
 .hub-node {
     fill: #efc406;
-    r: 18px !important;
 }
 
 .hub-source-node {
@@ -47,7 +46,7 @@
 .hub-link {
     cursor: pointer;
     stroke-dasharray: 10 5;
-    stroke-width: 8px;
+    stroke-width: 4px;
 }
 
 .internal-link {

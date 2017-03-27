@@ -41,13 +41,14 @@ function extract_hub_data_graph(hub_info) {
 
     var nodes = []
     var links = []
-        for (var n of node_set) {
-            nodes.push({ "id" : n });
-        }
-        for (var l of link_set) {
-            ends = l.split(",");
-            links.push({ "source" : ends[0], "target" : ends[1] });
-        }
+
+    for (var n of node_set) {
+        nodes.push({ "id" : n });
+    }
+    for (var l of link_set) {
+        ends = l.split(",");
+        links.push({ "source" : ends[0], "target" : ends[1] });
+    }
 
     return {
         "nodes" : nodes,
@@ -94,13 +95,27 @@ function load_hub_viz(hub_data_graph) {
 
     var container = svg.append("g");
 
+    svg.append("defs").append("marker")
+        .attr("id", "arrowhead")
+        .attr("viewBox", "0 0 10 10")
+        .attr("refX", "15")
+        .attr("refY", "5")
+        .attr("markerUnits", "strokeWidth")
+        .attr("markerWidth", "10")
+        .attr("markerHeight", "5")
+        .attr("orient", "auto")
+        .append("svg:path")
+        .attr("d", "M 0 0 L 10 5 L 0 10 z")
+        .attr("fill", "#555");
+
     var link = container.append("g")
         .attr("class", "links")
         .selectAll("line")
         .data(hub_data_graph.links)
         .enter().append("line")
         .attr("id", function(link) {return get_link_id(link);})
-        .attr("class", "internal-link");
+        .attr("class", "internal-link")
+        .attr("marker-end", "url(#arrowhead)");
 
     link.data().forEach(function (l, index, array) {
         l.id = get_link_id(l);
