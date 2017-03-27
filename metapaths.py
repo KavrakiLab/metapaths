@@ -25,14 +25,12 @@ def extract_pathways(string_pathways):
         links = []
         for i in range(len(path_compounds) - 1):
             j = i + 1
-            links.append({"source" : path_compounds[i], "target" : path_compounds[j]})
+            links.append(path_compounds[i] + "," + path_compounds[j])
 
         pathway = {}
         pathway["atoms"] = 0 # TODO: actually calculate this
-        pathway["nodes"] = [{"id" : node} for node in set(path_compounds)]
+        pathway["nodes"] = path_compounds
         pathway["links"] = links
-        pathway["hub_nodes"] = [] # TODO: remove
-        pathway["hub_links"] = [] # TODO: remove
 
         pathways.append(pathway)
 
@@ -42,7 +40,7 @@ def extract_pathways(string_pathways):
 def hub_paths_to_json(hub_src, hub_dst, string_pathways):
     pathways = extract_pathways(string_pathways)
     hub = {
-        "info" : {"start" : hub_dst, "target" : hub_dst},
+        "info" : {"source" : hub_src, "target" : hub_dst},
         "pathways" : pathways
     }
     return jsonify(hub)
