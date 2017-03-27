@@ -9,9 +9,6 @@ $(function () {
     $("#graph-data")[0].focus()
 });
 
-// TODO: this line for testing only, remove
-// var sample_data = '{    "info" : {        "start" : "C00031",        "goal" : "C00492"    },    "pathways" : [        {            "atoms" : 3,            "nodes": [                {"id" : "C00031"},                {"id" : "C00492"}            ],            "hub_nodes" : [                {"id" : "C00022"},                {"id" : "C00036"}            ],            "links" : [                {"source": "C00031", "target": "C00022"},                {"source": "C00036", "target": "C00492"}            ],            "hub_links": [                {                    "source": "C00022",                    "target": "C00036",                    "internal_nodes" : [                        {"id" : "RP04274"},                        {"id" : "C03248"},                        {"id" : "RP03811"},                        {"id" : "C03981"},                        {"id" : "RP09148"},                        {"id" : "RP00000"},                        {"id" : "C00000"}                    ],                    "internal_links": [                        {"source": "C00022", "target": "RP04274"},                        {"source": "C00022", "target": "RP00000"},                        {"source": "RP00000", "target": "C03981"},                        {"source": "RP04274", "target": "C03248"},                        {"source": "C03248", "target": "RP03811"},                        {"source": "C03981", "target": "RP09148"},                        {"source": "RP09148", "target": "C00036"},                        {"source": "RP03811", "target": "C00000"},                        {"source": "C00000", "target": "RP09148"}                    ]                }            ]        }    ]}'
-// validate_and_visualize(sample_data);
 
 function upload() {
     var graph_file = $('#graph-data')[0].files[0];
@@ -135,6 +132,19 @@ function load_viz(data_graph) {
 
     var container = svg.append("g");
 
+    svg.append("defs").append("marker")
+        .attr("id", "arrowhead")
+        .attr("viewBox", "0 0 10 10")
+        .attr("refX", "15")
+        .attr("refY", "5")
+        .attr("markerUnits", "strokeWidth")
+        .attr("markerWidth", "10")
+        .attr("markerHeight", "5")
+        .attr("orient", "auto")
+        .append("svg:path")
+        .attr("d", "M 0 0 L 10 5 L 0 10 z")
+        .attr("fill", "#555");
+
     var link = container.append("g")
         .attr("class", "links")
         .selectAll("line")
@@ -147,7 +157,8 @@ function load_viz(data_graph) {
             } else {
                 return "link";
             }
-        });
+        })
+        .attr("marker-end", "url(#arrowhead)");
 
     link.data().forEach(function (l, index, array) {
         l.id = get_link_id(l);
@@ -340,15 +351,15 @@ function attach_link_watchers(viz_graph, data_graph) {
     });
 
     viz_graph.link.on("mouseover", function(link) {
-        // if (link.isHub) {
-            // $("#" + link.id)[0].style.strokeWidth = 10;
-        // }
+        if (link.isHub) {
+            $("#" + link.id)[0].style.strokeWidth = 6;
+        }
     });
 
     viz_graph.link.on("mouseout", function(link) {
-        // if (link.isHub) {
-            // $("#" + link.id)[0].style.strokeWidth = 6;
-        // }
+        if (link.isHub) {
+            $("#" + link.id)[0].style.strokeWidth = 4;
+        }
     });
 }
 
