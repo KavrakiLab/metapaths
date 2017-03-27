@@ -245,13 +245,11 @@ function stylize(data_graph, viz_graph, start, goal) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
 
-    $("#title")[0].innerHTML = generate_title(start, goal);
+    var count = -1; // TODO: get the number of pathways being displayed
+    $("#title")[0].innerHTML = generate_title(start, goal, count);
 
 
     style_nodes(viz_graph, start, goal, data_graph.hub_nodes);
-
-
-
 
     // Show the info panel and options
     $("#info-panel")[0].style.visibility = "visible";
@@ -259,9 +257,8 @@ function stylize(data_graph, viz_graph, start, goal) {
 }
 
 
-function generate_title(start, goal) {
-    var title = start + " &#8594; " + goal;
-    return title;
+function generate_title(start, goal, count) {
+    return start + " &#8594; " + goal + " (" + count + " paths shown)";
 }
 
 
