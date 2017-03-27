@@ -128,6 +128,9 @@ function load_viz(data_graph) {
             container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
         });
 
+    // Create an SVG to draw on
+    d3.select("#viz-column").append("svg").attr("id", "viz")
+
     var svg = d3.select("#viz")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -341,7 +344,7 @@ function attach_link_watchers(viz_graph, data_graph) {
     viz_graph.link.on("click", function(link) {
         if (link.isHub) {
             // from viz-modal.js
-            open_modal(link);
+            init_hub_view(link);
         }
     });
 
@@ -349,15 +352,15 @@ function attach_link_watchers(viz_graph, data_graph) {
     });
 
     viz_graph.link.on("mouseover", function(link) {
-        if (link.isHub) {
-            $("#" + link.id)[0].style.strokeWidth = 10;
-        }
+        // if (link.isHub) {
+            // $("#" + link.id)[0].style.strokeWidth = 10;
+        // }
     });
 
     viz_graph.link.on("mouseout", function(link) {
-        if (link.isHub) {
-            $("#" + link.id)[0].style.strokeWidth = 6;
-        }
+        // if (link.isHub) {
+            // $("#" + link.id)[0].style.strokeWidth = 6;
+        // }
     });
 }
 

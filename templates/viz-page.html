@@ -5,6 +5,10 @@
         <script language="JavaScript" type="text/javascript" src="../static/scripts/bootstrap/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="../static/styles/bootstrap/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="../static/styles/viz-page.css" />
+
+        <!-- Load the visualization code -->
+        <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>
+        <script language="JavaScript" type="text/javascript" src="../static/scripts/hub-view.js"></script>
     </head>
     <body>
         <div class="row">
@@ -87,35 +91,12 @@
             </div> <!-- col-md-3options-column -->
 
             <div class="col-md-9" id="viz-column">
-                <!-- Create a canvas for the main visualization -->
-                <svg id="viz" style="visibility: hidden"></svg>
-
-                <!-- Load the visualization code -->
-                <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>
-                <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-modal.js"></script>
-
-                <!-- Hub View Modal -->
-                <div class="modal fade" tabindex="-1" id="hub-modal" role="dialog">
-                  <div class="modal-dialog modal-lg" id="hub-modal-dialog" role="document">
-                    <div class="modal-content">
-
-                      <div class="modal-header" id="hub-modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="hub-modal-title"></h4>
-                      </div>
-
-                      <div class="modal-body" id="hub-modal-body">
-                        <svg id="hub"></svg>
-                      </div>
-
-                      <div class="modal-footer" id="hub-modal-footer">
-                        <button type="button" class="btn btn-primary">Apply (?)</button>
-                      </div>
-
-                    </div>
-                  </div>
+                <div id="hub-btns" style="visibility: hidden;">
+                    <button class="btn btn-primary" id="hub-cancel-btn" onclick="cancel_hub_edits()">Cancel</button>
+                    <button class="btn btn-success" id="hub-apply-btn" onclick="apply_hub_edits()">Apply</button>
                 </div>
 
+                <!-- The visualizations will be filled in here. -->
             </div>
 
         </div>

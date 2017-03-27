@@ -1,15 +1,19 @@
-function open_modal(hub_link) {
+var full_viz = null
+
+function init_hub_view(hub_link) {
     console.log(hub_link);
-    // $("#hub-modal-title")[0].innerText = "Internal Hub Paths: " + hub_link.id;
+
+    // Hide the full visualization
+    full_viz = $("#viz").remove()
+
+    // Create an SVG for the hub
+    d3.select("#viz-column").append("svg").attr("id", "hub")
+
+    $("#hub-btns")[0].style.visibility = "visible";
+
     hub_info = get_hub_info(hub_link.source.id, hub_link.target.id)
 
-    // load_hub_viz(hub_info);
-
-    // Show the hub visualization
-   $("#hub-modal").modal({
-       backdrop: "static",
-       keyboard: false
-   });
+    load_hub_viz(hub_link);
 }
 
 function get_hub_info(hub_src, hub_dst) {
@@ -21,9 +25,9 @@ function get_hub_info(hub_src, hub_dst) {
 }
 
 function load_hub_viz(hub_info) {
-    var margin = {top: 0, right: 0, bottom: 0, left: 0};
-    var width = $("#hub-modal").width() - margin.left - margin.right + 46;
-    var height = $("#hub-modal-body").height() - margin.top - margin.bottom;
+    var margin = {top: -5, right: -5, bottom: -5, left: -5},
+        width = $("#viz-column")[0].offsetWidth - margin.left - margin.right,
+        height = $("#viz-column")[0].offsetHeight - margin.top - margin.bottom;
 
     var drag = d3.drag()
         .on("start", dragstarted)
@@ -154,4 +158,22 @@ function load_hub_viz(hub_info) {
 
 function simple_clone(original) {
     return JSON.parse(JSON.stringify(original));
+}
+
+function cancel_hub_edits() {
+    // TODO
+
+    close_hub_view();
+}
+
+function apply_hub_edits() {
+    // TODO
+
+    close_hub_view();
+}
+
+function close_hub_view() {
+    $("#hub-btns")[0].style.visibility = "hidden";
+    $("#hub").remove()
+    $("#viz-column").append(full_viz);
 }
