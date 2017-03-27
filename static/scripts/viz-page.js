@@ -342,6 +342,8 @@ function attach_node_watchers(viz_graph) {
 function attach_link_watchers(viz_graph, data_graph) {
     viz_graph.link.on("click", function(link) {
         if (link.isHub) {
+            $("#" + link.id)[0].style.stroke = "#555";
+
             // from viz-modal.js
             init_hub_view(link);
         }
@@ -352,13 +354,13 @@ function attach_link_watchers(viz_graph, data_graph) {
 
     viz_graph.link.on("mouseover", function(link) {
         if (link.isHub) {
-            $("#" + link.id)[0].style.strokeWidth = 6;
+            $("#" + link.id)[0].style.stroke = "#999";
         }
     });
 
     viz_graph.link.on("mouseout", function(link) {
-        if (link.isHub) {
-            $("#" + link.id)[0].style.strokeWidth = 4;
+        if (link.isHub && $("#" + link.id)[0]) {
+            $("#" + link.id)[0].style.stroke = "#555";
         }
     });
 }
