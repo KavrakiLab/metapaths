@@ -49,7 +49,7 @@ function validate_and_visualize(file_contents) {
         var viz_graph = load_viz(data_graph);
         console.log("viz_graph", viz_graph);
 
-        get_kegg_data(data_graph);
+        get_kegg_data(data_graph.nodes);
 
         stylize(data_graph, viz_graph, json_pathways.info.start, json_pathways.info.goal);
 
@@ -287,9 +287,9 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
 }
 
 
-function get_kegg_data(data_graph) {
+function get_kegg_data(graph_nodes) {
     var compounds = [];
-    data_graph.nodes.forEach(function(node, index, array) {
+    graph_nodes.forEach(function(node, index, array) {
         compounds.push(node.id);
     });
 
@@ -304,13 +304,13 @@ function get_kegg_data(data_graph) {
             }
         });
 
-        initialize_info_panel(kegg_data);
+        initialize_info_panel();
     });
 
 }
 
 
-function initialize_info_panel(kegg_data) {
+function initialize_info_panel() {
     $("#info-panel-body")[0].innerHTML = "Click on elements in the graph for more information.";
 }
 

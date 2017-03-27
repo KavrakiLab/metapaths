@@ -13,7 +13,14 @@ function init_hub_view(hub_link) {
 
     hub_info = get_hub_info(hub_link.source.id, hub_link.target.id)
 
-    load_hub_viz(hub_link);
+    // Create the hub graph
+    var hub_graph = load_hub_viz(hub_link);
+
+    // Get KEGG data for any new compounds and add to the global kegg_data dict
+    get_kegg_data(hub_link.internal_nodes);
+
+    // Attach the same node watchers as for the full viz
+    attach_node_watchers(hub_graph);
 }
 
 function get_hub_info(hub_src, hub_dst) {
@@ -148,17 +155,9 @@ function load_hub_viz(hub_info) {
         if (!d3.event.active) simulation.alphaTarget(0);
     }
 
-    $('#hub-modal').on('hidden.bs.modal', function (e) {
-        // When the hub view is hidden, clear it
-        d3.select("#hub").selectAll("*").remove();
-    });
-
     return {"node" : node, "link" : link};
 } // load_hub_viz
 
-function simple_clone(original) {
-    return JSON.parse(JSON.stringify(original));
-}
 
 function cancel_hub_edits() {
     // TODO
@@ -177,3 +176,16 @@ function close_hub_view() {
     $("#hub").remove()
     $("#viz-column").append(full_viz);
 }
+
+
+
+
+
+
+
+
+
+function simple_clone(original) {
+    return JSON.parse(JSON.stringify(original));
+}
+
