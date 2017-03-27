@@ -1,4 +1,4 @@
-var full_viz = null
+var full_viz;
 
 function init_hub_view(hub_link) {
     console.log(hub_link);
