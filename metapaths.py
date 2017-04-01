@@ -5,9 +5,11 @@ app = Flask(__name__)
 
 
 # Global dictionary for storing metapath search results
-# graph_id : results object
-graphs = {}
+searches = {}
 db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="hubdb")
+
+# TODO: This is just for testing; remove later
+searches["test"] = "static/pathways/custom_pathways.txt"
 
 
 #
@@ -20,6 +22,8 @@ def extract_pathways(string_pathways):
     # Finds compound IDs by extracting words that start with the letter 'C'
     regex = re.compile("C\w+")
 
+    start = None
+    goal = None
     for string_path in string_pathways:
         path_compounds = regex.findall(string_path)
         nodes = set([])
@@ -27,52 +31,50 @@ def extract_pathways(string_pathways):
         hub_nodes = set([])
         hub_links = []
 
+        if start == None and goal == None:
+            start = path_compounds[0]
+            goal = path_compounds[-1]
+
         for i in range(len(path_compounds) - 1):
             j = i + 1
             if "_HS" in path_compounds[i] and "_HE" in path_compounds[j]:
-                hub_nodes.add(path_compounds[i][0:6])
-                hub_nodes.add(path_compounds[j][0:6])
+                hub_nodes.add(path_compounds[i])
+                hub_nodes.add(path_compounds[j])
                 hub_links.append({
                     "source" : path_compounds[i][0:6],
                     "target" : path_compounds[j][0:6]
                 })
             else:
-                nodes.add(path_compounds[i][0:6])
-                nodes.add(path_compounds[j][0:6])
                 links.append({
                     "source" : path_compounds[i][0:6],
                     "target" : path_compounds[j][0:6]
                 })
 
-        nodes = list(nodes)
-        hub_nodes = list(hub_nodes)
-
         pathway = {}
         pathway["atoms"] = 0 # TODO: actually calculate this
-        pathway["nodes"] = [{"id" : nodes} for node in  nodes]
+        pathway["nodes"] = [{"id" : node[0:6]} for node in  (set(path_compounds) - hub_nodes)]
         pathway["links"] = links
-        pathway["hub_nodes"] = [{"id" : hub_node} for hub_node in hub_nodes]
+        pathway["hub_nodes"] = [{"id" : hub_node[0:6]} for hub_node in hub_nodes]
         pathway["hub_links"] = hub_links
         print(pathways)
 
         pathways.append(pathway)
 
-
-    return pathways
-
-
-def get_pathways_from_file(start, goal, pathways_filename):
-    pathways_file = open(pathways_filename, "r")
-    pathways = extract_pathways(pathways_file.readlines())
-
-    pathways_json = json.dumps({
+    pathways_data = {
         "info" : {
             "start" : start,
             "goal" : goal
             },
         "pathways" : pathways
-        })
-    return pathways_json
+    }
+
+    return pathways_data
+
+
+def get_pathways_from_file(pathways_filename):
+    pathways_file = open(pathways_filename, "r")
+    return extract_pathways(pathways_file.readlines())
+
 
 
 def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
@@ -135,15 +137,16 @@ def get_hub_paths(hub_src, hub_dst):
     return hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
 
 
-@app.route('/load_graph/<graph_id>')
-def load_data(graph_id):
+@app.route('/load_previous/<search_id>')
+def load_previous(search_id):
     """
     Looks up the graph associated with this graph_id and responds with a JSON
     representation of the graph
     """
-    # TODO: validate the JSON? Return error code if invaild
-    graph = graphs[graph_id]
-    # TODO: convert to JSON and send in the response
+    global searches
+
+    search_result_file = searches[search_id]
+    return json.dumps(get_pathways_from_file(search_result_file))
 
 
 @app.route('/search')
@@ -154,7 +157,7 @@ def search():
     """
     # TODO: Generate a graph_id
     # TODO: Execute the search (async?)
-    # TODO: Return the graph_id in the reponse
+    # TODO: Return the graph_id in the response
 
 
 @app.route('/help')
@@ -163,3 +166,5 @@ def help():
     Loads the help page
     """
     return render_template('help-page.html')
+
+
