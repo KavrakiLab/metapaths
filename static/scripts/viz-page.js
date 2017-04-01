@@ -6,8 +6,27 @@ var kegg_data = {};
 
 $(function () {
     $('[data-toggle="popover"]').popover({container: 'body'});
-    $("#graph-data")[0].focus()
+
+    var search_id = localStorage.getItem("search_id");
+    if (search_id != null) {
+        $("#load-panel").hide();
+        load_previous_search_result(search_id);
+    } else {
+        $("#graph-data")[0].focus();
+    }
 });
+
+
+function load_previous_search_result(search_id) {
+    localStorage.removeItem("search_id");
+
+    $.get("/load_previous/" + search_id).done(function(data) {
+        validate_and_visualize(data);
+    }).fail(function() {
+        alert("Failed to retrive search result.")
+        location.assign("/");
+    });
+}
 
 
 function upload() {
@@ -128,7 +147,11 @@ function load_viz(data_graph) {
         .attr("width", width)
         .attr("height", height)
         .style("fill", "none")
-        .style("pointer-events", "all");
+        .style("pointer-events", "all")
+        .on("contextmenu", function (d, i) {
+           // suppress default right-click menu
+            d3.event.preventDefault();
+        });
 
     var container = svg.append("g");
 
@@ -328,10 +351,27 @@ function attach_node_watchers(viz_graph) {
         $("#" + node.id)[0].style.stroke = "";
     });
 
+    viz_graph.node.on("contextmenu", function(node) {
+       // suppress default right-click menu
+        d3.event.preventDefault();
+
+        var tooltip = $("#tooltip")[0];
+        tooltip.innerHTML = generate_tooltip(node.id);
+
+        tooltip.style.visibility = "visible";
+
+    });
+
     function release_node(node) {
         node.fixed = false;
         node.fx = null;
         node.fy = null;
+    }
+
+    function generate_tooltip(node_id) {
+        // TODO: should filter buttons only be in the tooltip or can they also
+        // or instead of be in the info box on the left column?
+        return node_id;
     }
 }
 

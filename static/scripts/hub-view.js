@@ -91,7 +91,11 @@ function load_hub_viz(hub_data_graph) {
         .attr("width", width)
         .attr("height", height)
         .style("fill", "none")
-        .style("pointer-events", "all");
+        .style("pointer-events", "all")
+        .on("contextmenu", function (d, i) {
+           // suppress default right-click menu
+            d3.event.preventDefault();
+        });
 
     var container = svg.append("g");
 
