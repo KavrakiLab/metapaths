@@ -103,3 +103,19 @@
 .input-group {
     margin-bottom: 10px;
 }
+
+.tooltip {
+    background-color: #f00;
+	color: #333;
+	font-size: 0.9em;
+	font-weight: 400;
+	line-height: 125%;
+	opacity: 0.5;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	position: absolute;
+	text-align: left;
+	width: 300px;
+}
