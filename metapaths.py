@@ -1,4 +1,5 @@
 import re, MySQLdb
+import json
 from flask import Flask, render_template, jsonify
 app = Flask(__name__)
 
@@ -20,6 +21,67 @@ def extract_pathways(string_pathways):
     regex = re.compile("C\w+")
 
     for string_path in string_pathways:
+        path_compounds = regex.findall(string_path)
+        nodes = set([])
+        links = []
+        hub_nodes = set([])
+        hub_links = []
+
+        for i in range(len(path_compounds) - 1):
+            j = i + 1
+            if "_HS" in path_compounds[i] and "_HE" in path_compounds[j]:
+                hub_nodes.add(path_compounds[i][0:6])
+                hub_nodes.add(path_compounds[j][0:6])
+                hub_links.append({
+                    "source" : path_compounds[i][0:6],
+                    "target" : path_compounds[j][0:6]
+                })
+            else:
+                nodes.add(path_compounds[i][0:6])
+                nodes.add(path_compounds[j][0:6])
+                links.append({
+                    "source" : path_compounds[i][0:6],
+                    "target" : path_compounds[j][0:6]
+                })
+
+        nodes = list(nodes)
+        hub_nodes = list(hub_nodes)
+
+        pathway = {}
+        pathway["atoms"] = 0 # TODO: actually calculate this
+        pathway["nodes"] = [{"id" : nodes} for node in  nodes]
+        pathway["links"] = links
+        pathway["hub_nodes"] = [{"id" : hub_node} for hub_node in hub_nodes]
+        pathway["hub_links"] = hub_links
+        print(pathways)
+
+        pathways.append(pathway)
+
+
+    return pathways
+
+
+def get_pathways_from_file(start, goal, pathways_filename):
+    pathways_file = open(pathways_filename, "r")
+    pathways = extract_pathways(pathways_file.readlines())
+
+    pathways_json = json.dumps({
+        "info" : {
+            "start" : start,
+            "goal" : goal
+            },
+        "pathways" : pathways
+        })
+    return pathways_json
+
+
+def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
+    pathways = []
+
+    # Finds compound IDs by extracting words that start with the letter 'C'
+    regex = re.compile("C\w+")
+
+    for string_path in string_hub_pathways:
         path_compounds = regex.findall(string_path[0])
 
         links = []
@@ -34,11 +96,7 @@ def extract_pathways(string_pathways):
 
         pathways.append(pathway)
 
-    return pathways
 
-
-def hub_paths_to_json(hub_src, hub_dst, string_pathways):
-    pathways = extract_pathways(string_pathways)
     hub = {
         "info" : {"source" : hub_src, "target" : hub_dst},
         "pathways" : pathways
