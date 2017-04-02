@@ -18,7 +18,7 @@ $(function () {
 
 
 function load_previous_search_result(search_id) {
-    localStorage.removeItem("search_id");
+    // localStorage.removeItem("search_id");
 
     $.get("/load_previous/" + search_id).done(function(data) {
         validate_and_visualize(data);
@@ -407,11 +407,14 @@ function update_info_panel(id) {
     var entry = kegg_data[id];
     console.log("entry", entry);
 
-    var name = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>" + entry.name + "</a><br>";
-    var image = "<img src='" + KEGG_FIGURE_URL + id + ".gif'></img><br>"
-    var complete = "<a onclick=detail_popup('" + id +"')>View more</a>";
+    var name = "<h4>" + entry.name + "</h4>";
+    var link = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>KEGG entry</a>, ";
+    var exclude = "<a onclick=add_excluded_node('" + id +"')>exclude</a>, ";
+    var include = "<a onclick=add_included_node('" + id +"')>include</a>, ";
+    var more_info = "<a onclick=detail_popup('" + id +"')>more info</a><br>";
+    var image = "<img src='" + KEGG_FIGURE_URL + id + ".gif'></img><br>";
 
-    $("#info-panel-body")[0].innerHTML = name + image + complete;
+    $("#info-panel-body")[0].innerHTML = name + link + exclude + include + more_info +  image;
 }
 
 

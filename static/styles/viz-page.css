@@ -104,6 +104,10 @@
     margin-bottom: 10px;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .tooltip {
     background-color: #f00;
 	color: #333;
