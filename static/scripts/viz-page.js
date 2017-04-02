@@ -58,12 +58,12 @@ function upload() {
 }
 
 
-function validate_and_visualize(json_pathways) {
+function validate_and_visualize(pathways) {
     try {
         console.log(json_pathways);
 
         // The aggreate data of the nodes and links from the pathways
-        var data_graph = collect_pathways_into_graph(json_pathways);
+        var data_graph = collect_pathways_into_graph(pathways);
         console.log("data_graph", data_graph);
 
         var viz_graph = load_viz(data_graph);
@@ -71,7 +71,7 @@ function validate_and_visualize(json_pathways) {
 
         get_kegg_data(data_graph.nodes);
 
-        stylize(data_graph, viz_graph, json_pathways.info.start, json_pathways.info.goal);
+        stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal);
 
         attach_node_watchers(viz_graph);
 
@@ -85,7 +85,7 @@ function validate_and_visualize(json_pathways) {
 } // validate_and_visualize
 
 
-function collect_pathways_into_graph(json_pathways) {
+function collect_pathways_into_graph(pathways) {
     var nodes  = new Set([]);
     var links = new Set([]);
 
@@ -93,7 +93,7 @@ function collect_pathways_into_graph(json_pathways) {
     var hub_nodes = new Set([]);
     var hub_links = new Set([]);
 
-    json_pathways.pathways.forEach(function (pathway, index, array) {
+    pathways.pathways.forEach(function (pathway, index, array) {
         nodes = new Set([...nodes, ...pathway.nodes]);
         nodes = new Set([...nodes, ...pathway.hub_nodes]);
         links = new Set([...links, ...pathway.links]);
@@ -127,8 +127,9 @@ function collect_pathways_into_graph(json_pathways) {
         "links" : link_list,
         "hub_nodes" : hub_node_list,
         "hub_links" : hub_link_list,
-        "start" : json_pathways.info.start,
-        "goal" : json_pathways.info.goal
+        "start" : pathways.info.start,
+        "goal" : pathways.info.goal,
+        "num_pathways" : pathways.pathways.length
     };
 } // collect_pathways_into_graph
 
@@ -288,8 +289,7 @@ function stylize(data_graph, viz_graph, start, goal) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
 
-    var count = -1; // TODO: get the number of pathways being displayed
-    $("#title")[0].innerHTML = generate_title(start, goal, count);
+    $("#title")[0].innerHTML = generate_title(start, goal, data_graph.num_pathways);
 
 
     style_nodes(viz_graph, start, goal, data_graph.hub_nodes);
