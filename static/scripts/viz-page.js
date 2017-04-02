@@ -3,6 +3,7 @@ var KEGG_REST_URL = "http://togows.org/entry/kegg-compound/";
 var KEGG_ENTRY_URL = "http://www.kegg.jp/dbget-bin/www_bget?";
 var KEGG_FIGURE_URL = "http://www.kegg.jp/Fig/compound/";
 var kegg_data = {};
+var json_pathways;
 
 $(function () {
     $('[data-toggle="popover"]').popover({container: 'body'});
@@ -21,7 +22,8 @@ function load_previous_search_result(search_id) {
     // localStorage.removeItem("search_id");
 
     $.get("/load_previous/" + search_id).done(function(data) {
-        validate_and_visualize(data);
+        json_pathways = JSON.parse(data);
+        validate_and_visualize(json_pathways);
     }).fail(function() {
         alert("Failed to retrive search result.")
         location.assign("/");
@@ -43,7 +45,9 @@ function upload() {
             reader.onload = function(event){
                 // Get the file contents which are stored in the event's result by
                 // readAsText() when it completes
-                validate_and_visualize(event.target.result);
+                json_pathways = JSON.parse(event.target.result);
+                console.log(json_pathways);
+                validate_and_visualize(json_pathways);
             }
 
             reader.readAsText(graph_file);
@@ -54,10 +58,8 @@ function upload() {
 }
 
 
-function validate_and_visualize(file_contents) {
+function validate_and_visualize(json_pathways) {
     try {
-        // The pathway info from file
-        var json_pathways = JSON.parse(file_contents);
         console.log(json_pathways);
 
         // The aggreate data of the nodes and links from the pathways
@@ -146,6 +148,9 @@ function load_viz(data_graph) {
         .on("zoom", function() {
             container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
         });
+
+    // If previous viz exists, remove it
+    d3.select("#viz").remove();
 
     // Create an SVG to draw on
     d3.select("#viz-column").append("svg").attr("id", "viz")
