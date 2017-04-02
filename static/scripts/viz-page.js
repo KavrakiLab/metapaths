@@ -58,9 +58,11 @@ function validate_and_visualize(file_contents) {
     try {
         // The pathway info from file
         var json_pathways = JSON.parse(file_contents);
+        console.log(json_pathways);
 
         // The aggreate data of the nodes and links from the pathways
         var data_graph = collect_pathways_into_graph(json_pathways);
+        console.log("data_graph", data_graph);
 
         var viz_graph = load_viz(data_graph);
         console.log("viz_graph", viz_graph);
@@ -82,34 +84,51 @@ function validate_and_visualize(file_contents) {
 
 
 function collect_pathways_into_graph(json_pathways) {
-    var nodes  = [];
-    var links = [];
+    var nodes  = new Set([]);
+    var links = new Set([]);
 
     // Subset of nodes and links which are hubs
-    var hub_nodes = [];
-    var hub_links = [];
+    var hub_nodes = new Set([]);
+    var hub_links = new Set([]);
 
     json_pathways.pathways.forEach(function (pathway, index, array) {
-        nodes = nodes.concat(pathway.nodes);
-        nodes = nodes.concat(pathway.hub_nodes);
-        links = links.concat(pathway.links);
-        links = links.concat(pathway.hub_links);
+        nodes = new Set([...nodes, ...pathway.nodes]);
+        nodes = new Set([...nodes, ...pathway.hub_nodes]);
+        links = new Set([...links, ...pathway.links]);
+        links = new Set([...links, ...pathway.hub_links]);
 
         pathway.hub_nodes.forEach(function (hub_node, index, array) {
-            hub_nodes.push(hub_node.id);
+            hub_nodes.add(hub_node.id);
         });
 
         pathway.hub_links.forEach(function (hub_link, index, array) {
             var hub_link_id = get_link_id(hub_link);
-            hub_links.push(hub_link_id);
+            hub_links.add(hub_link_id);
         });
     });
 
+    var node_list = [];
+    var hub_node_list = Array.from(hub_nodes);
+    var link_list = [];
+    var hub_link_list = [];
+
+    nodes.forEach(function(node) {
+        node_list.push({"id":node});
+    });
+    links.forEach(function(link) {
+        var compounds = link.split("-");
+        link_list.push({"source":compounds[0], "target":compounds[1]});
+    });
+    hub_links.forEach(function(hub_link) {
+        var compounds = hub_link.split("-");
+        hub_link_list.push({"source":compounds[0], "target":compounds[1]});
+    });
+
     return {
-        "nodes" : nodes,
-        "links" : links,
-        "hub_nodes" : hub_nodes,
-        "hub_links" : hub_links,
+        "nodes" : node_list,
+        "links" : link_list,
+        "hub_nodes" : hub_node_list,
+        "hub_links" : hub_link_list,
         "start" : json_pathways.info.start,
         "goal" : json_pathways.info.goal
     };
