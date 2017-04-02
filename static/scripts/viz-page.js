@@ -98,31 +98,27 @@ function collect_pathways_into_graph(json_pathways) {
         links = new Set([...links, ...pathway.hub_links]);
 
         pathway.hub_nodes.forEach(function (hub_node, index, array) {
-            hub_nodes.add(hub_node.id);
+            hub_nodes.add(hub_node);
         });
 
         pathway.hub_links.forEach(function (hub_link, index, array) {
-            var hub_link_id = get_link_id(hub_link);
-            hub_links.add(hub_link_id);
+            hub_links.add(hub_link);
         });
     });
 
     var node_list = [];
-    var hub_node_list = Array.from(hub_nodes);
-    var link_list = [];
-    var hub_link_list = [];
-
     nodes.forEach(function(node) {
         node_list.push({"id":node});
     });
+
+    var link_list = [];
     links.forEach(function(link) {
         var compounds = link.split("-");
         link_list.push({"source":compounds[0], "target":compounds[1]});
     });
-    hub_links.forEach(function(hub_link) {
-        var compounds = hub_link.split("-");
-        hub_link_list.push({"source":compounds[0], "target":compounds[1]});
-    });
+
+    var hub_node_list = Array.from(hub_nodes);
+    var hub_link_list = Array.from(hub_links);
 
     return {
         "nodes" : node_list,
