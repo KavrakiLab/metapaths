@@ -1,5 +1,12 @@
-function get_hub_graphs(hub_links) {
-    hub_links.forEach(function(hub_link_id) {
+function get_hub_graphs(pathways) {
+    var all_hub_links = new Set([]);
+    pathways.forEach(function(pathway) {
+        pathway.hub_links.forEach(function(hub_link) {
+            all_hub_links.add(hub_link)
+        });
+    });
+
+    all_hub_links.forEach(function(hub_link_id) {
         var source = hub_link_id.split("-")[0];
         var target = hub_link_id.split("-")[1];
         var request_url = "/get_hub_paths/" + source + "/" + target;

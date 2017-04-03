@@ -31,6 +31,10 @@ function add_included_node(compound_id) {
 
 function apply_filters() {
 
+    filter_pathways();
+}
+
+function filter_pathways() {
     var filtered_pathways = {};
     filtered_pathways["info"] = JSON.parse(JSON.stringify(json_pathways["info"]));
     filtered_pathways["pathways"] = JSON.parse(JSON.stringify(json_pathways["pathways"]));
