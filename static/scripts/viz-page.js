@@ -33,6 +33,11 @@ function load_previous_search_result(search_id) {
 
     $.get("/load_previous/" + search_id).done(function(data) {
         json_pathways = JSON.parse(data);
+
+        // Get pathways between hubs from the server
+        get_hub_graphs(json_pathways.pathways);
+
+        // Visualize the pathways
         validate_and_visualize(json_pathways);
     }).fail(function() {
         alert("Failed to retrive search result.")
@@ -72,9 +77,6 @@ function validate_and_visualize(pathways) {
         // The aggreate data of the nodes and links from the pathways
         var data_graph = collect_pathways_into_graph(pathways);
         console.log("data_graph", data_graph);
-
-        // Get pathways between hubs from the server
-        get_hub_graphs(data_graph.hub_links);
 
         var viz_graph = load_viz(data_graph);
         console.log("viz_graph", viz_graph);
