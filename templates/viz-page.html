@@ -5,8 +5,10 @@
         <script language="JavaScript" type="text/javascript" src="../static/scripts/bootstrap/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="../static/styles/bootstrap/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="../static/styles/viz-page.css" />
+        <link rel="stylesheet" type="text/css" href="../static/styles/d3-context-menu.css" />
 
         <!-- Load the visualization code -->
+        <script language="JavaScript" type="text/javascript" src="../static/scripts/d3-context-menu.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/hub-view.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/filtering.js"></script>
@@ -84,8 +86,6 @@
                     <button class="btn btn-primary" id="hub-cancel-btn" onclick="cancel_hub_edits()">Cancel</button>
                     <button class="btn btn-success" id="hub-apply-btn" onclick="apply_hub_edits()">Apply</button>
                 </div>
-                <div id="tooltip" class="tooltip" style="visibility: hidden;"></div>
-
 
                 <!-- The visualizations will be filled in here. -->
             </div>

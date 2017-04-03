@@ -368,27 +368,27 @@ function attach_node_watchers(viz_graph) {
         $("#" + node.id)[0].style.stroke = "";
     });
 
-    viz_graph.node.on("contextmenu", function(node) {
-       // suppress default right-click menu
-        d3.event.preventDefault();
-
-        var tooltip = $("#tooltip")[0];
-        tooltip.innerHTML = generate_tooltip(node.id);
-
-        tooltip.style.visibility = "visible";
-
-    });
+    viz_graph.node.on("contextmenu", d3.contextMenu([
+        {
+            title: 'Exclude Compound',
+            action: function(elm, node, i) {
+                add_excluded_node(node.id);
+                apply_filters();
+            },
+        },
+        {
+            title: 'Include Compound',
+            action: function(elm, node, i) {
+                add_included_node(node.id);
+                apply_filters();
+            }
+        }
+    ]));
 
     function release_node(node) {
         node.fixed = false;
         node.fx = null;
         node.fy = null;
-    }
-
-    function generate_tooltip(node_id) {
-        // TODO: should filter buttons only be in the tooltip or can they also
-        // or instead of be in the info box on the left column?
-        return node_id;
     }
 }
 
