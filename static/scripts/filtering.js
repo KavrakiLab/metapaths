@@ -8,6 +8,7 @@ Set.prototype.intersection = function(setB) {
     return intersection;
 }
 
+
 function add_excluded_node(compound_id) {
     var existing = $("#excluded-ids").val();
     if(existing === "") {
@@ -16,6 +17,7 @@ function add_excluded_node(compound_id) {
         $("#excluded-ids").val(existing + "," + compound_id)
     }
 }
+
 
 function add_included_node(compound_id) {
     var existing = $("#included-ids").val();
@@ -26,48 +28,61 @@ function add_included_node(compound_id) {
     }
 }
 
+
 function apply_filters() {
-    var excluded = new Set($("#excluded-ids").val().split(","));
-    console.log(excluded);
-    console.log(json_pathways);
 
     var filtered_pathways = {};
     filtered_pathways["info"] = JSON.parse(JSON.stringify(json_pathways["info"]));
-    filtered_pathways["pathways"] = []
+    filtered_pathways["pathways"] = JSON.parse(JSON.stringify(json_pathways["pathways"]));
 
+    // First pass: remove pathways which contain an excluded compound
+    if ($("#excluded-ids").val() !== "") {
+        var excluded = new Set($("#excluded-ids").val().split(","));
 
-    var temp = [];
-    // First pass: exclude pathways which contain an excluded compound
-    json_pathways["pathways"].forEach(function(pathway) {
-        var node_intersect = new Set(pathway.nodes).intersection(excluded);
-        var hub_node_intersect = new Set(pathway.hub_nodes).intersection(excluded);
+        for (var i = filtered_pathways.pathways.length - 1; i >= 0; i--) {
+            // Iterate in reverse so that we can remove elements with out worrying about indices changing
+            var pathway = filtered_pathways.pathways[i];
+            var node_intersect = new Set(pathway.nodes).intersection(excluded);
+            var hub_node_intersect = new Set(pathway.hub_nodes).intersection(excluded);
 
-        // If pathway doesn't contain any of the excluded compounds, keep it
-        if (node_intersect.size === 0 && hub_node_intersect.size === 0) {
-            temp.push(JSON.parse(JSON.stringify(pathway)));
-        }
-    });
-    console.log(json_pathways);
-    console.log(temp);
-
-    if ($("#included-ids").val() !== "") {
-        var included = new Set($("#included-ids").val().split(","));
-        console.log("asdf");
-        // Second pass: remove any pathways that don't include any of the included compounds
-        temp.forEach(function(pathway) {
-            var node_intersect = new Set(pathway.nodes).intersection(included);
-            var hub_node_intersect = new Set(pathway.hub_nodes).intersection(included);
-
-            // If pathway contains all of the included compounds, keep it
-            if (node_intersect.size + hub_node_intersect.size === included.size) {
-                filtered_pathways["pathways"].push(pathway);
+            // If the pathway contains any of the excluded compounds, remove it
+            if (node_intersect.size > 0 || hub_node_intersect.size > 0) {
+                filtered_pathways.pathways.splice(i, 1);
             }
-        });
-    } else {
-        filtered_pathways["pathways"] = temp;
+        }
     }
 
-    console.log(filtered_pathways);
+    // Second pass: remove pathways that don't contain all of the included compounds
+    if ($("#included-ids").val() !== "") {
+        var included = new Set($("#included-ids").val().split(","));
+
+        for (var i = filtered_pathways.pathways.length - 1; i >= 0; i--) {
+            // Iterate in reverse so that we can remove elements with out worrying about indices changing
+            var pathway = filtered_pathways.pathways[i];
+            var nodes = new Set([...pathway.nodes, ...pathway.hub_nodes]);
+            var included_intersect = nodes.intersection(included);
+
+            // If pathway doesn't contain all of the included compounds, remove it
+            if (included_intersect.size !== included.size) {
+                filtered_pathways.pathways.splice(i, 1);
+            }
+        }
+    }
+
+    if ($("#max-path-len").val() !== "") {
+        var max_path_len = parseInt($("#max-path-len").val());
+
+        for (var i = filtered_pathways.pathways.length - 1; i >= 0; i--) {
+            // Iterate in reverse so that we can remove elements with out worrying about indices changing
+            var pathway = filtered_pathways.pathways[i];
+            var path_len = pathway.links.length + pathway.hub_links.length;
+
+            if (path_len > max_path_len) {
+                filtered_pathways.pathways.splice(i, 1);
+            }
+        }
+    }
+
     if (filtered_pathways.pathways.length === 0) {
         alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
     } else {
