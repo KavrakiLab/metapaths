@@ -46,7 +46,6 @@ function upload() {
                 // Get the file contents which are stored in the event's result by
                 // readAsText() when it completes
                 json_pathways = JSON.parse(event.target.result);
-                console.log(json_pathways);
                 validate_and_visualize(json_pathways);
             }
 
@@ -60,8 +59,6 @@ function upload() {
 
 function validate_and_visualize(pathways) {
     try {
-        console.log(json_pathways);
-
         // The aggreate data of the nodes and links from the pathways
         var data_graph = collect_pathways_into_graph(pathways);
         console.log("data_graph", data_graph);
@@ -425,7 +422,6 @@ function attach_link_watchers(viz_graph, data_graph) {
 
 function update_info_panel(id) {
     var entry = kegg_data[id];
-    console.log("entry", entry);
 
     var name = "<h4>" + entry.name + "</h4>";
     var link = "<a target=none href='" + KEGG_ENTRY_URL + id + "'>KEGG entry</a>, ";
