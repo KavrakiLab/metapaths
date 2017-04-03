@@ -30,14 +30,20 @@ function add_included_node(compound_id) {
 
 
 function apply_filters() {
+    var filtered_main_pathways = filter_pathways(JSON.stringify(json_pathways["info"]), JSON.stringify(json_pathways["pathways"]));
+    if (filtered_main_pathways === 0) {
+        alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
+    } else {
+        validate_and_visualize(filtered_main_pathways);
+    }
 
-    filter_pathways();
+    filter_all_hubs();
 }
 
-function filter_pathways() {
+function filter_pathways(str_info, str_pathways) {
     var filtered_pathways = {};
-    filtered_pathways["info"] = JSON.parse(JSON.stringify(json_pathways["info"]));
-    filtered_pathways["pathways"] = JSON.parse(JSON.stringify(json_pathways["pathways"]));
+    filtered_pathways["info"] = JSON.parse(str_info);
+    filtered_pathways["pathways"] = JSON.parse(str_pathways);
 
     // First pass: remove pathways which contain an excluded compound
     if ($("#excluded-ids").val() !== "") {
@@ -87,13 +93,12 @@ function filter_pathways() {
         }
     }
 
-    if (filtered_pathways.pathways.length === 0) {
-        alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
-    } else {
-        validate_and_visualize(filtered_pathways);
-    }
+    return filtered_pathways;
 }
 
+function filter_all_hubs() {
+
+}
 
 function reset_filters() {
     $("#excluded-ids").val("");
