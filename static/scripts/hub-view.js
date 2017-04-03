@@ -1,26 +1,33 @@
-var full_viz;
+function get_hub_graphs(hub_links) {
+    hub_links.forEach(function(hub_link_id) {
+        var source = hub_link_id.split("-")[0];
+        var target = hub_link_id.split("-")[1];
+        var request_url = "/get_hub_paths/" + source + "/" + target;
+
+        $.get(request_url).done(function (response) {
+            hub_graphs[hub_link_id] = extract_hub_data_graph(response);
+        }).fail(function() {
+            alert("ERROR: Failed to retrieve hub information for: " + hub_link_id);
+        });
+    });
+}
 
 function init_hub_view(hub_link) {
     console.log(hub_link);
+    console.log(hub_graphs);
 
-    var request_url = "/get_hub_paths/" + hub_link.source.id + "/" + hub_link.target.id;
+    var hub_data_graph = hub_graphs[hub_link.id]
+    console.log(hub_data_graph);
 
-    $.get(request_url).done(function (response) {
-        var hub_data_graph = extract_hub_data_graph(response);
-        console.log(hub_data_graph);
+    var hub_viz_graph = load_hub_viz(hub_data_graph);
 
-        var hub_viz_graph = load_hub_viz(hub_data_graph);
+    // Get KEGG data for any new compounds and add to the global kegg_data dict
+    get_kegg_data(hub_data_graph.nodes);
 
-        // Get KEGG data for any new compounds and add to the global kegg_data dict
-        get_kegg_data(hub_data_graph.nodes);
+    // Attach the same node watchers as for the full viz
+    attach_node_watchers(hub_viz_graph);
 
-        // Attach the same node watchers as for the full viz
-        attach_node_watchers(hub_viz_graph);
-
-        show_hub_view();
-    }).fail(function() {
-        alert("ERROR: Failed to retrieve hub information.");
-    });
+    show_hub_view();
 }
 
 function extract_hub_data_graph(hub_info) {
@@ -77,7 +84,7 @@ function load_hub_viz(hub_data_graph) {
         });
 
     // Create an SVG for the hub
-    d3.select("#viz-column").append("svg").attr("id", "hub")
+    d3.select("#viz-column").append("svg").attr("id", "hub");
 
     var svg = d3.select("#hub")
         .attr("width", width + margin.left + margin.right)
@@ -123,7 +130,7 @@ function load_hub_viz(hub_data_graph) {
 
     link.data().forEach(function (l, index, array) {
         l.id = get_link_id(l);
-    })
+    });
 
     var node = container.append("g")
         .attr("class", "nodes")
@@ -205,18 +212,6 @@ function load_hub_viz(hub_data_graph) {
 } // load_hub_viz
 
 
-function cancel_hub_edits() {
-    // TODO
-
-    close_hub_view();
-}
-
-function apply_hub_edits() {
-    // TODO
-
-    close_hub_view();
-}
-
 function show_hub_view() {
     // Hide the full visualization
     full_viz = $("#viz").remove()
@@ -229,16 +224,3 @@ function close_hub_view() {
     $("#hub").remove()
     $("#viz-column").append(full_viz);
 }
-
-
-
-
-
-
-
-
-
-function simple_clone(original) {
-    return JSON.parse(JSON.stringify(original));
-}
-

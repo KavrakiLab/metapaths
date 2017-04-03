@@ -5,6 +5,16 @@ var KEGG_FIGURE_URL = "http://www.kegg.jp/Fig/compound/";
 var kegg_data = {};
 var json_pathways;
 
+// Holds the full viz while the hub view is displayed
+var full_viz;
+
+// Key: str hub link id, eg: "C00103-C0085"
+// Val: data_graph for that hub link's pathways
+var hub_graphs = {};
+
+/* End of Globals */
+
+
 $(function () {
     $('[data-toggle="popover"]').popover({container: 'body'});
 
@@ -19,7 +29,7 @@ $(function () {
 
 
 function load_previous_search_result(search_id) {
-    // localStorage.removeItem("search_id");
+    // localStorage.removeItem("search_id"); // TODO: remove this
 
     $.get("/load_previous/" + search_id).done(function(data) {
         json_pathways = JSON.parse(data);
@@ -62,6 +72,9 @@ function validate_and_visualize(pathways) {
         // The aggreate data of the nodes and links from the pathways
         var data_graph = collect_pathways_into_graph(pathways);
         console.log("data_graph", data_graph);
+
+        // Get pathways between hubs from the server
+        get_hub_graphs(data_graph.hub_links);
 
         var viz_graph = load_viz(data_graph);
         console.log("viz_graph", viz_graph);
@@ -298,7 +311,7 @@ function stylize(data_graph, viz_graph, start, goal) {
 
 
 function generate_title(start, goal, count) {
-    return start + " &#8594; " + goal + " (" + count + " paths shown)";
+    return start + " &#8594; " + goal + " (" + count + " paths)";
 }
 
 
