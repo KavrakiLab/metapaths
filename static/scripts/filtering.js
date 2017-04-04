@@ -33,11 +33,16 @@ function apply_filters() {
     var filtered_main_pathways = filter_pathways(JSON.stringify(json_pathways["info"]), JSON.stringify(json_pathways["pathways"]));
     if (filtered_main_pathways === 0) {
         alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
-    } else {
-        validate_and_visualize(filtered_main_pathways);
+        return;
     }
 
     filter_all_hubs();
+
+    if (shown_hub !== "") {
+        load_hub_viz(extract_hub_data_graph(hub_pathways[shown_hub]));
+    } else {
+        validate_and_visualize(filtered_main_pathways);
+    }
 }
 
 function filter_pathways(str_info, str_pathways) {
@@ -97,7 +102,15 @@ function filter_pathways(str_info, str_pathways) {
 }
 
 function filter_all_hubs() {
-
+    for (var hub_link_id in hub_pathways) {
+        console.log(hub_pathways[hub_link_id]);
+        var filtered = filter_pathways(
+            JSON.stringify(hub_pathways[hub_link_id].info),
+            JSON.stringify(hub_pathways[hub_link_id].pathways)
+        );
+        hub_pathways[hub_link_id] = filtered;
+        console.log(filtered);
+    }
 }
 
 function reset_filters() {
