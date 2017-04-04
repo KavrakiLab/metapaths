@@ -1,6 +1,6 @@
-function get_hub_pathways(main_pathways) {
+function get_hub_pathways(pathways) {
     var all_hub_links = new Set([]);
-    main_pathways.forEach(function(pathway) {
+    pathways.forEach(function(pathway) {
         pathway.hub_links.forEach(function(hub_link) {
             all_hub_links.add(hub_link)
         });
@@ -14,17 +14,13 @@ function get_hub_pathways(main_pathways) {
         $.get(request_url).done(function (response) {
             hub_pathways[hub_link_id] = response;
         }).fail(function() {
-            alert("ERROR: Failed to retrieve hub information for: " + hub_link_id);
+            console.error("ERROR: Failed to retrieve hub information for: " + hub_link_id);
         });
     });
 }
 
 function init_hub_view(hub_link) {
-    console.log(hub_link);
-    console.log(hub_pathways);
-
     var hub_pathway = hub_pathways[hub_link.id]
-    console.log(hub_pathway);
 
     var hub_data_graph = extract_hub_data_graph(hub_pathway);
     var hub_viz_graph = load_hub_viz(hub_data_graph);
@@ -37,7 +33,6 @@ function init_hub_view(hub_link) {
 }
 
 function extract_hub_data_graph(hub_info) {
-    console.log(hub_info);
     var hub_data_graph = {};
 
     var node_set = new Set();
@@ -236,6 +231,7 @@ function show_hub_view() {
 function close_hub_view() {
     $("#hub-btns")[0].style.visibility = "hidden";
     $("#hub").remove()
-    $("#viz-column").append(full_viz);
+    // $("#viz-column").append(full_viz);
+    validate_and_visualize();
     shown_hub = "";
 }
