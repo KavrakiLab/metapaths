@@ -9,9 +9,11 @@ var json_pathways;
 var full_viz;
 
 // Key: str hub link id, eg: "C00103-C0085"
-// Val: data_graph for that hub link's pathways
-var hub_graphs = {};
+// Val: pathways the make up the hub link
+var hub_pathways = {};
 
+// If hub view is displayed, contains the hub link id. Otherwise, empty string.
+var shown_hub = "";
 /* End of Globals */
 
 
@@ -35,7 +37,7 @@ function load_previous_search_result(search_id) {
         json_pathways = JSON.parse(data);
 
         // Get pathways between hubs from the server
-        get_hub_graphs(json_pathways.pathways);
+        get_hub_pathways(json_pathways.pathways);
 
         // Visualize the pathways
         validate_and_visualize(json_pathways);

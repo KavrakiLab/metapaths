@@ -1,6 +1,6 @@
-function get_hub_graphs(pathways) {
+function get_hub_pathways(main_pathways) {
     var all_hub_links = new Set([]);
-    pathways.forEach(function(pathway) {
+    main_pathways.forEach(function(pathway) {
         pathway.hub_links.forEach(function(hub_link) {
             all_hub_links.add(hub_link)
         });
@@ -12,7 +12,7 @@ function get_hub_graphs(pathways) {
         var request_url = "/get_hub_paths/" + source + "/" + target;
 
         $.get(request_url).done(function (response) {
-            hub_graphs[hub_link_id] = extract_hub_data_graph(response);
+            hub_pathways[hub_link_id] = response;
         }).fail(function() {
             alert("ERROR: Failed to retrieve hub information for: " + hub_link_id);
         });
@@ -21,19 +21,18 @@ function get_hub_graphs(pathways) {
 
 function init_hub_view(hub_link) {
     console.log(hub_link);
-    console.log(hub_graphs);
+    console.log(hub_pathways);
 
-    var hub_data_graph = hub_graphs[hub_link.id]
-    console.log(hub_data_graph);
+    var hub_pathway = hub_pathways[hub_link.id]
+    console.log(hub_pathway);
 
+    var hub_data_graph = extract_hub_data_graph(hub_pathway);
     var hub_viz_graph = load_hub_viz(hub_data_graph);
 
     // Get KEGG data for any new compounds and add to the global kegg_data dict
     get_kegg_data(hub_data_graph.nodes);
 
-    // Attach the same node watchers as for the full viz
-    attach_node_watchers(hub_viz_graph);
-
+    shown_hub = hub_link.id;
     show_hub_view();
 }
 
@@ -89,6 +88,9 @@ function load_hub_viz(hub_data_graph) {
         .on("zoom", function() {
             container.attr("transform", "translate(" + d3.event.transform.x + ',' + d3.event.transform.y + ")scale(" + d3.event.transform.k + ")");
         });
+
+    // If previous hub viz exists, remove it
+    d3.select("#hub").remove();
 
     // Create an SVG for the hub
     d3.select("#viz-column").append("svg").attr("id", "hub");
@@ -215,7 +217,12 @@ function load_hub_viz(hub_data_graph) {
         if (!d3.event.active) simulation.alphaTarget(0);
     }
 
-    return {"node" : node, "link" : link};
+    var hub_viz_graph = {"node" : node, "link" : link};
+
+    // Attach the same node watchers as for the full viz
+    attach_node_watchers(hub_viz_graph);
+
+    return hub_viz_graph;
 } // load_hub_viz
 
 
@@ -230,4 +237,5 @@ function close_hub_view() {
     $("#hub-btns")[0].style.visibility = "hidden";
     $("#hub").remove()
     $("#viz-column").append(full_viz);
+    shown_hub = "";
 }
