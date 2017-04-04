@@ -3,7 +3,7 @@ var KEGG_REST_URL = "http://togows.org/entry/kegg-compound/";
 var KEGG_ENTRY_URL = "http://www.kegg.jp/dbget-bin/www_bget?";
 var KEGG_FIGURE_URL = "http://www.kegg.jp/Fig/compound/";
 var kegg_data = {};
-var json_pathways;
+var main_pathways;
 
 // Holds the full viz while the hub view is displayed
 var full_viz;
@@ -34,13 +34,13 @@ function load_previous_search_result(search_id) {
     // localStorage.removeItem("search_id"); // TODO: remove this
 
     $.get("/load_previous/" + search_id).done(function(data) {
-        json_pathways = JSON.parse(data);
+        main_pathways = JSON.parse(data);
 
         // Get pathways between hubs from the server
-        get_hub_pathways(json_pathways.pathways);
+        get_hub_pathways(main_pathways.pathways);
 
         // Visualize the pathways
-        validate_and_visualize(json_pathways);
+        validate_and_visualize();
     }).fail(function() {
         alert("Failed to retrive search result.")
         location.assign("/");
@@ -62,8 +62,12 @@ function upload() {
             reader.onload = function(event){
                 // Get the file contents which are stored in the event's result by
                 // readAsText() when it completes
-                json_pathways = JSON.parse(event.target.result);
-                validate_and_visualize(json_pathways);
+                try {
+                    main_pathways = JSON.parse(event.target.result);
+                    validate_and_visualize();
+                } catch (exception) {
+                    alert("An error occurred, please verify the file and try again.\n\n" + exception);
+                }
             }
 
             reader.readAsText(graph_file);
@@ -74,28 +78,24 @@ function upload() {
 }
 
 
-function validate_and_visualize(pathways) {
-    try {
-        // The aggreate data of the nodes and links from the pathways
-        var data_graph = collect_pathways_into_graph(pathways);
-        console.log("data_graph", data_graph);
+function validate_and_visualize() {
+    // The aggreate data of the nodes and links from the pathways
+    var data_graph = collect_pathways_into_graph(main_pathways);
+    console.log("data_graph", data_graph);
 
-        var viz_graph = load_viz(data_graph);
-        console.log("viz_graph", viz_graph);
+    var viz_graph = load_viz(data_graph);
+    console.log("viz_graph", viz_graph);
 
-        get_kegg_data(data_graph.nodes);
+    get_kegg_data(data_graph.nodes);
 
-        stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal);
+    stylize(data_graph, viz_graph, main_pathways.info.start, main_pathways.info.goal);
 
-        attach_node_watchers(viz_graph);
+    attach_node_watchers(viz_graph);
 
-        attach_link_watchers(viz_graph, data_graph);
+    attach_link_watchers(viz_graph, data_graph);
 
-        // Make the viz visible
-        $("#viz")[0].style.visibility = "visible";
-    } catch (exception) {
-        alert("An error occurred, please verify the file and try again.\n\n" + exception);
-    }
+    // Make the viz visible
+    $("#viz")[0].style.visibility = "visible";
 } // validate_and_visualize
 
 
