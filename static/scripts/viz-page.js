@@ -4,6 +4,8 @@ var KEGG_ENTRY_URL = "http://www.kegg.jp/dbget-bin/www_bget?";
 var KEGG_FIGURE_URL = "http://www.kegg.jp/Fig/compound/";
 var kegg_data = {};
 var main_pathways;
+var main_path_width = -1;
+var hub_path_width = -1;
 
 // Holds the full viz while the hub view is displayed
 var full_viz;
@@ -120,6 +122,10 @@ function collect_pathways_into_graph(pathways) {
         pathway.hub_links.forEach(function (hub_link, index, array) {
             hub_links.add(hub_link);
         });
+
+        if (pathway.links.length + pathway.hub_links.length > main_path_width) {
+            main_path_width = pathway.links.length + pathway.hub_links.length;
+        }
     });
 
     var node_list = [];
@@ -322,15 +328,23 @@ function generate_title(start, goal, count) {
 function style_nodes(viz_graph, start, goal, hub_nodes) {
 
     viz_graph.node.data().forEach(function (node, index, array) {
-        var mid_y = $("#viz-column")[0].offsetHeight / 2;
-        var end_x = $("#viz-column")[0].offsetWidth - 50;
         if (node.id === start) {
+            var mid_x = $("#viz-column")[0].offsetWidth / 2;
+            var mid_y = $("#viz-column")[0].offsetHeight / 2;
+            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+            left_x = mid_x - (0.5 * main_viz_width);
+
             node.fixed = true;
-            node.fx = 50;
+            node.fx = left_x;
             node.fy = mid_y;
         } else if (node.id === goal) {
+            var mid_x = $("#viz-column")[0].offsetWidth / 2;
+            var mid_y = $("#viz-column")[0].offsetHeight / 2;
+            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+            right_x = mid_x + (0.5 * main_viz_width);
+
             node.fixed = true;
-            node.fx = end_x;
+            node.fx = right_x;
             node.fy = mid_y;
         } else if (hub_nodes.includes(node.id)) {
 

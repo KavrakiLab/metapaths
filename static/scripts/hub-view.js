@@ -45,6 +45,10 @@ function extract_hub_data_graph(hub_info) {
         for (var l of pathway.links) {
             link_set.add(l);
         }
+
+        if (pathway.links.length > hub_path_width) {
+            hub_path_width = pathway.links.length;
+        }
     });
 
     var nodes = []
@@ -64,8 +68,6 @@ function extract_hub_data_graph(hub_info) {
         "source" : hub_info.info.source,
         "target" : hub_info.info.target
     };
-
-    return hub_data_graph;
 }
 
 function load_hub_viz(hub_data_graph) {
@@ -144,13 +146,19 @@ function load_hub_viz(hub_data_graph) {
         .attr("id", function(node) {return node.id;})
         .attr("class", function(node) {
             if (node.id === hub_data_graph.source) {
+                var hub_viz_width = hub_path_width * 100 // Num edges in the first path times 30px per edge
+                left_x = (width / 2) - (0.5 * hub_viz_width);
+
                 node.fixed = true;
-                node.fx = 50;
+                node.fx = left_x;
                 node.fy = height / 2;
                 return "hub-source-node";
             } else if (node.id === hub_data_graph.target) {
+                var path_width = main_pathways.pathways[0].links.length * 100 // Num edges in the first path times 30px per edge
+                right_x = (width / 2) + (0.5 * path_width);
+
                 node.fixed = true;
-                node.fx = width - 50;
+                node.fx = right_x;
                 node.fy = height / 2;
                 return "hub-target-node";
             } else {

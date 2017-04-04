@@ -43,6 +43,8 @@ function apply_filters() {
 
     if (shown_hub !== "") {
         load_hub_viz(extract_hub_data_graph(hub_pathways[shown_hub]));
+    } else {
+        validate_and_visualize();
     }
 }
 
