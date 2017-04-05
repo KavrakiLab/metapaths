@@ -33,7 +33,7 @@ $(function () {
 
 
 function load_previous_search_result(search_id) {
-    // localStorage.removeItem("search_id"); // TODO: remove this
+    localStorage.removeItem("search_id"); // TODO: uncomment
 
     $.get("/load_previous/" + search_id).done(function(data) {
         main_pathways = JSON.parse(data);
