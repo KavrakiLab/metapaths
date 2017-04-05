@@ -30,7 +30,8 @@ function add_included_node(compound_id) {
 
 
 function apply_filters() {
-    var filtered_main_pathways = filter_pathways(JSON.stringify(main_pathways["info"]), JSON.stringify(main_pathways["pathways"]));
+    // Always apply filters to a fresh copy of the original pathways
+    var filtered_main_pathways = filter_pathways(JSON.stringify(orig_pathways["info"]), JSON.stringify(orig_pathways["pathways"]));
 
     if (filtered_main_pathways.pathways.length === 0) {
         alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
@@ -44,7 +45,7 @@ function apply_filters() {
     if (shown_hub !== "") {
         load_hub_viz(extract_hub_data_graph(hub_pathways[shown_hub]));
     } else {
-        validate_and_visualize();
+        validate_and_visualize(main_pathways);
     }
 }
 
@@ -115,7 +116,12 @@ function filter_all_hubs() {
 }
 
 function reset_filters() {
+    if (shown_hub !== "") {
+        close_hub_view();
+    }
     $("#excluded-ids").val("");
     $("#included-ids").val("");
-    validate_and_visualize();
+    main_pathways = JSON.parse(JSON.stringify(orig_pathways));
+    hub_pathways = JSON.parse(JSON.stringify(orig_hub_pathways));
+    validate_and_visualize(main_pathways);
 }
