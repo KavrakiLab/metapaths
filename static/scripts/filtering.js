@@ -116,12 +116,14 @@ function filter_all_hubs() {
 }
 
 function reset_filters() {
-    if (shown_hub !== "") {
-        close_hub_view();
+    if (confirm("Are you sure you want to reset the visualization? All filters will be lost!")) {
+        if (shown_hub !== "") {
+            close_hub_view();
+        }
+        $("#excluded-ids").val("");
+        $("#included-ids").val("");
+        main_pathways = JSON.parse(JSON.stringify(orig_pathways));
+        hub_pathways = JSON.parse(JSON.stringify(orig_hub_pathways));
+        validate_and_visualize(main_pathways);
     }
-    $("#excluded-ids").val("");
-    $("#included-ids").val("");
-    main_pathways = JSON.parse(JSON.stringify(orig_pathways));
-    hub_pathways = JSON.parse(JSON.stringify(orig_hub_pathways));
-    validate_and_visualize(main_pathways);
 }
