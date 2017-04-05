@@ -90,6 +90,10 @@ def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
         pathway["nodes"] = path_compounds
         pathway["links"] = links
 
+        # Empty list since hub pathways don't contain hubs themselves
+        pathway["hub_links"] = []
+        pathway["hub_nodes"] = []
+
         pathways.append(pathway)
 
 

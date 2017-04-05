@@ -93,11 +93,7 @@ function filter_pathways(str_info, str_pathways) {
         for (var i = filtered_pathways.pathways.length - 1; i >= 0; i--) {
             // Iterate in reverse so that we can remove elements with out worrying about indices changing
             var pathway = filtered_pathways.pathways[i];
-            var path_len = pathway.links.length;
-
-            if (pathway.hub_links != null) {
-                 path_len += pathway.hub_links.length;
-            }
+            var path_len = pathway.links.length + pathway.hub_links.length;
 
             if (path_len > max_path_len) {
                 filtered_pathways.pathways.splice(i, 1);
