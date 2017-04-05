@@ -12,6 +12,7 @@ function get_hub_pathways(pathways) {
         var request_url = "/get_hub_paths/" + source + "/" + target;
 
         $.get(request_url).done(function (response) {
+            orig_hub_pathways[hub_link_id] = response;
             hub_pathways[hub_link_id] = response;
         }).fail(function() {
             console.error("ERROR: Failed to retrieve hub information for: " + hub_link_id);
@@ -239,7 +240,6 @@ function show_hub_view() {
 function close_hub_view() {
     $("#hub-btns")[0].style.visibility = "hidden";
     $("#hub").remove()
-    // $("#viz-column").append(full_viz);
-    validate_and_visualize();
+    validate_and_visualize(main_pathways);
     shown_hub = "";
 }

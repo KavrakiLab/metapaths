@@ -3,6 +3,7 @@ var KEGG_REST_URL = "http://togows.org/entry/kegg-compound/";
 var KEGG_ENTRY_URL = "http://www.kegg.jp/dbget-bin/www_bget?";
 var KEGG_FIGURE_URL = "http://www.kegg.jp/Fig/compound/";
 var kegg_data = {};
+var orig_pathways;
 var main_pathways;
 var main_path_width = -1;
 var hub_path_width = -1;
@@ -12,6 +13,7 @@ var full_viz;
 
 // Key: str hub link id, eg: "C00103-C0085"
 // Val: pathways the make up the hub link
+var orig_hub_pathways = {};
 var hub_pathways = {};
 
 // If hub view is displayed, contains the hub link id. Otherwise, empty string.
@@ -36,13 +38,14 @@ function load_previous_search_result(search_id) {
     localStorage.removeItem("search_id"); // TODO: uncomment
 
     $.get("/load_previous/" + search_id).done(function(data) {
-        main_pathways = JSON.parse(data);
+        orig_pathways = JSON.parse(data); // Keep a copy of the original pathways
+        main_pathways = JSON.parse(data); // This copy will be filtered
 
         // Get pathways between hubs from the server
         get_hub_pathways(main_pathways.pathways);
 
         // Visualize the pathways
-        validate_and_visualize();
+        validate_and_visualize(main_pathways);
     }).fail(function() {
         alert("Failed to retrive search result.")
         location.assign("/");
@@ -66,7 +69,7 @@ function upload() {
                 // readAsText() when it completes
                 try {
                     main_pathways = JSON.parse(event.target.result);
-                    validate_and_visualize();
+                    validate_and_visualize(main_pathways);
                 } catch (exception) {
                     alert("An error occurred, please verify the file and try again.\n\n" + exception);
                 }
@@ -80,9 +83,9 @@ function upload() {
 }
 
 
-function validate_and_visualize() {
+function validate_and_visualize(pathways) {
     // The aggreate data of the nodes and links from the pathways
-    var data_graph = collect_pathways_into_graph(main_pathways);
+    var data_graph = collect_pathways_into_graph(pathways);
     console.log("data_graph", data_graph);
 
     var viz_graph = load_viz(data_graph);
@@ -90,7 +93,7 @@ function validate_and_visualize() {
 
     get_kegg_data(data_graph.nodes);
 
-    stylize(data_graph, viz_graph, main_pathways.info.start, main_pathways.info.goal);
+    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal);
 
     attach_node_watchers(viz_graph);
 
