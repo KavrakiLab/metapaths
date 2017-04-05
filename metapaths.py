@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 # Global dictionary for storing metapath search results
 searches = {}
-db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="hubdb")
 
 # TODO: This is just for testing; remove later
 searches["test"] = "static/pathways/custom_pathways.txt"
@@ -130,9 +129,13 @@ def get_hub_paths(hub_src, hub_dst):
     Returns visualization formatted JSON describing the pathways between the
     two hub compounds
     """
+    db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="hubdb")
     cursor = db.cursor()
     cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + "")
-    return hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
+    results_json = hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
+    cursor.close()
+    db.close()
+    return results_json
 
 
 @app.route('/load_previous/<search_id>')
