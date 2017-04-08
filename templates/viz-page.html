@@ -6,12 +6,15 @@
         <link rel="stylesheet" type="text/css" href="../static/styles/bootstrap/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="../static/styles/viz-page.css" />
         <link rel="stylesheet" type="text/css" href="../static/styles/d3-context-menu.css" />
+        <link rel="stylesheet" type="text/css" href="../static/styles/select2.min.css" />
 
         <!-- Load the visualization code -->
         <script language="JavaScript" type="text/javascript" src="../static/scripts/d3-context-menu.js"></script>
+        <script language="JavaScript" type="text/javascript" src="../static/scripts/select2.min.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/hub-view.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/filtering.js"></script>
+        <script language="JavaScript" type="text/javascript" src="../static/scripts/highlighting.js"></script>
     </head>
     <body>
         <div class="row">
@@ -38,16 +41,32 @@
                     </div>
                 </div> <!-- load-panel -->
 
-                <div class="panel panel-success" id="info-panel" style="visibility: hidden">
-                    <div class="panel-heading">
-                        <h3 class="panel-title" id="title"></h3>
-                    </div>
-                    <div class="panel-body" id="info-panel-body">
-                        Retrieving data from KEGG...
-                    </div>
-                </div> <!-- info-panel -->
-
                 <div id="options-column" style="visibility: hidden">
+                    <div class="panel panel-success" id="info-panel" style="visibility: hidden">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" id="title"></h3>
+                        </div>
+                        <div class="panel-body" id="info-panel-body">
+                            Retrieving data from KEGG...
+                        </div>
+                    </div> <!-- info-panel -->
+
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Find</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <label>Search for compounds or organisms:</label>
+                                <select id="select-dropdown"></select>
+                            </div>
+
+                            <button class="btn btn-default" onclick="clear_search()">Clear</button>
+                        </div>
+                    </div> <!-- panel -->
+
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Filter</h3>
@@ -74,7 +93,8 @@
                             <button class="btn btn-default" onclick="apply_filters()">Apply</button>
                             <button class="btn btn-default" onclick="reset_filters()">Reset</button>
                         </div>
-                    </div>
+                    </div> <!-- panel -->
+
 
                 </div> <!-- options-column -->
 

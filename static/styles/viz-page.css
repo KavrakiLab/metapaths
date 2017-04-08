@@ -81,12 +81,11 @@
 }
 
 #info-panel-body {
-    height: 30vh;
     overflow: scroll;
 }
 
 #options-column {
-    height: 50vh;
+    height: 90vh;
     overflow: scroll;
 }
 
@@ -106,4 +105,8 @@
 
 a:hover {
     cursor: pointer;
+}
+
+#select-dropdown {
+    width: 100%;
 }
