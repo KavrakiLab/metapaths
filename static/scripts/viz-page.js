@@ -24,8 +24,6 @@ var shown_hub = "";
 $(function () {
     $('[data-toggle="popover"]').popover({container: 'body'}); // Enable popover
 
-    initialize_search_panel();
-
     var search_id = localStorage.getItem("search_id");
     if (search_id != null) {
         $("#load-panel").hide();
@@ -377,6 +375,7 @@ function get_kegg_data(graph_nodes) {
         });
 
         initialize_info_panel();
+        initialize_search_panel();
     });
 
 }
