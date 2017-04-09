@@ -29,6 +29,8 @@ function init_hub_view(hub_link) {
     // Get KEGG data for any new compounds and add to the global kegg_data dict
     get_kegg_data(hub_data_graph.nodes);
 
+    clear_search(); // Clear old highlighting
+
     shown_hub = hub_link.id;
     show_hub_view();
 }
@@ -240,6 +242,7 @@ function show_hub_view() {
 function close_hub_view() {
     $("#hub-btns")[0].style.visibility = "hidden";
     $("#hub").remove()
+    initialize_search_panel(kegg_data);
     validate_and_visualize(main_pathways);
     shown_hub = "";
 }

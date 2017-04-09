@@ -397,6 +397,7 @@ function attach_node_watchers(viz_graph) {
 
     viz_graph.node.on("mouseover", function(node) {
         $("#" + node.id)[0].style.stroke = "#aaa";
+        $("#" + node.id)[0].style.strokeWidth = "3px";
     });
 
     viz_graph.node.on("mouseout", function(node) {
