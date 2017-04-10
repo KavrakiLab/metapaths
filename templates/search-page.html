@@ -3,7 +3,9 @@
         <script language="JavaScript" type="text/javascript" src="../static/scripts/jquery/jquery-latest.min.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/bootstrap/bootstrap.min.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/search-page.js"></script>
+        <script language="JavaScript" type="text/javascript" src="../static/scripts/select2.min.js"></script>
         <link rel="stylesheet" type="text/css" href="../static/styles/bootstrap/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="../static/styles/select2.min.css" />
     </head>
 
     <body>
@@ -61,31 +63,37 @@
                 </div>
                 <div class="panel-body">
                     <div class="input-group">
+                        <label for="algorithm">Algorithm</label>
+                        <br>
+                        <select class="form-control" id="algorithm">
+                            <option>Hub Search</option>
+                            <option>LPAT</option>
+                            <option>MetaGraph</option>
+                        </select>
+                    </div><br>
+
+                    <div class="input-group">
                         <label for="start-compound">Start Compound</label>
-                        <input type="text" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
-                         id="start-compound" data-content="Enter the KEGG ID of the desired start compound" placeholder="C00022"/>
+                        <select class="form-control" id="start-compound"></select>
                     </div><br>
 
                     <div class="input-group">
                         <label for="target-compound">Target Compound</label>
-                        <input type="text" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
-                         id="target-compound" data-content="Enter the KEGG ID of the desired target compound" placeholder="C00047"/>
+                        <select class="form-control" id="target-compound"></select>
                     </div><br>
 
                     <div class="input-group">
                         <label for="num-atoms">Number of Conserved of Atoms</label>
                         <input type="number" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
                          id="num-atoms" data-content="Enter the minimum number of atoms (at least 1) that should be conserved in discovered pathways" placeholder="3">
-                        Atom Tracking</input>
+                        </input>
                     </div><br>
 
+
                     <div class="input-group">
-                        <label for="algorithm">Algorithm</label>
-                        <br>
-                        <select id="algorithm">
-                            <option>Atom Tracking</option>
-                            <option>MetaGraph Construction & Search</option>
-                        </select>
+                        <label for="allow-reversible">Allow Reversible Reactions</label>
+                        <input type="checkbox" class="form-control" data-toggle="popover" data-placement="right" data-trigger="hover"
+                         id="allow-reversible" data-content="If enabled, the reverse of a reaction direction will be considered" checked></input>
                     </div><br>
 
                     <button class="btn btn-primary" onclick="search()">Execute pathway search</button>
