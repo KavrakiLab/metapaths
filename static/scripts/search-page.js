@@ -41,5 +41,38 @@ function format_compounds(name_map) {
     }
 
     return formatted_names;
-    
+
+}
+
+function search() {
+
+    if ($("#algorithm").val() === "Hub Search") {
+        var query = {
+            "start" : $("#start-compound").val(),
+            "target" : $("#target-compound").val(),
+            "atoms" : parseInt($("#num-atoms").val()),
+            "reversible" : $("#allow-reversible").is(":checked")
+        }
+        console.log("Search query", query);
+
+        $.ajax({
+            url: "/hub_search",
+            data: query,
+            success: function(response) {
+                var search_id = JSON.parse(response)["search_id"];
+
+                var results_url = window.location.href + "visualize/" + search_id;
+
+                // alert("");
+
+                var alert_html = "<br><div class='alert alert-success alert-dismissible' role='alert'>";
+                alert_html += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span></button>"
+                alert_html += "Your pathway search has been submitted. The results can be viewed at this link: <a href='" + results_url + "'>" + results_url + "</a>"
+                alert_html += "<div>"
+
+                $("#alert-location").html(alert_html);
+
+            }
+        });
+    }
 }
