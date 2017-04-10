@@ -1,6 +1,7 @@
 import re, MySQLdb
 import json
-from flask import Flask, render_template, jsonify
+import pathway_search
+from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
 
@@ -126,6 +127,14 @@ def visualize():
     return render_template('viz-page.html')
 
 
+@app.route('/visualize/<search_id>')
+def visualize_previous(search_id):
+    """
+    Loads the visualization page for a previously executed search
+    """
+    return "Visualizaton for search id: " + search_id
+
+
 @app.route('/get_hub_paths/<hub_src>/<hub_dst>')
 def get_hub_paths(hub_src, hub_dst):
     """
@@ -157,11 +166,22 @@ def load_previous(search_id):
 def search():
     """
     Executes a user's configured search, stores the resulting graph locally and
-    responds with a graph_id which can be used to later vizualize the results
+    responds with a search id which can be used to later vizualize the results
     """
     # TODO: Generate a graph_id
     # TODO: Execute the search (async?)
     # TODO: Return the graph_id in the response
+
+
+@app.route('/hub_search')
+def hub_search():
+    """
+    Executes a user's configured hub search, stores the resulting graph locally
+    and responds with a search id which can be used to later vizualize the results
+    """
+
+    search_id = pathway_search.execute_hub_search(request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
+    return json.dumps({"search_id" : search_id});
 
 
 @app.route('/help')
