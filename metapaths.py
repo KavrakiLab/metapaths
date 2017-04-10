@@ -10,6 +10,9 @@ searches = {}
 # TODO: This is just for testing; remove later
 searches["test"] = "static/pathways/custom_pathways.txt"
 
+# KEGG ID to compound name mapping
+compound_names = {}
+
 
 #
 # Helpers
@@ -169,3 +172,30 @@ def help():
     return render_template('help-page.html')
 
 
+@app.route('/get_compound_names')
+def get_compound_names():
+    """
+    Returns a mapping of KEGG IDs to compound names
+    """
+    return json.dumps(compound_names)
+
+
+def initialize():
+    """
+    Runs when server is first started
+    """
+    print "Initializing..."
+
+    db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="metadb")
+    cursor = db.cursor()
+    cursor.execute("SELECT KEGGCompoundID, CompoundName from KEGGCompoundNames;")
+
+
+    for compound in cursor.fetchall():
+        compound_names[compound[0]] = compound[1]
+
+    cursor.close()
+    db.close()
+
+
+initialize()
