@@ -184,6 +184,17 @@ def hub_search():
     return json.dumps({"search_id" : search_id});
 
 
+@app.route('/lpat_search')
+def lpat_search():
+    """
+    Executes a user's configured LPAT search, stores the resulting graph locally
+    and responds with a search id which can be used to later vizualize the results
+    """
+
+    search_id = pathway_search.execute_lpat_search(request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
+    return json.dumps({"search_id" : search_id});
+
+
 @app.route('/help')
 def help():
     """
