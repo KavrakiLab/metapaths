@@ -10,7 +10,7 @@
 
         <!-- Load the visualization code -->
         <script language="JavaScript" type="text/javascript" src="../static/scripts/d3-context-menu.js"></script>
-        <script language="JavaScript" type="text/javascript" src="../static/scripts/select2.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="../static/scripts/select2.full.min.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/viz-page.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/hub-view.js"></script>
         <script language="JavaScript" type="text/javascript" src="../static/scripts/filtering.js"></script>
@@ -58,10 +58,14 @@
                         </div>
                         <div class="panel-body">
                             <div class="input-group">
-                                <label>Search for compounds or organisms:</label>
-                                <select id="select-dropdown"></select>
+                                <label>Search for compounds:</label>
+                                <select class="form-control" id="compounds-dropdown"></select>
                             </div>
 
+                            <div class="input-group">
+                                <label>Search for organisms:</label>
+                                <select class="form-control" id="organisms-dropdown"></select>
+                            </div>
                             <button class="btn btn-default" onclick="clear_search()">Clear</button>
                         </div>
                     </div> <!-- panel -->
