@@ -78,10 +78,15 @@
                         <select class="form-control" id="target-compound"></select>
                     </div><br>
 
+                    <div class="form-group" id="hub-compounds-group">
+                        <label for="target-compound">Hub Compounds</label>
+                        (<a onclick="select_all_hubs()">select all</a>)
+                        <select class="form-control"  multiple="multiple" id="hub-compounds" data-toggle="popover" data-placement="right" data-trigger="focus" data-content="Sample help text"></select>
+                    </div><br>
+
                     <div class="form-group">
                         <label for="num-atoms">Number of Conserved of Atoms</label>
-                        <input type="number" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
-                                                                                                               id="num-atoms" data-content="Enter the minimum number of atoms that should be conserved in discovered pathways. If value is < 1, the max number of atoms will try to be conserved" value=0>
+                        <input type="number" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus" id="num-atoms" data-content="Enter the minimum number of atoms that should be conserved in discovered pathways. If value is < 1, the max number of atoms will try to be conserved" value=0>
                         </input>
                     </div><br>
 
