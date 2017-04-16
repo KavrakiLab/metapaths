@@ -1,10 +1,10 @@
 import subprocess
 import uuid
 
-def execute_hub_search(start, target, num_atoms, allow_reversible):
+def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
     """docstring for exe"""
     print "Executing hub search with:"
-    print(start, target, num_atoms, allow_reversible)
+    print(start, target, hubs, num_atoms, allow_reversible)
     search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
 
     return search_id

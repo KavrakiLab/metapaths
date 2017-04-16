@@ -14,6 +14,8 @@ searches["test"] = "static/pathways/custom_pathways.txt"
 # KEGG ID to compound name mapping
 compound_names = {}
 
+# KEGG ID to compound name mapping of just hub compounds
+hub_compounds = {}
 
 #
 # Helpers
@@ -180,7 +182,7 @@ def hub_search():
     and responds with a search id which can be used to later vizualize the results
     """
 
-    search_id = pathway_search.execute_hub_search(request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
+    search_id = pathway_search.execute_hub_search(request.args["start"], request.args["target"], request.args["hubs"], request.args["atoms"], request.args["reversible"])
     return json.dumps({"search_id" : search_id});
 
 
@@ -211,6 +213,15 @@ def get_compound_names():
     return json.dumps(compound_names)
 
 
+@app.route('/get_hub_compounds')
+def get_hub_compounds():
+    """
+    Returns a list of hub compound KEGG IDs
+    """
+    # TODO: better way? Should this list just be in the JS? Get from a DB table?
+    return json.dumps(hub_compounds)
+
+
 def initialize():
     """
     Runs when server is first started
@@ -227,6 +238,9 @@ def initialize():
 
     cursor.close()
     db.close()
+
+    for hub in ["C00022","C00047","C00024","C00083","C00025","C00026","C00448","C00033","C00058","C00037","C00043","C02557","C00041","C00235","C00167","C00341","C00048","C00129","C00044","C00064","C00223","C00353","C00097","C00062","C00052","C00051","C01054","C00036","C00084","C00049","C00132","C00124","C00065","C00128","C00091","C00100","C00074","C00079","C00082","C00090","C00096","C00157","C00073","C00086","C00119","C00219","C00078","C00111","C00085","C00103","C00121","C00180","C00099","C00169","C00042"]:
+        hub_compounds[hub] = compound_names[hub]
 
 
 initialize()

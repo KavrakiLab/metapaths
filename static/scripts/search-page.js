@@ -3,7 +3,14 @@ $(function () {
 
     var alg_options = [{ id: 0, text: 'Hub Search' }, { id: 1, text: 'LPAT' }, { id: 2, text: 'MetaGraph' }];
 
-    $('#algorithm').select2({data: alg_options});
+    $("#algorithm").select2({data: alg_options});
+    $("#algorithm").on("select2:select", function(e) {
+        if ($("#algorithm").val() === "0") {
+            $("#hub-compounds-group").show();
+        } else {
+            $("#hub-compounds-group").hide();
+        }
+    });
 
     $.get("/get_compound_names").done(function(results_json) {
         var formatted_compounds = format_compounds(JSON.parse(results_json));
@@ -13,6 +20,18 @@ $(function () {
     }).fail(function(error) {
         console.log(error);
         alert("An error occured, please refresh the page to try again.");
+    });
+
+    $.get("/get_hub_compounds").done(function(results_json) {
+        $('#hub-compounds').select2({
+            data: format_compounds(JSON.parse(results_json))
+        });
+
+        if ($("#algorithm").val() === "0") {
+            $("#hub-compounds-group").show();
+        } else {
+            $("#hub-compounds-group").hide();
+        }
     });
 
 });
@@ -47,6 +66,7 @@ function search() {
         var query = {
             "start" : $("#start-compound").val(),
             "target" : $("#target-compound").val(),
+            "hubs" : JSON.stringify($("#hub-compounds").val()),
             "atoms" : parseInt($("#num-atoms").val()),
             "reversible" : $("#allow-reversible").is(":checked")
         }
@@ -76,7 +96,10 @@ function execute_search(alg_url, query) {
 
     $.ajax({
         url: alg_url,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
         data: query,
+        traditional: true,
         success: function(response) {
             var search_id = JSON.parse(response)["search_id"];
 
@@ -210,3 +233,8 @@ function initialize_dropdowns(items) {
 
 }
 
+
+function select_all_hubs() {
+    // TODO
+    alert("Not yet implemented.");
+}
