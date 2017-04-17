@@ -1,8 +1,15 @@
 import re, MySQLdb
 import json
 import pathway_search
+from pathway_search import make_celery
 from flask import Flask, render_template, jsonify, request
+
 app = Flask(__name__)
+celery = make_celery(app)
+app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379',
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
+)
 
 
 # Global dictionary for storing metapath search results
@@ -182,7 +189,8 @@ def hub_search():
     and responds with a search id which can be used to later vizualize the results
     """
 
-    search_id = pathway_search.execute_hub_search(request.args["start"], request.args["target"], request.args["hubs"], request.args["atoms"], request.args["reversible"])
+    search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
+    pathway_search.execute_hub_search.delay(search_id, request.args["start"], request.args["target"], request.args["hubs"], request.args["atoms"], request.args["reversible"])
     return json.dumps({"search_id" : search_id});
 
 
@@ -193,7 +201,8 @@ def lpat_search():
     and responds with a search id which can be used to later vizualize the results
     """
 
-    search_id = pathway_search.execute_lpat_search(request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
+    search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
+    pathway_search.execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
     return json.dumps({"search_id" : search_id});
 
 
