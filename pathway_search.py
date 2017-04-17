@@ -20,7 +20,6 @@ def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
     """docstring for exe"""
     print "Executing hub search with:"
     print(start, target, hubs, num_atoms, allow_reversible)
-    search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
 
 
 @celery.task()

@@ -11,6 +11,10 @@ app.config.update(
     CELERY_RESULT_BACKEND='redis://localhost:6379'
 )
 
+# Global dict mapping search_id to AsyncResult objects
+tasks = {}
+# TODO: create periodic celery task that iterates through tasks,
+# checks for completed ones and processes output
 
 # Global dictionary for storing metapath search results
 searches = {}
@@ -80,7 +84,6 @@ def extract_pathways(string_pathways):
 def get_pathways_from_file(pathways_filename):
     pathways_file = open(pathways_filename, "r")
     return extract_pathways(pathways_file.readlines())
-
 
 
 def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
@@ -201,9 +204,9 @@ def lpat_search():
     and responds with a search id which can be used to later vizualize the results
     """
 
-    search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
-    pathway_search.execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
-    return json.dumps({"search_id" : search_id});
+    result = pathway_search.execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
+    tasks[result.id] = result
+    return json.dumps({"search_id" : result.id});
 
 
 @app.route('/help')
