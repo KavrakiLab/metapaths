@@ -15,14 +15,14 @@ def make_celery(app):
     celery.Task = ContextTask
     return celery
 
-@celery.task()
+#  @celery.task()
 def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
     """docstring for exe"""
     print "Executing hub search with:"
     print(start, target, hubs, num_atoms, allow_reversible)
 
 
-@celery.task()
+#  @celery.task()
 def execute_lpat_search(start, target, num_atoms, allow_reversible):
     """docstring for exe"""
     print "Executing LPAT search with:"
