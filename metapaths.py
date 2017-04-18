@@ -164,7 +164,7 @@ def lpat_search():
     global tasks
 
     search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
-    result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
+    result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], int(request.args["atoms"]), request.args["reversible"])
     tasks[search_id] = result
     print(tasks)
     return json.dumps({"search_id" : search_id});
@@ -212,7 +212,7 @@ def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
     print(start, target, num_atoms, allow_reversible)
     config_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
 
-    output = subprocess.check_output(["java", "-jar", "algs/lpat/LinearPathwaySearch.jar", config_loc])
+    output = subprocess.check_output(["java", "-jar", "LinearPathwaySearch.jar", config_loc], cwd="algs/lpat")
 
     print output
 
