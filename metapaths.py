@@ -1,8 +1,28 @@
-import re, MySQLdb
+import MySQLdb
 import json
-import pathway_search
-from pathway_search import make_celery
+import subprocess
+from helpers import generate_LPAT_config, extract_pathways, get_pathways_from_file, hub_paths_to_json
+from celery import Celery
 from flask import Flask, render_template, jsonify, request
+
+
+
+#
+# Flask & Celery config
+#
+
+def make_celery(app):
+    celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
+                    broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery
 
 app = Flask(__name__)
 app.config.update(
@@ -10,6 +30,12 @@ app.config.update(
     CELERY_RESULT_BACKEND='redis://localhost:6379'
 )
 celery = make_celery(app)
+
+
+
+#
+# Globals
+#
 
 # Global dict mapping search_id to AsyncResult objects
 tasks = {}
@@ -30,95 +56,6 @@ compound_names = {}
 # KEGG ID to compound name mapping of just hub compounds
 hub_compounds = {}
 
-#
-# Helpers
-#
-
-def extract_pathways(string_pathways):
-    pathways = []
-
-    # Finds compound IDs by extracting words that start with the letter 'C'
-    regex = re.compile("C\w+")
-
-    start = None
-    goal = None
-    for string_path in string_pathways:
-        path_compounds = regex.findall(string_path)
-        nodes = set([])
-        links = []
-        hub_nodes = set([])
-        hub_links = []
-
-        if start == None and goal == None:
-            start = path_compounds[0]
-            goal = path_compounds[-1]
-
-        for i in range(len(path_compounds) - 1):
-            j = i + 1
-            if "_HS" in path_compounds[i] and "_HE" in path_compounds[j]:
-                hub_nodes.add(path_compounds[i])
-                hub_nodes.add(path_compounds[j])
-                hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
-            else:
-                links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
-
-        pathway = {}
-        pathway["atoms"] = 0 # TODO: actually calculate this
-        pathway["nodes"] = [node[0:6] for node in (set(path_compounds) - hub_nodes)]
-        pathway["links"] = list(links)
-        pathway["hub_nodes"] = [hub_node[0:6] for hub_node in hub_nodes]
-        pathway["hub_links"] = list(hub_links)
-        print(pathways)
-
-        pathways.append(pathway)
-
-    pathways_data = {
-        "info" : {
-            "start" : start,
-            "goal" : goal
-            },
-        "pathways" : pathways
-    }
-
-    return pathways_data
-
-
-def get_pathways_from_file(pathways_filename):
-    pathways_file = open(pathways_filename, "r")
-    return extract_pathways(pathways_file.readlines())
-
-
-def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
-    pathways = []
-
-    # Finds compound IDs by extracting words that start with the letter 'C'
-    regex = re.compile("C\w+")
-
-    for string_path in string_hub_pathways:
-        path_compounds = regex.findall(string_path[0])
-
-        links = []
-        for i in range(len(path_compounds) - 1):
-            j = i + 1
-            links.append(path_compounds[i] + "," + path_compounds[j])
-
-        pathway = {}
-        pathway["atoms"] = 0 # TODO: actually calculate this
-        pathway["nodes"] = path_compounds
-        pathway["links"] = links
-
-        # Empty list since hub pathways don't contain hubs themselves
-        pathway["hub_links"] = []
-        pathway["hub_nodes"] = []
-
-        pathways.append(pathway)
-
-
-    hub = {
-        "info" : {"source" : hub_src, "target" : hub_dst},
-        "pathways" : pathways
-    }
-    return jsonify(hub)
 
 
 #
@@ -198,7 +135,7 @@ def hub_search():
     """
 
     search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
-    pathway_search.execute_hub_search.delay(search_id, request.args["start"], request.args["target"], request.args["hubs"], request.args["atoms"], request.args["reversible"])
+    #  execute_hub_search.delay(search_id, request.args["start"], request.args["target"], request.args["hubs"], request.args["atoms"], request.args["reversible"])
     return json.dumps({"search_id" : search_id});
 
 
@@ -209,7 +146,7 @@ def lpat_search():
     and responds with a search id which can be used to later vizualize the results
     """
 
-    result = pathway_search.execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
+    result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
     tasks[result.id] = result
     return json.dumps({"search_id" : result.id});
 
@@ -238,6 +175,34 @@ def get_hub_compounds():
     # TODO: better way? Should this list just be in the JS? Get from a DB table?
     return json.dumps(hub_compounds)
 
+
+#
+# Celery Tasks
+#
+
+@celery.task()
+def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
+    """docstring for exe"""
+    print "Executing hub search with:"
+    print(start, target, hubs, num_atoms, allow_reversible)
+
+
+@celery.task()
+def execute_lpat_search(start, target, num_atoms, allow_reversible):
+    """docstring for exe"""
+    print "Executing LPAT search with:"
+    print(start, target, num_atoms, allow_reversible)
+    config_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
+
+    output = subprocess.check_output(["java", "-jar", "LPAT/LinearPathwaySearch.jar", config_loc])
+
+    print output
+
+
+
+#
+# Server Initialization
+#
 
 def initialize():
     """
