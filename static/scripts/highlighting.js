@@ -9,13 +9,13 @@ function initialize_search_panel() {
 
     $('#compounds-dropdown').on("select2:select", function(e){
         var selected_val = $('#compounds-dropdown').select2().val();
-        highlight(selected_val);
+        highlight_compound(selected_val);
     });
 
     $('#compounds-dropdown').on("select2:selecting", function(e){
         var unselected_val = $('#compounds-dropdown').select2().val();
         if (unselected_val != null) {
-            remove_highlight(unselected_val);
+            remove_compound_highlight(unselected_val);
         }
     });
 
@@ -24,21 +24,16 @@ function initialize_search_panel() {
 }
 
 
-function highlight(hl_element) {
-    // TODO: need a better way to check this, could be an organism that starts with C
-    if (hl_element.startsWith('C')) {
-        $("#" + hl_element)[0].style.stroke = "#ff997c";
-        $("#" + hl_element)[0].style.strokeWidth = "7px";
-    }
+function highlight_compound(compound) {
+    $("#" + compound)[0].style.stroke = "#ff997c";
+    $("#" + compound)[0].style.strokeWidth = "7px";
+    update_info_panel(compound);
 }
 
-function remove_highlight(hl_element) {
-    // TODO: need a better way to check this, could be an organism that starts with C
-    if (hl_element.startsWith('C')) {
-        if ($("#" + hl_element).length > 0) {
-            $("#" + hl_element)[0].style.stroke = "";
-            $("#" + hl_element)[0].style.strokeWidth = "3px";
-        }
+function remove_compound_highlight(compound) {
+    if ($("#" + compound).length > 0) {
+        $("#" + compound)[0].style.stroke = "";
+        $("#" + compound)[0].style.strokeWidth = "3px";
     }
 }
 
@@ -56,7 +51,7 @@ function get_compounds_list() {
 function clear_search() {
     var selected_val = $('select').select2().val();
     if (selected_val != null) {
-        remove_highlight(selected_val)
+        remove_compound_highlight(selected_val)
     }
     $('select').select2().val(null).trigger("change");
 }
