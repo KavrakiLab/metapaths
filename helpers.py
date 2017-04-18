@@ -19,11 +19,11 @@ def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
         config += "CARBONTRACK\tmax\n"
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
-    config += "OUTPUTDIR\tLPAT_OUTPUT\n"
+    config += "OUTPUTDIR\toutput\n"
 
-    config_loc = "algs/lpat/LPAT_INPUT/" + search_id + ".txt"
+    config_loc = "input/" + search_id + ".txt"
 
-    config_file = open(config_loc, 'w')
+    config_file = open("algs/lpat/" + config_loc, 'w')
     config_file.write(config)
     config_file.close()
 
