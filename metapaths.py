@@ -5,22 +5,24 @@ from pathway_search import make_celery
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
-celery = make_celery(app)
 app.config.update(
     CELERY_BROKER_URL='redis://localhost:6379',
     CELERY_RESULT_BACKEND='redis://localhost:6379'
 )
+celery = make_celery(app)
 
 # Global dict mapping search_id to AsyncResult objects
 tasks = {}
 # TODO: create periodic celery task that iterates through tasks,
 # checks for completed ones and processes output
+# TODO: remove, for testing only
+tasks["test_id"] = "foobar";
 
 # Global dictionary for storing metapath search results
 searches = {}
 
 # TODO: This is just for testing; remove later
-searches["test"] = "static/pathways/custom_pathways.txt"
+searches["test_id"] = "static/pathways/custom_pathways.txt"
 
 # KEGG ID to compound name mapping
 compound_names = {}
@@ -144,7 +146,10 @@ def visualize_previous(search_id):
     """
     Loads the visualization page for a previously executed search
     """
-    return "Visualizaton for search id: " + search_id
+    if search_id in tasks:
+        return render_template('viz-page.html')
+    else:
+        return "The results for search ID '" + str(search_id) + "' are not yet available."
 
 
 @app.route('/get_hub_paths/<hub_src>/<hub_dst>')
@@ -162,8 +167,8 @@ def get_hub_paths(hub_src, hub_dst):
     return results_json
 
 
-@app.route('/load_previous/<search_id>')
-def load_previous(search_id):
+@app.route('/load_results/<search_id>')
+def load_result(search_id):
     """
     Looks up the graph associated with this graph_id and responds with a JSON
     representation of the graph
@@ -238,6 +243,8 @@ def initialize():
     """
     Runs when server is first started
     """
+    global compound_names
+
     print "Initializing..."
 
     db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="metadb")

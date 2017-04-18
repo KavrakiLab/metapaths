@@ -24,20 +24,22 @@ var shown_hub = "";
 $(function () {
     $('[data-toggle="popover"]').popover({container: 'body'}); // Enable popover
 
-    var search_id = localStorage.getItem("search_id");
-    if (search_id != null) {
+    path_components = window.location.pathname.split("/");
+    if (path_components.length === 3) {
+        var search_id = path_components[2];
+        console.log(search_id);
         $("#load-panel").hide();
-        load_previous_search_result(search_id);
+        load_search_result(search_id);
     } else {
         $("#graph-data")[0].focus();
     }
 });
 
 
-function load_previous_search_result(search_id) {
+function load_search_result(search_id) {
     // localStorage.removeItem("search_id"); // TODO: uncomment
 
-    $.get("/load_previous/" + search_id).done(function(data) {
+    $.get("/load_results/" + search_id).done(function(data) {
         orig_pathways = JSON.parse(data); // Keep a copy of the original pathways
         main_pathways = JSON.parse(data); // This copy will be filtered
 
@@ -47,7 +49,7 @@ function load_previous_search_result(search_id) {
         // Visualize the pathways
         validate_and_visualize(main_pathways);
     }).fail(function() {
-        alert("Failed to retrive search result.")
+        alert("Failed to retrieve search result.")
         location.assign("/");
     });
 }
