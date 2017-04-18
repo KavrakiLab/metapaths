@@ -40,6 +40,7 @@ function load_search_result(search_id) {
     // localStorage.removeItem("search_id"); // TODO: uncomment
 
     $.get("/load_results/" + search_id).done(function(data) {
+        console.log(data);
         orig_pathways = JSON.parse(data); // Keep a copy of the original pathways
         main_pathways = JSON.parse(data); // This copy will be filtered
 
