@@ -1,4 +1,5 @@
 import re
+from flask import jsonify
 
 def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
     config = "DBHOST\tlocalhost\n"
@@ -22,12 +23,13 @@ def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
     config += "OUTPUTDIR\toutput\n"
 
     config_loc = "input/" + search_id + ".txt"
+    output_loc = "algs/lpat/output/" + search_id + ".txt"
 
     config_file = open("algs/lpat/" + config_loc, 'w')
     config_file.write(config)
     config_file.close()
 
-    return config_loc
+    return config_loc, output_loc
 
 
 #

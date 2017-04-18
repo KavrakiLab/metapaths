@@ -43,12 +43,10 @@ celery = Celery('tasks', backend='rpc://', broker='pyamqp://')
 # Globals
 #
 
-# Global dict mapping search_id to AsyncResult objects
+# Global mapping of search_id to Celery task IDs
 tasks = {}
 # TODO: create periodic celery task that iterates through tasks,
 # checks for completed ones and processes output
-# TODO: remove, for testing only
-tasks["test_id"] = "foobar";
 
 # Global dictionary for storing metapath search results
 searches = {}
@@ -89,10 +87,29 @@ def visualize_results(search_id):
     """
     Loads the visualization page for a previously executed search
     """
-    if search_id in tasks:
-        return render_template('viz-page.html')
+    global searches
+    global celery
+
+    print("Viz request for ", search_id)
+    if search_id in tasks.keys():
+        task_id = tasks[search_id]
+        task = celery.AsyncResult(task_id)
+        print(search_id, task.state)
+
+        if task.state not in ["SUCCESS", "FAILURE"]:
+            return "The results for search ID '" + str(search_id) + "' are not yet available."
+        elif task.state == "SUCCESS":
+            value = task.get()
+            print("value", value)
+            searches[search_id] = value
+            print("searches{}", searches)
+            return render_template('viz-page.html')
+        elif task.state == "FAILURE":
+            # Task failed so remove it
+            searches.remove(search_id)
+            return "The search with ID '" + str(search_id) + "' failed and the results will not become available. Please execute a new search."
     else:
-        return "The results for search ID '" + str(search_id) + "' are not yet available."
+        return "Search ID '" + str(search_id) + "' was not found. Please execute a new search."
 
 
 @app.route('/get_hub_paths/<hub_src>/<hub_dst>')
@@ -117,16 +134,13 @@ def load_results(search_id):
     representation of the graph
     """
     global searches
-    global tasks
 
-    if search_id in tasks:
-        res = tasks[search_id]
-        while res.state != "SUCCESS":
-            print("state", res.state)
-            time.sleep(5)
-        return 200
+    if search_id in searches:
+        search_result_file = searches[search_id]
+        return json.dumps(get_pathways_from_file(search_result_file))
     else:
-        return 500
+        print(search_id, "not in ", searches)
+        return "500"
 
     #  search_result_file = searches[search_id]
     #  return json.dumps(get_pathways_from_file(search_result_file))
@@ -165,8 +179,7 @@ def lpat_search():
 
     search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
     result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], int(request.args["atoms"]), request.args["reversible"])
-    tasks[search_id] = result
-    print(tasks)
+    tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 
 
@@ -208,13 +221,19 @@ def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
 
 @celery.task()
 def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
+    global searches
+
     print "Executing LPAT search with:"
     print(start, target, num_atoms, allow_reversible)
-    config_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
+    config_loc, output_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
 
     output = subprocess.check_output(["java", "-jar", "LinearPathwaySearch.jar", config_loc], cwd="algs/lpat")
 
     print output
+
+    print("Returning output loc", output_loc)
+    return output_loc
+
 
 
 
