@@ -1,9 +1,15 @@
 import MySQLdb
 import json
 import subprocess
+import uuid
+import time
 from helpers import generate_LPAT_config, extract_pathways, get_pathways_from_file, hub_paths_to_json
 from celery import Celery
 from flask import Flask, render_template, jsonify, request
+
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 
 
@@ -11,25 +17,25 @@ from flask import Flask, render_template, jsonify, request
 # Flask & Celery config
 #
 
-def make_celery(app):
-    celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
-                    broker=app.config['CELERY_BROKER_URL'])
-    celery.conf.update(app.config)
-    TaskBase = celery.Task
-    class ContextTask(TaskBase):
-        abstract = True
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return TaskBase.__call__(self, *args, **kwargs)
-    celery.Task = ContextTask
-    return celery
+#  def make_celery(app):
+    #  celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
+                    #  broker=app.config['CELERY_BROKER_URL'])
+    #  celery.conf.update(app.config)
+    #  TaskBase = celery.Task
+    #  class ContextTask(TaskBase):
+        #  abstract = True
+        #  def __call__(self, *args, **kwargs):
+            #  with app.app_context():
+                #  return TaskBase.__call__(self, *args, **kwargs)
+    #  celery.Task = ContextTask
+    #  return celery
 
 app = Flask(__name__)
-app.config.update(
-    CELERY_BROKER_URL='redis://localhost:6379',
-    CELERY_RESULT_BACKEND='redis://localhost:6379'
-)
-celery = make_celery(app)
+#  app.config.update(
+    #  CELERY_BROKER_URL='redis://localhost:6379',
+    #  CELERY_RESULT_BACKEND='redis://localhost:6379'
+#  )
+celery = Celery('tasks', backend='rpc://', broker='pyamqp://')
 
 
 
@@ -79,7 +85,7 @@ def visualize():
 
 
 @app.route('/visualize/<search_id>')
-def visualize_previous(search_id):
+def visualize_results(search_id):
     """
     Loads the visualization page for a previously executed search
     """
@@ -105,15 +111,25 @@ def get_hub_paths(hub_src, hub_dst):
 
 
 @app.route('/load_results/<search_id>')
-def load_result(search_id):
+def load_results(search_id):
     """
     Looks up the graph associated with this graph_id and responds with a JSON
     representation of the graph
     """
     global searches
+    global tasks
 
-    search_result_file = searches[search_id]
-    return json.dumps(get_pathways_from_file(search_result_file))
+    if search_id in tasks:
+        res = tasks[search_id]
+        while res.state != "SUCCESS":
+            print("state", res.state)
+            time.sleep(5)
+        return 200
+    else:
+        return 500
+
+    #  search_result_file = searches[search_id]
+    #  return json.dumps(get_pathways_from_file(search_result_file))
 
 
 @app.route('/search')
@@ -145,10 +161,13 @@ def lpat_search():
     Executes a user's configured LPAT search, stores the resulting graph locally
     and responds with a search id which can be used to later vizualize the results
     """
+    global tasks
 
+    search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
     result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["atoms"], request.args["reversible"])
-    tasks[result.id] = result
-    return json.dumps({"search_id" : result.id});
+    tasks[search_id] = result
+    print(tasks)
+    return json.dumps({"search_id" : search_id});
 
 
 @app.route('/help')
@@ -188,13 +207,12 @@ def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
 
 
 @celery.task()
-def execute_lpat_search(start, target, num_atoms, allow_reversible):
-    """docstring for exe"""
+def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
     print "Executing LPAT search with:"
     print(start, target, num_atoms, allow_reversible)
     config_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
 
-    output = subprocess.check_output(["java", "-jar", "LPAT/LinearPathwaySearch.jar", config_loc])
+    output = subprocess.check_output(["java", "-jar", "algs/lpat/LinearPathwaySearch.jar", config_loc])
 
     print output
 
