@@ -48,9 +48,10 @@ function load_search_result(search_id) {
 
         // Visualize the pathways
         validate_and_visualize(main_pathways);
-    }).fail(function() {
-        alert("Failed to retrieve search result.")
-        location.assign("/");
+    }).fail(function(data) {
+        console.log(data);
+        // alert("Failed to retrieve search result.")
+        // location.assign("/");
     });
 }
 

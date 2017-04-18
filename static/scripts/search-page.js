@@ -11,6 +11,7 @@ $(function () {
             $("#hub-compounds-group").hide();
         }
     });
+    $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
 
     $.get("/get_compound_names").done(function(results_json) {
         var formatted_compounds = format_compounds(JSON.parse(results_json));
@@ -96,7 +97,7 @@ function execute_search(alg_url, query) {
         data: query,
         traditional: true,
         success: function(response) {
-            var search_id = JSON.parse(response)["search_id"];
+            var search_id = response["search_id"];
 
             var results_url = window.location.href + "visualize/" + search_id;
 

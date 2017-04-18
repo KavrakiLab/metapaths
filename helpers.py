@@ -21,9 +21,9 @@ def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
     config += "OUTPUTDIR\tLPAT_OUTPUT\n"
 
-    config_loc = "LPAT_INPUT/" + search_id + ".txt"
+    config_loc = "algs/lpat/LPAT_INPUT/" + search_id + ".txt"
 
-    config_file = open("LPAT/" + config_loc, 'w')
+    config_file = open(config_loc, 'w')
     config_file.write(config)
     config_file.close()
 
