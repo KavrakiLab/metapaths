@@ -1,0 +1,49 @@
+import string
+import sys
+
+
+def convert_lpat(filename):
+    # Read the original file and then empty it out
+    f = open(filename, "r+")
+    lines = f.readlines()
+    f.seek(0)
+    f.truncate()
+
+    # Convert each path and write out to the same file
+    for line in lines:
+        path_segments = []
+        for item in line.split(","):
+            cleaned_item = "".join(x for x in item if x.isalnum())
+            if cleaned_item[0] == "C":
+                f.write(cleaned_item[0:6] + " ")
+            elif cleaned_item[0] == "R":
+                f.write(cleaned_item[0:7] + " ")
+
+        f.write("\n")
+    f.close()
+
+
+
+def main():
+    if len(sys.argv) != 3:
+        sys.stderr.write("Invalid arguments.")
+        sys.exit(1)
+    else:
+        alg = sys.argv[1]
+
+        if alg == "lpat":
+            convert_lpat(sys.argv[2])
+
+        elif alg  == "hub":
+            convert_hub(sys.argv[2])
+
+        elif alg == "metagraph":
+            convert_metagraph(sys.argv[2])
+
+        else:
+            sys.stderr.write("Invalid value for algorithm.")
+            sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
