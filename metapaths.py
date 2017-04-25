@@ -108,6 +108,8 @@ def visualize_results(search_id):
             # Task failed so remove it
             #  searches.remove(search_id) # TODO: dict has not attr remove()
             return "The search with ID '" + str(search_id) + "' failed and the results will not become available. Please execute a new search."
+    elif search_id in searches.keys():
+            return render_template('viz-page.html')
     else:
         return "Search ID '" + str(search_id) + "' was not found. Please execute a new search."
 
@@ -232,8 +234,7 @@ def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
 
     converter_output = subprocess.check_output(["python", "path_convert.py", "lpat", output_loc], cwd="algs")
 
-    print("Returning output loc", output_loc)
-    return output_loc
+    return "algs/" + output_loc
 
 
 
