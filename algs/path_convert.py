@@ -1,3 +1,5 @@
+import os
+import re
 import string
 import sys
 
@@ -22,6 +24,50 @@ def convert_lpat(filename):
         f.write("\n")
     f.close()
 
+def convert_hub(filename):
+    # Read the original file and then empty it out
+    f = open(filename, "r+")
+    lines = f.readlines()
+    f.seek(0)
+    f.truncate()
+
+    # Convert each path and write out to the same file
+    for line in lines:
+        hub_pattern = re.compile("\(([^\)]+)\)")
+        hub_links = hub_pattern.findall(line)
+
+        for hub_link in hub_links:
+            compound_pattern = re.compile("\C\w+")
+            compounds = compound_pattern.findall(hub_link)
+
+            if len(compounds) < 2:
+                sys.stderr("less than two compounds in hub link!\n")
+                sys.stderr(hub_link)
+                sys.stderr(compounds)
+                sys.exit(1)
+
+            hub_start = compounds[0][0:6] + "_HS"
+            hub_end = compounds[-1][0:6] + "_HE"
+
+            line = string.replace(line, "(" + hub_link + ")", hub_start + "," + hub_end)
+
+        path_segments = []
+        for item in line.split(","):
+            item = item.strip()
+            if len(item) > 0:
+                cleaned_item = "".join(x for x in item if x.isalnum() or x == "_")
+                if cleaned_item[0] == "C":
+                    if cleaned_item[-3] == "_":
+                        f.write(cleaned_item[0:9] + ",")
+                    else:
+                        f.write(cleaned_item[0:6] + ",")
+                elif cleaned_item[0] == "R":
+                    f.write(cleaned_item[0:7] + ",")
+
+
+        f.seek(-1, os.SEEK_CUR)
+        f.write("\n")
+    f.close()
 
 
 def main():
