@@ -14,13 +14,15 @@ def convert_lpat(filename):
     # Convert each path and write out to the same file
     for line in lines:
         path_segments = []
-        for item in line.split(","):
-            cleaned_item = "".join(x for x in item if x.isalnum())
-            if cleaned_item[0] == "C":
-                f.write(cleaned_item[0:6] + " ")
-            elif cleaned_item[0] == "R":
-                f.write(cleaned_item[0:7] + " ")
+        for item in line.split(";"):
+            if len(item) > 0:
+                cleaned_item = "".join(x for x in item if x.isalnum())
+                if cleaned_item[0] == "C":
+                    f.write(cleaned_item[0:6] + ",")
+                elif cleaned_item[0] == "R":
+                    f.write(cleaned_item[0:7] + ",")
 
+        f.seek(-1, os.SEEK_CUR)
         f.write("\n")
     f.close()
 

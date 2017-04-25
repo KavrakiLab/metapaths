@@ -2,6 +2,9 @@ import re
 from flask import jsonify
 
 def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
+    config_loc = "input/" + search_id + ".txt"
+    output_loc = "output/" + search_id + ".txt"
+
     config = "DBHOST\tlocalhost\n"
     config += "DBPORT\t3306\n"
     config += "DBNAME\tmetadb\n"
@@ -20,16 +23,13 @@ def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
         config += "CARBONTRACK\tmax\n"
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
-    config += "OUTPUTDIR\toutput\n"
-
-    config_loc = "input/" + search_id + ".txt"
-    output_loc = "algs/lpat/output/" + search_id + ".txt"
+    config += "OUTPUTDIR\t"+ output_loc + "\n"
 
     config_file = open("algs/lpat/" + config_loc, 'w')
     config_file.write(config)
     config_file.close()
 
-    return config_loc, output_loc
+    return config_loc, "lpat/" + output_loc
 
 
 #

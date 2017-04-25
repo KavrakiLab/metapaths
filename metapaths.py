@@ -106,7 +106,7 @@ def visualize_results(search_id):
             return render_template('viz-page.html')
         elif task.state == "FAILURE":
             # Task failed so remove it
-            searches.remove(search_id)
+            #  searches.remove(search_id) # TODO: dict has not attr remove()
             return "The search with ID '" + str(search_id) + "' failed and the results will not become available. Please execute a new search."
     else:
         return "Search ID '" + str(search_id) + "' was not found. Please execute a new search."
@@ -227,9 +227,10 @@ def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
     print(start, target, num_atoms, allow_reversible)
     config_loc, output_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
 
-    output = subprocess.check_output(["java", "-jar", "LinearPathwaySearch.jar", config_loc], cwd="algs/lpat")
+    alg_output = subprocess.check_output(["java", "-jar", "LinearPathwaySearch.jar", config_loc], cwd="algs/lpat")
+    print alg_output
 
-    print output
+    converter_output = subprocess.check_output(["python", "path_convert.py", "lpat", output_loc], cwd="algs")
 
     print("Returning output loc", output_loc)
     return output_loc
