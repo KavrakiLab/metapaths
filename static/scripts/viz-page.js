@@ -502,3 +502,15 @@ function detail_popup(id) {
     alert(JSON.stringify(kegg_data[id], null, 2));
 }
 
+function export_filtered() {
+    export_json(JSON.stringify(main_pathways));
+}
+
+function export_original() {
+    export_json(JSON.stringify(orig_pathways));
+}
+
+function export_json(data) {
+    var blob = new Blob([data], {type: "application/json"});
+    window.open(window.URL.createObjectURL(blob), "_blank");
+}
