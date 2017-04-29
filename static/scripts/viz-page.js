@@ -103,6 +103,8 @@ function validate_and_visualize(pathways) {
 
     attach_link_watchers(viz_graph, data_graph);
 
+    attach_motion_watcher(viz_graph);
+
     // Make the viz visible
     $("#viz")[0].style.visibility = "visible";
 } // validate_and_visualize
@@ -459,6 +461,21 @@ function attach_link_watchers(viz_graph, data_graph) {
     });
 }
 
+function attach_motion_watcher(viz_graph) {
+    $("#motion-toggle")[0].onclick = function() {
+        if ($("#motion-toggle").hasClass("active")) {
+            viz_graph.node.data().forEach(function (node, index, array) {
+                node.fixed = true;
+            });
+            $("#motion-toggle").removeClass("active");
+        } else {
+            viz_graph.node.data().forEach(function (node, index, array) {
+                node.fixed = false;
+            });
+            $("#motion-toggle").addClass("active");
+        }
+    };
+}
 
 function update_info_panel(id) {
     var entry = kegg_data[id];
@@ -484,3 +501,4 @@ function detail_popup(id) {
     // TODO: better way of doing this
     alert(JSON.stringify(kegg_data[id], null, 2));
 }
+
