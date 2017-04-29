@@ -231,6 +231,11 @@ function initialize_dropdowns(items) {
 
 
 function select_all_hubs() {
-    // TODO
-    alert("Not yet implemented.");
+    $("#hub-compounds > option").prop("selected","selected");
+    $("#hub-compounds").trigger("change");
+}
+
+function remove_all_hubs() {
+    $("#hub-compounds > option").removeAttr("selected");
+    $("#hub-compounds").trigger("change");
 }
