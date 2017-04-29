@@ -96,9 +96,11 @@
                         <select class="form-control"  multiple="multiple" id="hub-compounds" data-toggle="popover" data-placement="right" data-trigger="focus" data-content="Sample help text"></select>
                     </div><br>
 
-                    <div class="form-group">
-                        <label for="num-atoms">Number of Conserved of Atoms</label>
-                        <input type="number" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus" id="num-atoms" data-content="Enter the minimum number of atoms that should be conserved in discovered pathways. If value is < 1, the max number of atoms will try to be conserved" value=0>
+                    <div class="form-group" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Select the level of carbon tracking. Max will convserve the most possible, One will conserve at least one carbon.">
+                        <label for="carbontracking">Carbon Tracking</label><br>
+                        <input type="radio" name="carbontracking" value="max" checked> Max &nbsp&nbsp&nbsp&nbsp</input>
+                        <input type="radio" name="carbontracking" value="one"> One &nbsp&nbsp&nbsp&nbsp</input>
+                        <input type="radio" name="carbontracking" value="no"> None &nbsp&nbsp&nbsp&nbsp</input>
                         </input>
                     </div><br>
 

@@ -63,7 +63,7 @@ function search() {
             "start" : $("#start-compound").val(),
             "target" : $("#target-compound").val(),
             "hubs" : JSON.stringify($("#hub-compounds").val()),
-            "atoms" : parseInt($("#num-atoms").val()),
+            "carbontrack" : $("input[name=carbontracking]:checked").val(),
             "reversible" : $("#allow-reversible").is(":checked")
         }
         execute_search("/hub_search", query);
@@ -73,7 +73,7 @@ function search() {
         var query = {
             "start" : $("#start-compound").val(),
             "target" : $("#target-compound").val(),
-            "atoms" : parseInt($("#num-atoms").val()),
+            "carbontrack" : $("input[name=carbontracking]:checked").val(),
             "reversible" : $("#allow-reversible").is(":checked")
         }
         execute_search("/lpat_search", query);
