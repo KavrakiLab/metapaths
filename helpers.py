@@ -1,4 +1,5 @@
 import re
+import os
 from flask import jsonify
 
 def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
@@ -131,3 +132,5 @@ def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
     return jsonify(hub)
 
 
+def remove_input_file(search_id):
+    os.remove("searches/input/" + search_id + ".txt")

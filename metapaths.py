@@ -4,7 +4,7 @@ import os
 import subprocess
 import uuid
 import time
-from helpers import generate_LPAT_config, extract_pathways, get_pathways_from_file, hub_paths_to_json
+from helpers import generate_LPAT_config, extract_pathways, get_pathways_from_file, hub_paths_to_json, remove_input_file
 from celery import Celery
 from flask import Flask, render_template, jsonify, request
 
@@ -90,19 +90,18 @@ def visualize_results(search_id):
     if search_id in tasks.keys():
         task_id = tasks[search_id]
         task = celery.AsyncResult(task_id)
-        print(search_id, task.state)
 
         if task.state not in ["SUCCESS", "FAILURE"]:
             return "The results for search ID '" + str(search_id) + "' are not yet available."
         elif task.state == "SUCCESS":
             value = task.get()
-            print("value", value)
             searches[search_id] = value
-            print("searches{}", searches)
+            remove_input_file(search_id)
             return render_template('viz-page.html')
         elif task.state == "FAILURE":
             # Task failed so remove it
-            #  searches.remove(search_id) # TODO: dict has not attr remove()
+            searches.pop(search_id) # TODO: dict has not attr remove()
+            remove_input_file(search_id)
             return "The search with ID '" + str(search_id) + "' failed and the results will not become available. Please execute a new search."
     elif search_id in searches.keys():
             return render_template('viz-page.html')
