@@ -1,5 +1,6 @@
 import MySQLdb
 import json
+import os
 import subprocess
 import uuid
 import time
@@ -45,14 +46,9 @@ celery = Celery('tasks', backend='rpc://', broker='pyamqp://')
 
 # Global mapping of search_id to Celery task IDs
 tasks = {}
-# TODO: create periodic celery task that iterates through tasks,
-# checks for completed ones and processes output
 
 # Global dictionary for storing metapath search results
 searches = {}
-
-# TODO: This is just for testing; remove later
-searches["test_id"] = "static/pathways/custom_pathways.txt"
 
 # KEGG ID to compound name mapping
 compound_names = {}
@@ -210,6 +206,7 @@ def get_hub_compounds():
     return json.dumps(hub_compounds)
 
 
+
 #
 # Celery Tasks
 #
@@ -240,17 +237,31 @@ def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
     return output_loc
 
 
-def load_example_outputs():
-    global searches
-
-    searches["C00031-C00078"] = "searches/examples/C00031-C00078.txt"
-    searches["C00668-C01613"] = "searches/examples/C00668-C01613.txt"
-    searches["C00022-C00047"] = "searches/examples/C00022-C00047.txt"
-
-
 #
 # Server Initialization
 #
+
+def load_examples():
+    global searches
+
+    examples_dir = "searches/examples"
+
+    for f in os.listdir(examples_dir):
+        if f.endswith(".txt"):
+            search_id = f.split(".")[0]
+            searches[search_id] = examples_dir + "/" + f
+
+
+def load_existing_results():
+    global searches
+
+    output_dir = "searches/output"
+
+    for f in os.listdir(output_dir):
+        if f.endswith(".txt"):
+            search_id = f.split(".")[0]
+            searches[search_id] = output_dir + "/" + f
+
 
 def initialize():
     """
@@ -274,6 +285,7 @@ def initialize():
     for hub in ["C00022","C00047","C00024","C00083","C00025","C00026","C00448","C00033","C00058","C00037","C00043","C02557","C00041","C00235","C00167","C00341","C00048","C00129","C00044","C00064","C00223","C00353","C00097","C00062","C00052","C00051","C01054","C00036","C00084","C00049","C00132","C00124","C00065","C00128","C00091","C00100","C00074","C00079","C00082","C00090","C00096","C00157","C00073","C00086","C00119","C00219","C00078","C00111","C00085","C00103","C00121","C00180","C00099","C00169","C00042"]:
         hub_compounds[hub] = compound_names[hub]
 
-    load_example_outputs()
+    load_examples()
+    load_existing_results()
 
 initialize()

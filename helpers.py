@@ -79,7 +79,6 @@ def extract_pathways(string_pathways):
         pathway["links"] = list(links)
         pathway["hub_nodes"] = [hub_node[0:6] for hub_node in hub_nodes]
         pathway["hub_links"] = list(hub_links)
-        print(pathways)
 
         pathways.append(pathway)
 
