@@ -100,7 +100,7 @@ def visualize_results(search_id):
             return render_template('viz-page.html')
         elif task.state == "FAILURE":
             # Task failed so remove it
-            searches.pop(search_id) # TODO: dict has not attr remove()
+            tasks.pop(search_id) # TODO: dict has not attr remove()
             remove_input_file(search_id)
             return "The search with ID '" + str(search_id) + "' failed and the results will not become available. Please execute a new search."
     elif search_id in searches.keys():
@@ -162,7 +162,6 @@ def hub_search():
     """
 
     search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
-    #  execute_hub_search.delay(search_id, request.args["start"], request.args["target"], request.args["hubs"], request.args["atoms"], request.args["reversible"])
     return json.dumps({"search_id" : search_id});
 
 
@@ -175,7 +174,7 @@ def lpat_search():
     global tasks
 
     search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
-    result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], int(request.args["atoms"]), request.args["reversible"])
+    result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["carbontrack"], request.args["reversible"])
     tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 
@@ -218,20 +217,26 @@ def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
 
 
 @celery.task()
-def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
+def execute_lpat_search(search_id, start, target, carbon_track, allow_reversible):
     global searches
 
     print "Executing LPAT search with:"
-    print(start, target, num_atoms, allow_reversible)
-    input_loc, output_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
+    print(start, target, carbon_track, allow_reversible)
+    input_loc, output_loc = generate_LPAT_config(start, target, carbon_track, allow_reversible, search_id)
 
     alg_output = subprocess.call(["java", "-jar",
         "searches/LinearPathwaySearch.jar", input_loc])
     print("alg_output", alg_output)
+    if alg_output != 0:
+        raise Exception("LPAT execution failed, check Celery worker logs.")
+        return None
 
     converter_output = subprocess.call(["python", "searches/path_convert.py",
         "lpat", output_loc])
     print("converter_output", converter_output)
+    if converter_output != 0:
+        raise Exception("Converting LPAT output to visualization format failed, check Celery worker logs.")
+        return None
 
     return output_loc
 

@@ -2,7 +2,7 @@ import re
 import os
 from flask import jsonify
 
-def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
+def generate_LPAT_config(start, target, carbon_track, allow_reversible, search_id):
 
     config = "DBHOST\tlocalhost\n"
     config += "DBPORT\t3306\n"
@@ -16,11 +16,7 @@ def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
     config += "USEREVERSE\t1\n"
     config += "STARTCID\t" + start + "\n"
     config += "TARGETCID\t" + target + "\n"
-
-    if num_atoms > 0:
-        config += "CARBONTRACK\t" + str(num_atoms) + "\n"
-    else:
-        config += "CARBONTRACK\tmax\n"
+    config += "CARBONTRACK\t" + carbon_track + "\n"
 
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
