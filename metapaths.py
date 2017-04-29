@@ -272,7 +272,7 @@ def initialize():
 
     db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="metadb")
     cursor = db.cursor()
-    cursor.execute("SELECT KEGGCompoundID, CompoundName from KEGGCompoundNames;")
+    cursor.execute("SELECT KEGGCompoundID, CompoundName from KEGGCompoundNames WHERE FirstName = 1;")
 
 
     for compound in cursor.fetchall():
