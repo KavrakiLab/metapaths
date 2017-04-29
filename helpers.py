@@ -2,39 +2,48 @@ import re
 from flask import jsonify
 
 def generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id):
-    config_loc = "input/" + search_id + ".txt"
-    output_loc = "output/" + search_id + ".txt"
 
     config = "DBHOST\tlocalhost\n"
     config += "DBPORT\t3306\n"
     config += "DBNAME\tmetadb\n"
     config += "DBUSER\troot\n"
     config += "DBPASS\tmeta\n"
-    config += "MOLDIR\trpair_mol\n"
-    config += "RPAIRDIR\trpair_only_maps\n"
-    config += "REACTIONDIR\trpair_maps\n"
+    config += "MOLDIR\tsearches/rpair_mol\n"
+    config += "RPAIRDIR\tsearches/rpair_only_maps\n"
+    config += "REACTIONDIR\tsearches/rpair_maps\n"
     config += "K\t1000000\n"
     config += "USEREVERSE\t1\n"
     config += "STARTCID\t" + start + "\n"
     config += "TARGETCID\t" + target + "\n"
+
     if num_atoms > 0:
         config += "CARBONTRACK\t" + str(num_atoms) + "\n"
     else:
         config += "CARBONTRACK\tmax\n"
+
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
+
+    output_loc = "searches/output/" + search_id + ".txt"
     config += "OUTPUTDIR\t"+ output_loc + "\n"
 
-    config_file = open("algs/lpat/" + config_loc, 'w')
-    config_file.write(config)
-    config_file.close()
-
-    return config_loc, "lpat/" + output_loc
+    input_loc = write_config_file(search_id, config)
+    return input_loc, output_loc
 
 
 #
 # Helpers
 #
+
+def write_config_file(search_id, config):
+    config_loc = "searches/input/" + search_id + ".txt"
+
+    config_file = open(config_loc, 'w')
+    config_file.write(config)
+    config_file.close()
+
+    return config_loc
+
 
 def extract_pathways(string_pathways):
     pathways = []

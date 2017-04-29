@@ -227,15 +227,17 @@ def execute_lpat_search(search_id, start, target, num_atoms, allow_reversible):
 
     print "Executing LPAT search with:"
     print(start, target, num_atoms, allow_reversible)
-    config_loc, output_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
+    input_loc, output_loc = generate_LPAT_config(start, target, num_atoms, allow_reversible, search_id)
 
-    alg_output = subprocess.call(["java", "-jar", "LinearPathwaySearch.jar", config_loc], cwd="algs/lpat")
+    alg_output = subprocess.call(["java", "-jar",
+        "searches/LinearPathwaySearch.jar", input_loc])
     print("alg_output", alg_output)
 
-    converter_output = subprocess.call(["python", "path_convert.py", "lpat", output_loc], cwd="algs")
+    converter_output = subprocess.call(["python", "searches/path_convert.py",
+        "lpat", output_loc])
     print("converter_output", converter_output)
 
-    return "algs/" + output_loc
+    return output_loc
 
 
 
