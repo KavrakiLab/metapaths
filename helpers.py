@@ -17,12 +17,40 @@ def generate_LPAT_config(start, target, carbon_track, allow_reversible, search_i
     config += "STARTCID\t" + start + "\n"
     config += "TARGETCID\t" + target + "\n"
     config += "CARBONTRACK\t" + carbon_track + "\n"
-
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
 
     output_loc = "searches/output/" + search_id + ".txt"
     config += "OUTPUTDIR\t"+ output_loc + "\n"
+
+    input_loc = write_config_file(search_id, config)
+    return input_loc, output_loc
+
+def generate_hub_config(start, target, carbon_track, allow_reversible,
+        search_id, selected_hub_compounds):
+
+    config = "DBHOST\tlocalhost\n"
+    config += "DBPORT\t3306\n"
+    config += "DBNAME\tmetadb\n"
+    config += "DBUSER\troot\n"
+    config += "DBPASS\tmeta\n"
+    config += "MOLDIR\tsearches/rpair_mol\n"
+    config += "RPAIRDIR\tsearches/rpair_only_maps\n"
+    config += "REACTIONDIR\tsearches/rpair_maps\n"
+    config += "K\t1000000\n"
+    config += "USEREVERSE\t1\n"
+    config += "STARTCID\t" + start + "\n"
+    config += "TARGETCID\t" + target + "\n"
+    config += "CARBONTRACK\t" + carbon_track + "\n"
+    config += "PERCENTCARBON\t1.0\n"
+    config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
+
+    output_loc = "searches/output/" + search_id + ".txt"
+    config += "OUTPUTDIR\t"+ output_loc + "\n"
+
+    config += "USEHUBTABLE\t1\n"
+    config += "HUBS\t" + ",".join(selected_hub_compounds)
+
 
     input_loc = write_config_file(search_id, config)
     return input_loc, output_loc
