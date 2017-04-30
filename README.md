@@ -1,93 +1,12 @@
-## Metabolic Pathway Visualization
+# Metabolic Pathway Visualization
 
-### Two use cases:
-
-1. User uploads their metabolic pathway data in some specified and supported
-   format. The front-end JS code parses their data and generate a
-   visualization.
-
-    The uploaded data could be one of the following:
-    * Pathways which were exported from the app itself
-    * Pathways which were output by LPAT/BPAT or hub algorithm
-    * Pathways which were output by metagraphs algorithm
-
-2. The user configures and executes a pathway search. The results may not be
-   instantaneous so some sort of callback or link generated for them to
-   get their results would be needed.
-
-   Algorithm output would reside on the server and be accessible at the
-   visualization link.
+## Introduction
 
 
-### Implementation Tasks:
-
-1. Need to define a schema for the input
-    * Preferably JSON for easy usage with D3
-    * Need to figure out what data is available from each source and how to
-      support or visualize that data?
-2. Write parsers for the different supported metapaths data (LPAT/BPAT/HUBs/MG)
-   to convert to the data scheme
-3. Implement visualization
-    * Will the viz look different based what type of input was given? --> This
-      could get complicated
-    * What are the minimum required features?
-    * What amount of information should be pulled from external sources?
-4. Implement back-end
-    * Receive and execute pathway searches
-    * Output data into the viz scheme or into the native format and then
-      converted to the viz scheme
-    * Make results available via a URL
-    * User notification system when search is complete (email)
+## Installation
 
 
-### Data File Specification
-```
-{
-    "info" : {
-        "start" : "C00022",
-        "target" : "C00036"
-    },
-    "pathways" : [
-        { // Pathway 1
-            "atoms" : 3,
-            "nodes": [
-                {"id" : "C00031"},
-                {"id" : "C00492"}
-            ],
-            "hub_nodes" : [
-                {"id" : "C00022"},
-                {"id" : "C00036"}
-            ],
-            "links" : [
-                {"source": "C00031", "target": "C00022"},
-                {"source": "C00036", "target": "C00492"}
-            ],
-            "hub_links": [
-                { // Hub link 1
-                    "source": "C00022",
-                    "target": "C00036",
-                    "internal_nodes" : [
-                        {"id" : "RP04274"},
-                        {"id" : "C03248"},
-                        {"id" : "RP03811"},
-                        {"id" : "C03981"},
-                        {"id" : "RP09148"}
-                    ],
-                    "internal_links": [
-                        {"source": "C00022", "target": "RP04274"},
-                        {"source": "RP04274", "target": "C03248"},
-                        {"source": "C03248", "target": "RP03811"},
-                        {"source": "C03981", "target": "RP09148"},
-                        {"source": "RP09148", "target": "C00036"}
-                    ]
-                },
-                { // Hub link 2 },
-                ...
-            ]
-        },
-        { // Pathway 2 },
-        { // Pathway 3 },
-        ...
-    ]
-}
-```
+### Deploying to a server
+
+
+## File Overview
