@@ -6,7 +6,7 @@ backend is written in Python using [Flask](http://flask.pocoo.org) and the
 frontend is written in HTML/CSS and JavaScript.
 
 ### Backend
-There are several components to the backend.
+There backend comprises several components.
 
 #### Flask
 The primary component is the Flask web server which handles URL routing for
@@ -39,9 +39,69 @@ used to populate the hub visualization when a user clicks to expand a hub link.
 
 
 ### Frontend
+The HTML for webpages resides in the `templates` directory and is served by
+the Flask server. The frontend makes extensive use of
+[Bootstrap](http://getbootstrap.com) for the UI components and
+[Select2](https://select2.github.io) for the searchable drop-down select boxes.
+The visualization is created using a force-directed graph layout from
+[D3](https://d3js.org).
+
 
 ## Installation
+<!-- ***Python version 2.7.* *** -->
+`$` indicates command should be executed from the shell
+`mysql>` indicates command should be executed from the MySQL server REPL
 
+### Acquire Dependencies
+
+#### Python Libraries
+Flask: `$ sudo pip install Flask`
+
+Celery: `$ sudo pip install celery`
+
+MySQLdb: `$ sudo pip install mysql-python`
+
+#### Other
+MySQL Server: [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/)
+
+RabbitMQ: [Debian/Ubuntu](http://www.rabbitmq.com/install-debian.html), [Mac
+OSX](http://www.rabbitmq.com/install-standalone-mac.html)
+
+### Clone
+```
+git clone https://github.com/KavrakiLab/metapaths.git
+```
+
+### Database Setup
+1. Complete the initial post-installation setup of MySQL Server. The default
+   user is `root` and the password is `meta`. If you configure with a different
+   username and password, you must update the `DB_USER` and `DB_PASSWD` fields
+   in `metapaths.py`.
+
+```
+$ mysql -u root -p // start and login to the MySQL server
+```
+
+2. Create `metadb` database
+
+```
+mysql> CREATE DATABASE metadb;
+mysql> USE metadb;
+mysql> SOURCE ./metapaths/resources/metadb_2017-04-30.sql;
+```
+
+3. Create `hubdb` database
+
+```
+mysql> CREATE DATABASE hubdb;
+mysql> USE hubdb;
+mysql> SOURCE ./metapaths/resources/hubdb_2017-04-30.sql;
+```
+
+4. Logout
+```
+mysql> quit;
+```
 
 ### Deploying to a server
 
