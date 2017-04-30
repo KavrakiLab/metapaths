@@ -12,6 +12,8 @@ import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
+DB_USER = "root"
+DB_PASSWD = "meta"
 
 
 #
@@ -115,7 +117,7 @@ def get_hub_paths(hub_src, hub_dst):
     Returns visualization formatted JSON describing the pathways between the
     two hub compounds
     """
-    db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="hubdb")
+    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db="hubdb")
     cursor = db.cursor()
     cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + "")
     results_json = hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
@@ -309,7 +311,7 @@ def initialize():
 
     print "Initializing..."
 
-    db = MySQLdb.connect(host="localhost", user="root", passwd="meta", db="metadb")
+    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db="metadb")
     cursor = db.cursor()
     cursor.execute("SELECT KEGGCompoundID, CompoundName from KEGGCompoundNames WHERE FirstName = 1;")
 
