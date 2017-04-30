@@ -57,11 +57,13 @@ The visualization is created using a force-directed graph layout from
 
 
 ## Installation
-Python version `2.7.*` is assumed
+* Instructions are applicable for Debian/Ubuntu and Mac OSX.
 
-`$` indicates command should be executed from the shell
+* Python version `2.7.*` is assumed.
 
-`mysql>` indicates command should be executed from the MySQL server REPL
+* `$` indicates command should be executed from the shell
+
+* `mysql>` indicates command should be executed from the MySQL server REPL
 
 ### Dependencies
 
@@ -143,7 +145,8 @@ $ cd metapaths
 $ export FLASK_APP=metapaths.py
 $ flask run
 ```
-
+The Flask server will initialize and the webapp will become available at
+[localhost:5000](http://localhost:5000)
 
 
 ### Deploying to a non-local server
@@ -157,3 +160,4 @@ to be followed.
 
 
 ## File Descriptions
+
