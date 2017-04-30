@@ -1,5 +1,14 @@
 # Metabolic Pathway Visualization
 
+* [Overview](#overview)
+
+* [Installation](#installation)
+    * [Dependencies](#dependencies)
+    * [Database Setup](#database-setup)
+    * [Server Setup](#server-setup)
+
+* [File Descriptions](#file-descriptions)
+
 ## Overview
 This project implements a web app for metabolic pathway visualization. The
 backend is written in Python using [Flask](http://flask.pocoo.org) and the
@@ -52,7 +61,7 @@ The visualization is created using a force-directed graph layout from
 `$` indicates command should be executed from the shell
 `mysql>` indicates command should be executed from the MySQL server REPL
 
-### Acquire Dependencies
+### Dependencies
 
 #### Python Libraries
 Flask: `$ sudo pip install Flask`
@@ -69,7 +78,7 @@ OSX](http://www.rabbitmq.com/install-standalone-mac.html)
 
 ### Clone
 ```
-git clone https://github.com/KavrakiLab/metapaths.git
+$ git clone https://github.com/KavrakiLab/metapaths.git
 ```
 
 ### Database Setup
@@ -103,7 +112,9 @@ mysql> SOURCE ./metapaths/resources/hubdb_2017-04-30.sql;
 mysql> quit;
 ```
 
-### Deploying to a server
+### Server Setup
+
+### Deploying to a non-local server
 
 
 ## File Descriptions
