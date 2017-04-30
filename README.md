@@ -57,8 +57,10 @@ The visualization is created using a force-directed graph layout from
 
 
 ## Installation
-<!-- ***Python version 2.7.* *** -->
+Python version `2.7.*` is assumed
+
 `$` indicates command should be executed from the shell
+
 `mysql>` indicates command should be executed from the MySQL server REPL
 
 ### Dependencies
@@ -85,10 +87,10 @@ $ git clone https://github.com/KavrakiLab/metapaths.git
 1. Complete the initial post-installation setup of MySQL Server. The default
    user is `root` and the password is `meta`. If you configure with a different
    username and password, you must update the `DB_USER` and `DB_PASSWD` fields
-   in `metapaths.py`.
+   in `metapaths.py`. Start and login to the MySQL server with:
 
 ```
-$ mysql -u root -p // start and login to the MySQL server
+$ mysql -u root -p
 ```
 
 2. Create `metadb` database
@@ -113,8 +115,45 @@ mysql> quit;
 ```
 
 ### Server Setup
+Once all the dependencies are available and the databases have been setup, we
+can run the main Flask server.
+
+If using Ubuntu or Debian, the RabbitMQ server will begin running right after
+installation, so no further action is needed. On Mac OSX, you will need to run
+`rabbitmq-server` to start up the broker.
+
+Next, we need to intialize Celery.
+```
+$ cd metapaths
+$ celery worker -A metapaths.celery --loglevel=info
+```
+This creates a celery work for the metapaths application. The log level can be
+configured as desired. You can run the Celery worker in its own shell and use
+another shell to run the Flask server, or the worker can be run in the
+background and its output and logging can be redirected into a log file like
+this:
+```
+$ cd metapaths
+$ celery worker -A metapaths.celery --loglevel=info &> celery_worker.log &
+```
+
+Lastly, we can start the Flask server:
+```
+$ cd metapaths
+$ export FLASK_APP=metapaths.py
+$ flask run
+```
+
+
 
 ### Deploying to a non-local server
+The whole metapaths web app can be deployed to the cloud using apache and
+mod\_wsgi. Complete instructions can be found
+[here](https://devops.profitbricks.com/tutorials/deploy-a-flask-application-on-ubuntu-1404/).
+
+This guide can be used to setup apache and mod\_wsgi, but the other installation
+instructions regarding dependencies, database setup, and celery will also need
+to be followed.
 
 
 ## File Descriptions
