@@ -239,3 +239,21 @@ function remove_all_hubs() {
     $("#hub-compounds > option").removeAttr("selected");
     $("#hub-compounds").trigger("change");
 }
+
+function get_available_searches() {
+    $.get("/get_available_searches").done(function(results_json) {
+        var available_search_ids = JSON.parse(results_json);
+        var html = "<br><div class='alert alert-success alert-dismissible' role='alert'>";
+        html += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span></button>"
+        available_search_ids.forEach(function(id) {
+            html += "<li><a href='/visualize/" + id + "'>" + id + "</a><br></li>";
+        });
+        html += "<div>"
+        $("#more-pathways").html(html);
+
+    }).fail(function(error) {
+        console.log(error);
+        alert("Unable to find more pathway results.");
+    });
+}
+

@@ -211,6 +211,13 @@ def get_hub_compounds():
     return json.dumps(hub_compounds)
 
 
+@app.route('/get_available_searches')
+def get_available_searches():
+    """
+    Returns a list of search_ids that can be visualized
+    """
+    return json.dumps(searches.keys())
+
 
 #
 # Celery Tasks
