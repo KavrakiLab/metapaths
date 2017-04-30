@@ -4,7 +4,7 @@ import os
 import subprocess
 import uuid
 import time
-from helpers import generate_LPAT_config, extract_pathways, get_pathways_from_file, hub_paths_to_json, remove_input_file
+from helpers import generate_hub_config, generate_LPAT_config, extract_pathways, get_pathways_from_file, hub_paths_to_json, remove_input_file
 from celery import Celery
 from flask import Flask, render_template, jsonify, request
 
@@ -161,7 +161,12 @@ def hub_search():
     and responds with a search id which can be used to later vizualize the results
     """
 
-    search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
+    search_id = str(uuid.uuid4())
+    result = execute_hub_search.delay(search_id, request.args["start"],
+            request.args["target"], request.args["carbontrack"],
+            request.args["reversible"],
+            json.loads(request.args["hubcompounds"]))
+    tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 
 
@@ -173,8 +178,10 @@ def lpat_search():
     """
     global tasks
 
-    search_id = str(uuid.uuid4()) # TODO: Is this okay to do?
-    result = execute_lpat_search.delay(search_id, request.args["start"], request.args["target"], request.args["carbontrack"], request.args["reversible"])
+    search_id = str(uuid.uuid4())
+    result = execute_lpat_search.delay(search_id, request.args["start"],
+            request.args["target"], request.args["carbontrack"],
+            request.args["reversible"])
     tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 
@@ -210,10 +217,30 @@ def get_hub_compounds():
 #
 
 @celery.task()
-def execute_hub_search(start, target, hubs, num_atoms, allow_reversible):
-    """docstring for exe"""
-    print "Executing hub search with:"
-    print(start, target, hubs, num_atoms, allow_reversible)
+def execute_hub_search(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds):
+    global searches
+
+    print "Executing Hub search with:"
+    #  print(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds)
+    #  print("hub compudns", type(selected_hub_compounds), selected_hub_compounds)
+    input_loc, output_loc = generate_hub_config(start, target, carbon_track,
+            allow_reversible, search_id, selected_hub_compounds)
+
+    alg_output = subprocess.call(["java", "-jar",
+        "searches/LinearPathwaySearch.jar", input_loc])
+    print("alg_output", alg_output)
+    if alg_output != 0:
+        raise Exception("Hub execution failed, check Celery worker logs.")
+        return None
+
+    converter_output = subprocess.call(["python", "searches/path_convert.py",
+        "hub", output_loc])
+    print("converter_output", converter_output)
+    if converter_output != 0:
+        raise Exception("Converting Hub output to visualization format failed, check Celery worker logs.")
+        return None
+
+    return output_loc
 
 
 @celery.task()
