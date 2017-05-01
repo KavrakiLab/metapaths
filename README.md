@@ -7,7 +7,7 @@
     * [Database Setup](#database-setup)
     * [Server Setup](#server-setup)
 
-* [File Descriptions](#file-descriptions)
+* [A Note on Usage](#a-note-on-usage)
 
 ## Overview
 This project implements a web app for metabolic pathway visualization. The
@@ -159,10 +159,7 @@ instructions regarding dependencies, database setup, and celery will also need
 to be followed.
 
 
-## File Descriptions
-
-
-## Notes
+## A Note on Usage
 
 Celery and RabbitMQ are necessary for the search execution functionality of the
 webapp. However, it is possible to just run the Flask web app and still use all
@@ -196,3 +193,4 @@ This can be done in two ways:
     ```
     **Note that `path_convert.py` overwrites the original input file with the
     converted format.**
+
