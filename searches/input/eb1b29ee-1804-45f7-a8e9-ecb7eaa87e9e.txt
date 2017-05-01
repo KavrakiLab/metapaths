@@ -1,0 +1,16 @@
+DBHOST	localhost
+DBPORT	3306
+DBNAME	metadb
+DBUSER	root
+DBPASS	meta
+MOLDIR	searches/rpair_mol
+RPAIRDIR	searches/rpair_only_maps
+REACTIONDIR	searches/rpair_maps
+K	1000000
+USEREVERSE	1
+STARTCID	C00668
+TARGETCID	C01613
+CARBONTRACK	max
+PERCENTCARBON	1.0
+WEIGHTTYPE	WEIGHT_OF_ONE
+OUTPUTDIR	searches/output/eb1b29ee-1804-45f7-a8e9-ecb7eaa87e9e.txt
