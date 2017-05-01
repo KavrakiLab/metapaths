@@ -1,13 +1,11 @@
 # Metabolic Pathway Visualization
 
 * [Overview](#overview)
-
 * [Installation](#installation)
     * [Dependencies](#dependencies)
     * [Database Setup](#database-setup)
     * [Server Setup](#server-setup)
-
-* [A Note on Usage](#a-note-on-usage)
+* [A Note On Usage](#a-note-on-usage)
 
 ## Overview
 This project implements a web app for metabolic pathway visualization. The
@@ -159,7 +157,7 @@ instructions regarding dependencies, database setup, and celery will also need
 to be followed.
 
 
-## A Note on Usage
+## A Note On Usage
 
 Celery and RabbitMQ are necessary for the search execution functionality of the
 webapp. However, it is possible to just run the Flask web app and still use all
