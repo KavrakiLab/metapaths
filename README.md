@@ -161,3 +161,38 @@ to be followed.
 
 ## File Descriptions
 
+
+## Notes
+
+Celery and RabbitMQ are necessary for the search execution functionality of the
+webapp. However, it is possible to just run the Flask web app and still use all
+of the visualization features.
+
+This can be done in two ways:
+
+1. By uploading properly formatted JSON using the upload feature on the webapp
+
+    For examples of the JSON accepted by this feature, see the `resources`
+    directory. This is the same JSON format as is given when pathways are exported
+    from the web app.
+
+2. By placing a text file of pathways in the `searches/output` directory and
+   clicking "View more pathways" on the web app.
+
+    The format of these text files is simple; each line represents a pathway and
+    contains a comma delimited list of KEGG compound and RPair IDs. For a sample of
+    this format, inspect any of the files in the `searches/examples` directory.
+
+    Note that this is not exactly the same format as that output by the AtomMetaNet
+    algorithms. However, the `path_convert.py` tool (located in the `searches`
+    directory) can be used to convert certain supported formats into this format.
+    For example, to convert LPAT:
+    ```
+    python path_convert.py lpat lpat_output.txt
+    ```
+    To convert Hub output:
+    ```
+    python path_convert.py hub hub_output.txt
+    ```
+    **Note that `path_convert.py` overwrites the original input file with the
+    converted format.**
