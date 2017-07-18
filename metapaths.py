@@ -63,7 +63,8 @@ compound_names = {}
 hub_compounds = {}
 
 # Working dir
-working_dir = "/usr/local/metapathssandbox/metapaths"
+#working_dir = "/home/sarahkim/metapath/webserver/metapaths"
+working_dir = "/usr/localhost/metapathssandbox/metapaths"
 
 #
 # Routes
@@ -237,8 +238,8 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
 
     print "Executing Hub search with:"
     print(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds)
-    print("hub compudns", type(selected_hub_compounds), selected_hub_compounds)
-    input_loc, output_loc = generate_hub_config(start, target, carbon_track,
+    print("hub compounds", type(selected_hub_compounds), selected_hub_compounds)
+    input_loc, output_loc = generate_hub_config(start, compound_names[start], target, compound_names[target], carbon_track,
             allow_reversible, search_id, selected_hub_compounds)
 
     alg_output = subprocess.call(["java", "-jar", "searches/LinearPathwaySearch.jar", input_loc])
@@ -262,7 +263,7 @@ def execute_lpat_search(search_id, start, target, carbon_track, allow_reversible
 
     print "Executing LPAT search with:"
     #print(start, target, carbon_track, allow_reversible)
-    input_loc, output_loc = generate_LPAT_config(start, target, carbon_track, allow_reversible, search_id)
+    input_loc, output_loc = generate_LPAT_config(start, compound_names[start], target, compound_names[target], carbon_track, allow_reversible, search_id)
 
     print "current_dir =" + os.getcwd()
     print ["java", "-jar", "searches/LinearPathwaySearch.jar", input_loc]

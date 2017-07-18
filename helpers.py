@@ -20,14 +20,14 @@ def generate_LPAT_config(start, target, carbon_track, allow_reversible, search_i
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
 
-    output_loc = "searches/output/" + search_id + ".txt"
+    output_loc = "searches/output/" + search_id + "|" + start_name + "|" + target_name + "|" + "LPAT.txt"
     config += "OUTPUTDIR\t"+ output_loc + "\n"
 
     input_loc = write_config_file(search_id, config)
     print config
     return input_loc, output_loc
 
-def generate_hub_config(start, target, carbon_track, allow_reversible,
+def generate_hub_config(start, start_name, target, target_name, carbon_track, allow_reversible,
         search_id, selected_hub_compounds):
 
     config = "DBHOST\tlocalhost\n"
@@ -47,7 +47,7 @@ def generate_hub_config(start, target, carbon_track, allow_reversible,
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
     config += "HUBTABLE\tsearches/hub_table\n"
 
-    output_loc = "searches/output/" + search_id + ".txt"
+    output_loc = "searches/output/" + search_id + "|" + start_name + "|" + target_name + "|" + "Hub.txt"
     config += "OUTPUTDIR\t"+ output_loc + "\n"
 
     config += "USEHUBTABLE\t1\n"
