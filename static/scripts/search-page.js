@@ -245,10 +245,24 @@ function get_available_searches() {
         var available_search_ids = JSON.parse(results_json);
         var html = "<br><div class='alert alert-success alert-dismissible' role='alert'>";
         html += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span></button>"
+        html += "<table class='table table-hover'>\
+                        <thead><tr>\
+                            <th>Start</th>\
+                            <th>Target</th>\
+                            <th>Algorithm</th>\
+                            <th>Results</th>\
+                        </tr></thead>\
+                        <tbody>"                        
         available_search_ids.forEach(function(id) {
-            html += "<li><a href='/visualize/" + id + "'>" + id + "</a><br></li>";
+            html += "<tr>\
+                                <td>D-Glucose (C00031)</td>\
+                                <td>L-Tryptophan (C00078)</td>\
+                                <td>Hub</td>\
+                                <td><a id='test' class='btn btn-default' href='/visualize/" + id + "'>" + id + '>View</a></td>\
+                            </tr><li><a href=</a><br></li>";
         });
-        html += "<div>"
+        html += "</tbody>\
+                    </table><div>"
         $("#more-pathways").html(html);
 
     }).fail(function(error) {
