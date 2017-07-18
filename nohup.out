@@ -1,0 +1,897 @@
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 423, in run_command
+    app = DispatchingApp(info.load_app, use_eager_loading=eager_loading)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 152, in __init__
+    self._load_unlocked()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 176, in _load_unlocked
+    self._app = rv = self.loader()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 237, in load_app
+    rv = locate_app(self.app_import_path)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 90, in locate_app
+    __import__(module)
+  File "/usr/local/metapathssandbox/metapaths/metapaths.py", line 8, in <module>
+    reload(helpers)
+NameError: name 'helpers' is not defined
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 423, in run_command
+    app = DispatchingApp(info.load_app, use_eager_loading=eager_loading)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 152, in __init__
+    self._load_unlocked()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 176, in _load_unlocked
+    self._app = rv = self.loader()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 237, in load_app
+    rv = locate_app(self.app_import_path)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 90, in locate_app
+    __import__(module)
+  File "/usr/local/metapathssandbox/metapaths/metapaths.py", line 8, in <module>
+    reload(helpers)
+NameError: name 'helpers' is not defined
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 423, in run_command
+    app = DispatchingApp(info.load_app, use_eager_loading=eager_loading)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 152, in __init__
+    self._load_unlocked()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 176, in _load_unlocked
+    self._app = rv = self.loader()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 237, in load_app
+    rv = locate_app(self.app_import_path)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 90, in locate_app
+    __import__(module)
+  File "/usr/local/metapathssandbox/metapaths/metapaths.py", line 8, in <module>
+    reload(helpers)
+NameError: name 'helpers' is not defined
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 423, in run_command
+    app = DispatchingApp(info.load_app, use_eager_loading=eager_loading)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 152, in __init__
+    self._load_unlocked()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 176, in _load_unlocked
+    self._app = rv = self.loader()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 237, in load_app
+    rv = locate_app(self.app_import_path)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 90, in locate_app
+    __import__(module)
+  File "/usr/local/metapathssandbox/metapaths/metapaths.py", line 8, in <module>
+    reload(helpers)
+NameError: name 'helpers' is not defined
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 423, in run_command
+    app = DispatchingApp(info.load_app, use_eager_loading=eager_loading)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 152, in __init__
+    self._load_unlocked()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 176, in _load_unlocked
+    self._app = rv = self.loader()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 237, in load_app
+    rv = locate_app(self.app_import_path)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 90, in locate_app
+    __import__(module)
+  File "/usr/local/metapathssandbox/metapaths/metapaths.py", line 8, in <module>
+    reload(helpers)
+NameError: name 'helpers' is not defined
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 423, in run_command
+    app = DispatchingApp(info.load_app, use_eager_loading=eager_loading)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 152, in __init__
+    self._load_unlocked()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 176, in _load_unlocked
+    self._app = rv = self.loader()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 237, in load_app
+    rv = locate_app(self.app_import_path)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 90, in locate_app
+    __import__(module)
+  File "/usr/local/metapathssandbox/metapaths/metapaths.py", line 8, in <module>
+    reload(helpers)
+NameError: name 'helpers' is not defined
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+current_dir =/usr/local/metapathssandbox/metapaths
+Initializing...
+Gathered compound from database...
+In load_examples, current_dir =/usr/local/metapathssandbox/metapaths
+Loaded examples...
+current_dir =/usr/local/metapathssandbox/metapaths
+Loaded existing results. Initialization complete.
+current_dir =/usr/local/metapathssandbox/metapaths
+ * Serving Flask app "metapaths"
+Traceback (most recent call last):
+  File "/usr/local/metapathssandbox/bin/flask", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 513, in main
+    cli.main(args=args, prog_name=name)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 380, in main
+    return AppGroup.main(self, *args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 697, in main
+    rv = self.invoke(ctx)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 1066, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 895, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/decorators.py", line 64, in new_func
+    return ctx.invoke(f, obj, *args[1:], **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/click/core.py", line 535, in invoke
+    return callback(*args, **kwargs)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/flask/cli.py", line 438, in run_command
+    use_debugger=debugger, threaded=with_threads)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 739, in run_simple
+    inner()
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 699, in inner
+    fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 593, in make_server
+    passthrough_errors, ssl_context, fd=fd)
+  File "/usr/local/metapathssandbox/local/lib/python2.7/site-packages/werkzeug/serving.py", line 504, in __init__
+    HTTPServer.__init__(self, (host, int(port)), handler)
+  File "/usr/lib/python2.7/SocketServer.py", line 419, in __init__
+    self.server_bind()
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 108, in server_bind
+    SocketServer.TCPServer.server_bind(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 430, in server_bind
+    self.socket.bind(self.server_address)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use

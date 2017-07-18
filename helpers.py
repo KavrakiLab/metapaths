@@ -6,8 +6,8 @@ def generate_LPAT_config(start, target, carbon_track, allow_reversible, search_i
 
     config = "DBHOST\tlocalhost\n"
     config += "DBPORT\t3306\n"
-    config += "DBNAME\tmetadb\n"
-    config += "DBUSER\troot\n"
+    config += "DBNAME\tMetaDB_2015\n"
+    config += "DBUSER\tMetaDBUser\n"
     config += "DBPASS\tmeta\n"
     config += "MOLDIR\tsearches/rpair_mol\n"
     config += "RPAIRDIR\tsearches/rpair_only_maps\n"
@@ -24,6 +24,7 @@ def generate_LPAT_config(start, target, carbon_track, allow_reversible, search_i
     config += "OUTPUTDIR\t"+ output_loc + "\n"
 
     input_loc = write_config_file(search_id, config)
+    print config
     return input_loc, output_loc
 
 def generate_hub_config(start, target, carbon_track, allow_reversible,
@@ -31,8 +32,8 @@ def generate_hub_config(start, target, carbon_track, allow_reversible,
 
     config = "DBHOST\tlocalhost\n"
     config += "DBPORT\t3306\n"
-    config += "DBNAME\tmetadb\n"
-    config += "DBUSER\troot\n"
+    config += "DBNAME\tMetaDB_2015\n"
+    config += "DBUSER\tMetaDBUser\n"
     config += "DBPASS\tmeta\n"
     config += "MOLDIR\tsearches/rpair_mol\n"
     config += "RPAIRDIR\tsearches/rpair_only_maps\n"
@@ -44,6 +45,7 @@ def generate_hub_config(start, target, carbon_track, allow_reversible,
     config += "CARBONTRACK\t" + carbon_track + "\n"
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
+    config += "HUBTABLE\tsearches/hub_table\n"
 
     output_loc = "searches/output/" + search_id + ".txt"
     config += "OUTPUTDIR\t"+ output_loc + "\n"
@@ -91,7 +93,7 @@ def extract_pathways(string_pathways):
 
         for i in range(len(path_compounds) - 1):
             j = i + 1
-            if "_HS" in path_compounds[i] and "_HE" in path_compounds[j]:
+            if ("_HS" in path_compounds[i] and "_HE" in path_compounds[j]) or ("_HS" in path_compounds[i] and "_HM" in path_compounds[j])  or ("_HM" in path_compounds[i] and "_HM" in path_compounds[j]) or ("_HM" in path_compounds[i] and "_HE" in path_compounds[j]):
                 hub_nodes.add(path_compounds[i])
                 hub_nodes.add(path_compounds[j])
                 hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])

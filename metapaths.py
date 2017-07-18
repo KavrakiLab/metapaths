@@ -9,10 +9,11 @@ from celery import Celery
 from flask import Flask, render_template, jsonify, request
 
 import logging
+
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-DB_USER = "root"
+DB_USER = "MetaDBUser"
 DB_PASSWD = "meta"
 
 
@@ -20,27 +21,30 @@ DB_PASSWD = "meta"
 # Flask & Celery config
 #
 
-#  def make_celery(app):
-    #  celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
-                    #  broker=app.config['CELERY_BROKER_URL'])
-    #  celery.conf.update(app.config)
-    #  TaskBase = celery.Task
-    #  class ContextTask(TaskBase):
-        #  abstract = True
-        #  def __call__(self, *args, **kwargs):
-            #  with app.app_context():
-                #  return TaskBase.__call__(self, *args, **kwargs)
-    #  celery.Task = ContextTask
-    #  return celery
+#def make_celery(app):
+#    celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
+#                     broker=app.config['CELERY_BROKER_URL'])
+#    celery.conf.update(app.config)
+#    TaskBase = celery.Task
+#    class ContextTask(TaskBase):
+#        abstract = True
+#        def __call__(self, *args, **kwargs):
+#            with app.app_context():
+#                return TaskBase.__call__(self, *args, **kwargs)
+#    celery.Task = ContextTask
+#    return celery
 
+#print "Defining app"
 app = Flask(__name__)
-#  app.config.update(
-    #  CELERY_BROKER_URL='redis://localhost:6379',
-    #  CELERY_RESULT_BACKEND='redis://localhost:6379'
+#app.config.update(
+#    CELERY_BROKER_URL='redis://localhost:6379',
+#    CELERY_RESULT_BACKEND='redis://localhost:6379'
 #  )
-celery = Celery('tasks', backend='rpc://', broker='pyamqp://')
 
-
+#print "Starting up celery"
+celery = Celery('tasks', backend='redis://localhost:6379/1', broker='redis://localhost:6379/1')
+#print "Celery has been defined"
+#celery = make_celery(app)
 
 #
 # Globals
@@ -58,7 +62,8 @@ compound_names = {}
 # KEGG ID to compound name mapping of just hub compounds
 hub_compounds = {}
 
-
+# Working dir
+working_dir = "/usr/local/metapathssandbox/metapaths"
 
 #
 # Routes
@@ -69,6 +74,7 @@ def search_page():
     """
     Loads the main page
     """
+    #print "Rendering template..."
     return render_template('search-page.html')
 
 
@@ -88,7 +94,7 @@ def visualize_results(search_id):
     global searches
     global celery
 
-    print("Viz request for ", search_id)
+    #print("Viz request for ", search_id)
     if search_id in tasks.keys():
         task_id = tasks[search_id]
         task = celery.AsyncResult(task_id)
@@ -117,7 +123,7 @@ def get_hub_paths(hub_src, hub_dst):
     Returns visualization formatted JSON describing the pathways between the
     two hub compounds
     """
-    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db="hubdb")
+    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db="HubDB")
     cursor = db.cursor()
     cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + "")
     results_json = hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
@@ -138,7 +144,7 @@ def load_results(search_id):
         search_result_file = searches[search_id]
         return json.dumps(get_pathways_from_file(search_result_file))
     else:
-        print(search_id, "not in ", searches)
+        #print(search_id, "not in ", searches)
         return "500"
 
     #  search_result_file = searches[search_id]
@@ -230,20 +236,18 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
     global searches
 
     print "Executing Hub search with:"
-    #  print(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds)
-    #  print("hub compudns", type(selected_hub_compounds), selected_hub_compounds)
+    print(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds)
+    print("hub compudns", type(selected_hub_compounds), selected_hub_compounds)
     input_loc, output_loc = generate_hub_config(start, target, carbon_track,
             allow_reversible, search_id, selected_hub_compounds)
 
-    alg_output = subprocess.call(["java", "-jar",
-        "searches/LinearPathwaySearch.jar", input_loc])
+    alg_output = subprocess.call(["java", "-jar", "searches/LinearPathwaySearch.jar", input_loc])
     print("alg_output", alg_output)
     if alg_output != 0:
         raise Exception("Hub execution failed, check Celery worker logs.")
         return None
 
-    converter_output = subprocess.call(["python", "searches/path_convert.py",
-        "hub", output_loc])
+    converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc])
     print("converter_output", converter_output)
     if converter_output != 0:
         raise Exception("Converting Hub output to visualization format failed, check Celery worker logs.")
@@ -257,13 +261,15 @@ def execute_lpat_search(search_id, start, target, carbon_track, allow_reversible
     global searches
 
     print "Executing LPAT search with:"
-    print(start, target, carbon_track, allow_reversible)
+    #print(start, target, carbon_track, allow_reversible)
     input_loc, output_loc = generate_LPAT_config(start, target, carbon_track, allow_reversible, search_id)
 
-    alg_output = subprocess.call(["java", "-jar",
-        "searches/LinearPathwaySearch.jar", input_loc])
+    print "current_dir =" + os.getcwd()
+    print ["java", "-jar", "searches/LinearPathwaySearch.jar", input_loc]
+    alg_output = subprocess.call(["java", "-jar", "searches/LinearPathwaySearch.jar", input_loc])
     print("alg_output", alg_output)
     if alg_output != 0:
+	print "LPAT execution failed."
         raise Exception("LPAT execution failed, check Celery worker logs.")
         return None
 
@@ -271,6 +277,7 @@ def execute_lpat_search(search_id, start, target, carbon_track, allow_reversible
         "lpat", output_loc])
     print("converter_output", converter_output)
     if converter_output != 0:
+	print "Converting LPAT to visualization format failed."
         raise Exception("Converting LPAT output to visualization format failed, check Celery worker logs.")
         return None
 
@@ -283,6 +290,7 @@ def execute_lpat_search(search_id, start, target, carbon_track, allow_reversible
 
 def load_examples():
     global searches
+    print "In load_examples, current_dir =" + os.getcwd()
 
     examples_dir = "searches/examples"
 
@@ -291,9 +299,9 @@ def load_examples():
             search_id = f.split(".")[0]
             searches[search_id] = examples_dir + "/" + f
 
-
 def load_existing_results():
     global searches
+    print "current_dir =" + os.getcwd()
 
     output_dir = "searches/output"
 
@@ -311,9 +319,10 @@ def initialize():
 
     print "Initializing..."
 
-    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db="metadb")
+    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db="MetaDB_2015")
     cursor = db.cursor()
     cursor.execute("SELECT KEGGCompoundID, CompoundName from KEGGCompoundNames WHERE FirstName = 1;")
+    print "Gathered compound from database..."
 
 
     for compound in cursor.fetchall():
@@ -326,6 +335,14 @@ def initialize():
         hub_compounds[hub] = compound_names[hub]
 
     load_examples()
+    print "Loaded examples..."
     load_existing_results()
+    print "Loaded existing results. Initialization complete."
 
+os.chdir(working_dir)
+print "current_dir =" + os.getcwd()
 initialize()
+print "current_dir =" + os.getcwd()
+
+if __name__ == "__main__":
+    app.run()
