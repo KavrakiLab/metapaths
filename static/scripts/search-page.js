@@ -258,7 +258,7 @@ function get_available_searches() {
                                 <td>D-Glucose (C00031)</td>\
                                 <td>L-Tryptophan (C00078)</td>\
                                 <td>Hub</td>\
-                                <td><a id='test' class='btn btn-default' href='/visualize/" + id + "'>" + id + '>View</a></td>\
+                                <td><a id='test' class='btn btn-default' href='/visualize/" + id + "'>" + id + "'>View</a></td>\
                             </tr><li><a href=</a><br></li>";
         });
         html += "</tbody>\
