@@ -256,11 +256,15 @@ function get_available_searches() {
                         <tbody>"                        
         available_search_ids.forEach(function(raw_id) {
             var id = raw_id.split("|");
-            var start = id[1].replace("_"," ");
-            var target = id[2].replace("_"," ");
+            if(typeof id[1] === 'string') {
+                id[1] = id[1].replace("_"," ");
+            }
+            if(typeof id[2] === 'string') {
+                id[2] = id[2].replace("_"," ");
+            }
             html += "<tr>\
-                                <td>" + start + "</td>\
-                                <td>" + target + "</td>\
+                                <td>" + id[1] + "</td>\
+                                <td>" + id[2] + "</td>\
                                 <td>" + id[3] + "</td>\
                                 <td><a id='test' class='btn btn-default' href='/visualize/" + raw_id + "'>View</a></td>\
                             </tr>";
