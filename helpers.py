@@ -2,7 +2,7 @@ import re
 import os
 from flask import jsonify
 
-def generate_LPAT_config(start, target, carbon_track, allow_reversible, search_id):
+def generate_LPAT_config(start, start_name, target, target_name, carbon_track, allow_reversible, search_id):
 
     config = "DBHOST\tlocalhost\n"
     config += "DBPORT\t3306\n"
