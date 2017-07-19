@@ -240,6 +240,7 @@ function remove_all_hubs() {
     $("#hub-compounds").trigger("change");
 }
 
+
 function get_available_searches() {
     $.get("/get_available_searches").done(function(results_json) {
         var available_search_ids = JSON.parse(results_json);
@@ -253,13 +254,14 @@ function get_available_searches() {
                             <th>Results</th>\
                         </tr></thead>\
                         <tbody>"                        
-        available_search_ids.forEach(function(id) {
+        available_search_ids.forEach(function(raw_id) {
+            var id = raw_id.split("|");
             html += "<tr>\
-                                <td>D-Glucose (C00031)</td>\
-                                <td>L-Tryptophan (C00078)</td>\
-                                <td>Hub</td>\
-                                <td><a id='test' class='btn btn-default' href='/visualize/" + id + "'>" + id + "'>View</a></td>\
-                            </tr><li><a href=</a><br></li>";
+                                <td>" + id[1] + "</td>\
+                                <td>" + id[2] + "</td>\
+                                <td>" + id[3] + "</td>\
+                                <td><a id='test' class='btn btn-default' href='/visualize/" + raw_id + "'>View</a></td>\
+                            </tr>";
         });
         html += "</tbody>\
                     </table><div>"
