@@ -256,8 +256,8 @@ function get_available_searches() {
                         <tbody>"                        
         available_search_ids.forEach(function(raw_id) {
             var id = raw_id.split("|");
-            start = id[1].replace("_"," ");
-            target = id[2].replace("_"," ");
+            var start = id[1].replace("_"," ");
+            var target = id[2].replace("_"," ");
             html += "<tr>\
                                 <td>" + start + "</td>\
                                 <td>" + target + "</td>\
