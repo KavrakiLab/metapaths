@@ -51,7 +51,9 @@ function format_compounds(name_map) {
         });
     }
 
-    return formatted_names;
+    return formatted_names.sort(function(a,b) {
+        return a.text.length - b.text.length;
+    });
 
 }
 
