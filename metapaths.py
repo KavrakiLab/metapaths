@@ -64,7 +64,7 @@ hub_compounds = {}
 
 # Working dir
 #working_dir = "/home/sarahkim/metapath/webserver/metapaths"
-working_dir = "/usr/localhost/metapathssandbox/metapaths"
+working_dir = "/usr/local/metapathssandbox/metapaths"
 
 #
 # Routes

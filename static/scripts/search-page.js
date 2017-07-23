@@ -160,18 +160,19 @@ function initialize_dropdowns(items) {
                         }
                     }
                 }
-
                 // Set found matches as selected
                 this.$element.find("option").prop("selected", false).removeAttr("selected");
                 for (var v = 0; v < found.length; v++) {
                     this.$element.find("option[value='" + found[v].id + "']").prop("selected", true).attr("selected","selected");
                 }
+		
 
                 // If nothing was found, then set to top option (for single select)
                 if (!found.length && !this.$element.prop('multiple')) {  // default to top option
                     found.push({id: jsonData[0][jsonMap.id], text: jsonData[0][jsonMap.text]});
                     this.$element.html(new Option(jsonData[0][jsonMap.text], jsonData[0][jsonMap.id], true, true));
                 }
+		//found.sort(function(a,b){return a.text.length - b.text.length});
 
                 callback(found);
             };
@@ -242,6 +243,10 @@ function remove_all_hubs() {
     $("#hub-compounds").trigger("change");
 }
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 
 function get_available_searches() {
     $.get("/get_available_searches").done(function(results_json) {
@@ -259,10 +264,10 @@ function get_available_searches() {
         available_search_ids.forEach(function(raw_id) {
             var id = raw_id.split("|");
             if(typeof id[1] === 'string') {
-                id[1] = id[1].replace("_"," ");
+                id[1] = id[1].replaceAll("_"," ");
             }
             if(typeof id[2] === 'string') {
-                id[2] = id[2].replace("_"," ");
+                id[2] = id[2].replaceAll("_"," ");
             }
             html += "<tr>\
                                 <td>" + id[1] + "</td>\
