@@ -35,6 +35,9 @@ $(function () {
     }
 });
 
+  $( function() {
+    $( "#slider" ).slider();
+  } );
 
 function load_search_result(search_id) {
     // localStorage.removeItem("search_id"); // TODO: uncomment
