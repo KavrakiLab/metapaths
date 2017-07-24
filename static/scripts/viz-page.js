@@ -7,6 +7,8 @@ var orig_pathways;
 var main_pathways;
 var main_path_width = -1;
 var hub_path_width = -1;
+var charge_force = 50;
+var current_main_pathways = {};
 
 // Holds the full viz while the hub view is displayed
 var full_viz;
@@ -36,7 +38,28 @@ $(function () {
 });
 
   $( function() {
-    $( "#slider" ).slider();
+
+    var originalVal;
+
+    $( "#slider" ).slider({
+        max: 60,
+        value: 10,
+    });
+
+    $( ".span" ).slider().on('slideStart', function(ev) {
+        originalVal = $('.span').data('slider').getValue();
+    });
+
+    $(".span").slider().on('slideStop', function(ev) {
+        var newVal = $(".span").dat('slider').getValue();
+        if(originalVal != newVal) {
+            alert("Value changed!");
+            charge_force = newVal;
+            if(current_main_pathways.length > 0)
+                validate_and_visualize(current_main_pathways);
+        }
+    })
+
   } );
 
 function load_search_result(search_id) {
@@ -51,6 +74,7 @@ function load_search_result(search_id) {
         get_hub_pathways(main_pathways.pathways);
 
         // Visualize the pathways
+        current_main_pathways = main_pathways;
         validate_and_visualize(main_pathways);
     }).fail(function(data) {
         console.log(data);
@@ -272,7 +296,7 @@ function load_viz(data_graph) {
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(-5).strength(1.0))
-        .force("charge", d3.forceCollide(50))
+        .force("charge", d3.forceCollide(charge_force))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
     simulation
