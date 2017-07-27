@@ -73,14 +73,17 @@ def write_config_file(search_id, config):
     return config_loc
 
 
-def extract_pathways(string_pathways):
+def extract_pathways(string_pathways, background_hubs_filename):
     pathways = []
-
+    all_hub_nodes = set([])
+    all_hub_links = []
     # Finds compound IDs by extracting words that start with the letter 'C'
     regex = re.compile("C\w+")
 
     start = None
     goal = None
+    hubs_exist = False
+
     for string_path in string_pathways:
         path_compounds = regex.findall(string_path)
         nodes = set([])
@@ -95,6 +98,7 @@ def extract_pathways(string_pathways):
         for i in range(len(path_compounds) - 1):
             j = i + 1
             if ("_HS" in path_compounds[i] and "_HE" in path_compounds[j]) or ("_HS" in path_compounds[i] and "_HM" in path_compounds[j])  or ("_HM" in path_compounds[i] and "_HM" in path_compounds[j]) or ("_HM" in path_compounds[i] and "_HE" in path_compounds[j]):
+                hubs_exist = True
                 hub_nodes.add(path_compounds[i])
                 hub_nodes.add(path_compounds[j])
                 hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
@@ -106,9 +110,10 @@ def extract_pathways(string_pathways):
         pathway["nodes"] = [node[0:6] for node in (set(path_compounds) - hub_nodes)]
         pathway["links"] = list(links)
         pathway["hub_nodes"] = [hub_node[0:6] for hub_node in hub_nodes]
-        pathway["hub_links"] = list(hub_links)
-
+        pathway["hub_links"] = list(hub_links) 
         pathways.append(pathway)
+        if(hubs_exist):
+            all_hub_links = all_hub_links + hub_links
 
     pathways_data = {
         "info" : {
@@ -118,12 +123,35 @@ def extract_pathways(string_pathways):
         "pathways" : pathways
     }
 
+    # If this is a hub search, add in the rest of the hubs
+    if(hubs_exist):
+        pathways_data["background_hubs"] = get_background_hubs_from_file(background_hubs_filename, set(all_hub_links))
+
     return pathways_data
 
+def get_background_hubs_from_file(background_hubs_filename, all_hub_links):
+    b_hubs_file = open(background_hubs_filename, "r")
+    b_nodes = {}
+    b_links = []
+    on_links = False
+    for line in b_hubs_file:
+        line.replace("\n", "")
+        if not on_links:
+            if "LINKS" not in line:
+                node_info = line.split(",")
+                b_nodes[node_info[0]] = (float(node_info[1]), float(node_info[2]))
+            else:
+                on_links = True
+        else:
+            if(line not in all_hub_links):
+                b_links.append(line.replace("\r","").replace("\n",""))
 
-def get_pathways_from_file(pathways_filename):
+    return { "b_nodes" : b_nodes, "b_links" : b_links }
+
+
+def get_pathways_from_file(pathways_filename, background_hubs_filename):
     pathways_file = open(pathways_filename, "r")
-    return extract_pathways(pathways_file.readlines())
+    return extract_pathways(pathways_file.readlines(), background_hubs_filename)
 
 
 def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):

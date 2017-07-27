@@ -64,7 +64,11 @@ hub_compounds = {}
 
 # Working dir
 #working_dir = "/home/sarahkim/metapath/webserver/metapaths"
-working_dir = "/usr/local/metapathssandbox/metapaths"
+#working_dir = "/usr/local/metapathssandbox/metapaths"
+working_dir = "/mnt/c/Users/skim2/git/metapaths"
+
+
+B_HUBS_FILE = working_dir + "/searches/b_hub_file.txt"
 
 #
 # Routes
@@ -143,7 +147,7 @@ def load_results(search_id):
 
     if search_id in searches:
         search_result_file = searches[search_id]
-        return json.dumps(get_pathways_from_file(search_result_file))
+        return json.dumps(get_pathways_from_file(search_result_file, B_HUBS_FILE))
     else:
         #print(search_id, "not in ", searches)
         return "500"
