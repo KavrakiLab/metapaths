@@ -118,16 +118,13 @@ function validate_and_visualize(pathways) {
     // The aggreate data of the nodes and links from the pathways
     var data_graph = collect_pathways_into_graph(pathways);
     console.log("data_graph", data_graph);
-    print "Data grapph complete."
 
     var viz_graph = load_viz(data_graph);
     console.log("viz_graph", viz_graph);
-    print "Viz graph complete."
 
     get_kegg_data(data_graph.nodes);
 
     stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal);
-    print "Stylizing graph".
 
     attach_node_watchers(viz_graph);
 
@@ -148,10 +145,6 @@ function collect_pathways_into_graph(pathways) {
     var hub_nodes = new Set([]);
     var hub_links = new Set([]);
 
-    // Subset of nodes and links which are background hubs
-    var b_hub_nodes = new Set([]);
-    var b_hub_links = new Set([]);
-
     pathways.pathways.forEach(function (pathway, index, array) {
         nodes = new Set([...nodes, ...pathway.nodes]);
         nodes = new Set([...nodes, ...pathway.hub_nodes]);
@@ -171,12 +164,6 @@ function collect_pathways_into_graph(pathways) {
         }
     });
 
-    if(len(hub_nodes) > 0):
-        b_hub_nodes = Set([...pathways.background_hubs.b_nodes].filter(x => !nodes.has(x)));
-        b_hub_links = Set([...pathways.background_hubs.b_links].filter(x => !links.has(x)));
-        nodes = new Set([...nodes, ...pathways.background_hubs.b_nodes]);
-        links = new Set([...links, ...pahtways.background_hubs.b_links]);
-
     var node_list = [];
     nodes.forEach(function(node) {
         node_list.push({"id":node});
@@ -190,16 +177,12 @@ function collect_pathways_into_graph(pathways) {
 
     var hub_node_list = Array.from(hub_nodes);
     var hub_link_list = Array.from(hub_links);
-    var b_hub_node_list = Array.from(b_hub_nodes);
-    var b_hub_link_list = Array.from(b_hub_links);
 
     return {
         "nodes" : node_list,
         "links" : link_list,
         "hub_nodes" : hub_node_list,
         "hub_links" : hub_link_list,
-        "b_hub_nodes" : b_hub_node_list,
-        "b_hub_links" : b_hub_link_list,
         "start" : pathways.info.start,
         "goal" : pathways.info.goal,
         "num_pathways" : pathways.pathways.length
@@ -556,5 +539,5 @@ function export_original() {
 
 function export_json(data) {
     var blob = new Blob([data], {type: "application/json"});
-    window.open(window.URL.createObjectURL(blob), "_blank");
+window.open(window.URL.createObjectURL(blob), "_blank");
 }
