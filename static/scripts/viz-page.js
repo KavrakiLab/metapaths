@@ -124,7 +124,7 @@ function validate_and_visualize(pathways) {
 
     get_kegg_data(data_graph.nodes);
 
-    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal);
+    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs.b_nodes);
 
     attach_node_watchers(viz_graph);
 
@@ -164,6 +164,14 @@ function collect_pathways_into_graph(pathways) {
         }
     });
 
+    var b_nodes = new Set(Object.keys(pathways.background_hubs.b_nodes));
+    nodes = new Set([...nodes, ...b_nodes]);
+
+    alert("Added nodes!");
+    //links = new Set([...links, ...pathway.background_hubs.b_links]);
+
+    alert("Added links!");
+
     var node_list = [];
     nodes.forEach(function(node) {
         node_list.push({"id":node});
@@ -178,6 +186,7 @@ function collect_pathways_into_graph(pathways) {
     var hub_node_list = Array.from(hub_nodes);
     var hub_link_list = Array.from(hub_links);
 
+    alert("Returning info soon!");
     return {
         "nodes" : node_list,
         "links" : link_list,
@@ -341,14 +350,14 @@ function load_viz(data_graph) {
 } // load_viz
 
 
-function stylize(data_graph, viz_graph, start, goal) {
+function stylize(data_graph, viz_graph, start, goal, b_nodes) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
 
     $("#title")[0].innerHTML = generate_title(start, goal, data_graph.num_pathways);
 
 
-    style_nodes(viz_graph, start, goal, data_graph.hub_nodes);
+    style_nodes(viz_graph, start, goal, data_graph.hub_nodes, b_nodes);
 
     // Show the info panel and options
     $("#info-panel")[0].style.visibility = "visible";
@@ -361,8 +370,10 @@ function generate_title(start, goal, count) {
 }
 
 
-function style_nodes(viz_graph, start, goal, hub_nodes) {
+function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
 
+    alert("b_nodes: " + b_nodes_list);
+    var b_nodes_list = Object.keys(b_nodes);
     viz_graph.node.data().forEach(function (node, index, array) {
         if (node.id === start) {
             var mid_x = $("#viz-column")[0].offsetWidth / 2;
@@ -384,7 +395,19 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fy = mid_y;
         } else if (hub_nodes.includes(node.id)) {
 
+        } else if (b_nodes_list.includes(node.id)) {
+            var mid_x = $("#viz-column")[0].offsetWidth / 2;
+            var mid_y = $("#viz-column")[0].offsetHeight / 2;
+            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+            alert("x: " + b_nodes[node.id][0]);
+            alert("y: " + b_nodes[node.id][1]);
+            actual_x = mid_x + (b_nodes[node.id][0] * main_viz_width);
+            actual_y = mid_y + (b_nodes[node.id][1] * $("#viz-column")[0].offsetHeight);
+
+            node.fx = actual_x;
+            node.fy = actual_y;
         }
+
     });
 
 }
