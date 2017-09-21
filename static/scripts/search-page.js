@@ -32,8 +32,10 @@ $(function () {
 
         if ($("#algorithm").val() === "0") {
             $("#hub-compounds-group").show();
+	    $("#hub-database-group").show();
         } else {
             $("#hub-compounds-group").hide();
+	    $("#hub-database-group").hide();
         }
     });
 
