@@ -71,7 +71,7 @@ function load_search_result(search_id) {
         main_pathways = JSON.parse(data); // This copy will be filtered
 
         // Get pathways between hubs from the server
-        get_hub_pathways(main_pathways.pathways);
+        get_hub_pathways(main_pathways.pathways, "HubDB");
 
         // Visualize the pathways
         current_main_pathways = main_pathways;

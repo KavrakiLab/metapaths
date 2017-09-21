@@ -154,7 +154,7 @@ def get_pathways_from_file(pathways_filename, background_hubs_filename):
     return extract_pathways(pathways_file.readlines(), background_hubs_filename)
 
 
-def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
+def hub_paths_to_json(hub_src, hub_dst, hub_db, string_hub_pathways):
     pathways = []
 
     # Finds compound IDs by extracting words that start with the letter 'C'
@@ -182,6 +182,7 @@ def hub_paths_to_json(hub_src, hub_dst, string_hub_pathways):
 
     hub = {
         "info" : {"source" : hub_src, "target" : hub_dst},
+	"db" : hub_db,
         "pathways" : pathways
     }
     return jsonify(hub)

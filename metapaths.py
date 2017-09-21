@@ -64,8 +64,8 @@ hub_compounds = {}
 
 # Working dir
 #working_dir = "/home/sarahkim/metapath/webserver/metapaths"
-#working_dir = "/usr/local/metapathssandbox/metapaths"
-working_dir = "/mnt/c/Users/skim2/git/metapaths"
+working_dir = "/usr/local/metapathssandbox/metapaths"
+#working_dir = "/mnt/c/Users/skim2/git/metapaths"
 
 
 B_HUBS_FILE = working_dir + "/searches/b_hub_file.txt"
@@ -122,16 +122,16 @@ def visualize_results(search_id):
         return "Search ID '" + str(search_id) + "' was not found. Please execute a new search."
 
 
-@app.route('/get_hub_paths/<hub_src>/<hub_dst>')
-def get_hub_paths(hub_src, hub_dst):
+@app.route('/get_hub_paths/<hub_src>/<hub_dst>/<hub_db>')
+def get_hub_paths(hub_src, hub_dst, hub_db):
     """
     Returns visualization formatted JSON describing the pathways between the
     two hub compounds
     """
-    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db="HubDB")
+    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db=hub_db)
     cursor = db.cursor()
     cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + "")
-    results_json = hub_paths_to_json(hub_src, hub_dst, cursor.fetchall())
+    results_json = hub_paths_to_json(hub_src, hub_dst, hub_db, cursor.fetchall())
     cursor.close()
     db.close()
     return results_json
