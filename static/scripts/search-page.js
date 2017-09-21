@@ -7,8 +7,10 @@ $(function () {
     $("#algorithm").on("select2:select", function(e) {
         if ($("#algorithm").val() === "0") {
             $("#hub-compounds-group").show();
+	    $("#hub-database-group").show();
         } else {
             $("#hub-compounds-group").hide();
+	    $("#hub-database-group").hide();
         }
     });
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
