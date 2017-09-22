@@ -147,7 +147,8 @@ def load_results(search_id):
 
     if search_id in searches:
         search_result_file = searches[search_id]
-        return json.dumps(get_pathways_from_file(search_result_file, B_HUBS_FILE))
+        hub_db = search_result_file.split("|")[-1].replace(".txt", "")
+        return json.dumps(get_pathways_from_file(search_result_file, B_HUBS_FILE, hub_db))
     else:
         #print(search_id, "not in ", searches)
         return "500"
@@ -178,7 +179,8 @@ def hub_search():
     result = execute_hub_search.delay(search_id, request.args["start"],
             request.args["target"], request.args["carbontrack"],
             request.args["reversible"],
-            json.loads(request.args["hubcompounds"]))
+            json.loads(request.args["hubcompounds"]),
+            request.args["hubdatabase"])
     tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 
@@ -237,7 +239,7 @@ def get_available_searches():
 #
 
 @celery.task()
-def execute_hub_search(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds):
+def execute_hub_search(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds, hub_db):
     global searches
 
     print "Executing Hub search with:"
@@ -252,13 +254,13 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
         raise Exception("Hub execution failed, check Celery worker logs.")
         return None
 
-    converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc])
+    converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc, hub_db])
     print("converter_output", converter_output)
     if converter_output != 0:
         raise Exception("Converting Hub output to visualization format failed, check Celery worker logs.")
         return None
 
-    return output_loc
+    return output_loc.replace(".txt", "|" + hub_db + ".txt")
 
 
 @celery.task()

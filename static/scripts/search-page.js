@@ -7,10 +7,10 @@ $(function () {
     $("#algorithm").on("select2:select", function(e) {
         if ($("#algorithm").val() === "0") {
             $("#hub-compounds-group").show();
-	    $("#hub-database-group").show();
+	        $("#hub-database-group").show();
         } else {
             $("#hub-compounds-group").hide();
-	    $("#hub-database-group").hide();
+	        $("#hub-database-group").hide();
         }
     });
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
@@ -32,10 +32,10 @@ $(function () {
 
         if ($("#algorithm").val() === "0") {
             $("#hub-compounds-group").show();
-	    $("#hub-database-group").show();
+	        $("#hub-database-group").show();
         } else {
             $("#hub-compounds-group").hide();
-	    $("#hub-database-group").hide();
+	        $("#hub-database-group").hide();
         }
     });
 
@@ -71,6 +71,7 @@ function search() {
             "hubcompounds" : JSON.stringify($("#hub-compounds").val()),
             "carbontrack" : $("input[name=carbontracking]:checked").val(),
             "reversible" : $("#allow-reversible").is(":checked"),
+            "hubdb" : $("#hub-db").val(),
         }
         execute_search("/hub_search", query);
 
@@ -262,6 +263,7 @@ function get_available_searches() {
                             <th>Start</th>\
                             <th>Target</th>\
                             <th>Algorithm</th>\
+                            <th>Hub Table</th>\
                             <th>Results</th>\
                         </tr></thead>\
                         <tbody>"                        
@@ -273,10 +275,15 @@ function get_available_searches() {
             if(typeof id[2] === 'string') {
                 id[2] = id[2].replaceAll("_"," ");
             }
+            var hub_table = "N/A";
+            if(id.length >= 5) {
+                hub_table = id[4]
+            }
             html += "<tr>\
                                 <td>" + id[1] + "</td>\
                                 <td>" + id[2] + "</td>\
                                 <td>" + id[3] + "</td>\
+                                <td>" + hub_table + "</td>\
                                 <td><a id='test' class='btn btn-default' href='/visualize/" + raw_id + "'>View</a></td>\
                             </tr>";
         });
