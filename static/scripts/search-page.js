@@ -13,7 +13,12 @@ $(function () {
 	        $("#hub-database-group").hide();
         }
     });
+
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
+
+    var hubdb_options = [{id:'UnionHubDB_10', text:'Merged Hub Table 10'}, {id:'UnionHubDB', text:'Merged Hub Table'}];
+    $("#hub-db").select2({data: hubdb_options});
+    $("#hub-db").val("UnionHubDB_10").trigger("change");
 
     $.get("/get_compound_names").done(function(results_json) {
         var formatted_compounds = format_compounds(JSON.parse(results_json));
