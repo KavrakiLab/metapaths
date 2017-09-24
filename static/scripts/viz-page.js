@@ -372,7 +372,7 @@ function generate_title(start, goal, count) {
 
 function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
 
-    alert("b_nodes: " + b_nodes_list);
+    //alert("b_nodes: " + b_nodes_list);
     var b_nodes_list = Object.keys(b_nodes);
     viz_graph.node.data().forEach(function (node, index, array) {
         if (node.id === start) {
