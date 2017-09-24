@@ -180,7 +180,7 @@ def hub_search():
             request.args["target"], request.args["carbontrack"],
             request.args["reversible"],
             json.loads(request.args["hubcompounds"]),
-            request.args["hubdatabase"])
+            request.args["hub_db"])
     tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 

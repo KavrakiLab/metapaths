@@ -71,7 +71,7 @@ function load_search_result(search_id) {
         main_pathways = JSON.parse(data); // This copy will be filtered
 
         // Get pathways between hubs from the server
-        get_hub_pathways(main_pathways.pathways, main_pathways.db);
+        get_hub_pathways(main_pathways.pathways, main_pathways.hub_db);
 
         // Visualize the pathways
         current_main_pathways = main_pathways;
@@ -167,10 +167,10 @@ function collect_pathways_into_graph(pathways) {
     var b_nodes = new Set(Object.keys(pathways.background_hubs.b_nodes));
     nodes = new Set([...nodes, ...b_nodes]);
 
-    alert("Added nodes!");
+    //alert("Added nodes!");
     //links = new Set([...links, ...pathway.background_hubs.b_links]);
 
-    alert("Added links!");
+    //alert("Added links!");
 
     var node_list = [];
     nodes.forEach(function(node) {
@@ -399,8 +399,8 @@ function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
             var mid_x = $("#viz-column")[0].offsetWidth / 2;
             var mid_y = $("#viz-column")[0].offsetHeight / 2;
             var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
-            alert("x: " + b_nodes[node.id][0]);
-            alert("y: " + b_nodes[node.id][1]);
+            //alert("x: " + b_nodes[node.id][0]);
+            //alert("y: " + b_nodes[node.id][1]);
             actual_x = mid_x + (b_nodes[node.id][0] * main_viz_width);
             actual_y = mid_y + (b_nodes[node.id][1] * $("#viz-column")[0].offsetHeight);
 

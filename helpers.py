@@ -183,7 +183,7 @@ def hub_paths_to_json(hub_src, hub_dst, hub_db, string_hub_pathways):
 
     hub = {
         "info" : {"source" : hub_src, "target" : hub_dst},
-	   "db" : hub_db,
+	   "hub_db" : hub_db,
         "pathways" : pathways
     }
     return jsonify(hub)
