@@ -146,7 +146,8 @@ function uploadGraph() {
         alert("Select a proper file to visualize.");
     } else if (graph_file.type != "application/json") {
         alert("Invalid file type selected! Graph data must be in JSON format.");
-    } else {
+    } 
+    else {
         try {
             var reader = new FileReader();
             // Define what to do when the file is read
@@ -221,8 +222,9 @@ function collect_pathways_into_graph(pathways) {
         }
     });
 
-    var b_nodes = new Set(Object.keys(pathways.background_hubs.b_nodes));
-    nodes = new Set([...nodes, ...b_nodes]);
+    //var b_nodes = new Set(Object.keys(pathways.background_hubs.b_nodes));
+    nodes = new Set([...nodes]);
+    //nodes = new Set([...nodes, ...b_nodes]);
 
     //alert("Added nodes!");
     //links = new Set([...links, ...pathway.background_hubs.b_links]);
