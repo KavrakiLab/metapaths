@@ -179,7 +179,9 @@ function validate_and_visualize(pathways) {
 
     get_kegg_data(data_graph.nodes);
 
-    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs.b_nodes);
+    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal)
+
+    //stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs.b_nodes);
 
     attach_node_watchers(viz_graph);
 
@@ -405,6 +407,20 @@ function load_viz(data_graph) {
 } // load_viz
 
 
+function stylize(data_graph, viz_graph, start, goal) {
+    // Hide the upload panel
+    $("#load-panel")[0].style.display = "none";
+
+    $("#title")[0].innerHTML = generate_title(start, goal, data_graph.num_pathways);
+
+
+    style_nodes(viz_graph, start, goal, data_graph.hub_nodes);
+
+    // Show the info panel and options
+    $("#info-panel")[0].style.visibility = "visible";
+    $("#options-column")[0].style.visibility = "visible";
+}
+
 function stylize(data_graph, viz_graph, start, goal, b_nodes) {
     // Hide the upload panel
     $("#load-panel")[0].style.display = "none";
@@ -424,6 +440,35 @@ function generate_title(start, goal, count) {
     return start + " &#8594; " + goal + " (" + count + " paths)";
 }
 
+
+function style_nodes(viz_graph, start, goal, hub_nodes) {
+
+    viz_graph.node.data().forEach(function (node, index, array) {
+        if (node.id === start) {
+            var mid_x = $("#viz-column")[0].offsetWidth / 2;
+            var mid_y = $("#viz-column")[0].offsetHeight / 2;
+            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+            left_x = mid_x - (0.5 * main_viz_width);
+
+            node.fixed = true;
+            node.fx = left_x;
+            node.fy = mid_y;
+        } else if (node.id === goal) {
+            var mid_x = $("#viz-column")[0].offsetWidth / 2;
+            var mid_y = $("#viz-column")[0].offsetHeight / 2;
+            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+            right_x = mid_x + (0.5 * main_viz_width);
+
+            node.fixed = true;
+            node.fx = right_x;
+            node.fy = mid_y;
+        } else if (hub_nodes.includes(node.id)) {
+
+        }
+
+    });
+
+}
 
 function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
 
