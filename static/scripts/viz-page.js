@@ -84,7 +84,62 @@ function load_search_result(search_id) {
 }
 
 
-function upload() {
+function execute_file_upload(query) {
+    console.log("Sending file: ", query);
+
+    $.ajax({
+        url: "/upload_path_file",
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: query,
+        traditional: true,
+        success: function(response) {
+            var search_id = response["search_id"];
+
+            var results_url = window.location.href + "visualize/" + search_id;
+
+            var alert_html = "<br><div class='alert alert-success alert-dismissible' role='alert'>";
+            alert_html += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span></button>"
+            alert_html += "Your pathway file has been submitted. The results can be viewed at this link: <a href='" + results_url + "'>" + results_url + "</a>"
+            alert_html += "<div>"
+
+            $("#alert-location-2").html(alert_html);
+
+        }
+    });
+}
+
+function uploadPaths() {
+    var path_file = $('#path-data')[0].files[0];
+
+    if (path_file == null) {
+        alert("Select a proper file to visualize.");
+    } else {
+        try {
+            var reader = new FileReader();
+            // Define what to do when the file is read
+            reader.onload = function(event){
+                // Get the file contents which are stored in the event's result by
+                // readAsText() when it completes
+                try {
+                    var query = {
+                        "paths" : event.target.result,
+                        "hub_db" : "UnionHubDB_10",
+                    }
+                    execute_file_upload(query);
+                } catch (exception) {
+                    alert("An error occurred, please verify the file and try again.\n\n" + exception);
+                }
+            }
+
+            reader.readAsText(path_file);
+        } catch (exception) {
+            alert("An error occurred. Please retry the last operation.\n\n" + exception);
+        }
+    }
+}
+
+function uploadGraph() {
     var graph_file = $('#graph-data')[0].files[0];
 
     if (graph_file == null) {
@@ -372,7 +427,7 @@ function generate_title(start, goal, count) {
 
 function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
 
-    //alert("b_nodes: " + b_nodes_list);
+    alert("b_nodes: " + b_nodes_list);
     var b_nodes_list = Object.keys(b_nodes);
     viz_graph.node.data().forEach(function (node, index, array) {
         if (node.id === start) {

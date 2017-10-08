@@ -36,8 +36,15 @@
                     </div>
                     <div class="panel-body">
                         <div class="input-group">
+                            <label>Upload Path Data</label>
+                            <input id="path-data" onchange="uploadPaths()" type="file" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
+                             data-content="Select a list of metabolic pathways.">
+                             <div id="alert-location-2">
+                             </div>
+                        </div>
+                        <div class="input-group">
                             <label>Upload Graph Data</label>
-                            <input id="graph-data" onchange="upload()" type="file" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
+                            <input id="graph-data" onchange="uploadGraph()" type="file" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
                              data-content="Select a previously exported metabolic pathway graph in JSON format.">
                         </div>
                     </div>

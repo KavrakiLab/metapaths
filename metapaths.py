@@ -64,8 +64,8 @@ hub_compounds = {}
 
 # Working dir
 #working_dir = "/home/sarahkim/metapath/webserver/metapaths"
-working_dir = "/usr/local/metapathssandbox/metapaths"
-#working_dir = "/mnt/c/Users/skim2/git/metapaths"
+#working_dir = "/usr/local/metapathssandbox/metapaths"
+working_dir = "/mnt/c/Users/skim2/git/metapaths"
 
 
 B_HUBS_FILE = working_dir + "/searches/b_hub_file.txt"
@@ -181,6 +181,19 @@ def hub_search():
             request.args["reversible"],
             json.loads(request.args["hubcompounds"]),
             request.args["hub_db"])
+    tasks[search_id] = result.id
+    return json.dumps({"search_id" : search_id});
+
+
+@app.route('/upload_path_file')
+def file_upload():
+    """
+    Uploads a file with paths
+    """
+    global tasks
+
+    search_id = str(uuid.uuid4())
+    result = extract_pathways(request.args["file"], B_HUBS_FILE, request.args["hub_db"])
     tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 
