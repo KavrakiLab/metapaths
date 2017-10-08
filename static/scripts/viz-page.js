@@ -144,7 +144,7 @@ function uploadGraph() {
 
     if (graph_file == null) {
         alert("Select a proper file to visualize.");
-    } else if (graph_file.type != "application/json") {
+    } else if (graph_file.type != "application/json" && graph_file.name.split(".")[1] != "json") {
         alert("Invalid file type selected! Graph data must be in JSON format.");
     } 
     else {
