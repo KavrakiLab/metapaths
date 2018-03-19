@@ -474,8 +474,11 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
 
 function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
 
-    alert("b_nodes: " + b_nodes_list);
-    var b_nodes_list = Object.keys(b_nodes);
+    alert("b_nodes: " + b_nodes);
+    var b_nodes_list = [];
+    if(b_nodes != null) {
+        b_nodes_list = Object.keys(b_nodes);
+    }
     viz_graph.node.data().forEach(function (node, index, array) {
         if (node.id === start) {
             var mid_x = $("#viz-column")[0].offsetWidth / 2;
