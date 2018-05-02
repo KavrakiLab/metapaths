@@ -46,54 +46,14 @@ $(function () {
         value: 10,
     });
 
-    $( ".span" ).slider().on('slideStart', function(ev) {
-        originalVal = $('.span').data('slider').getValue();
-    });
-
-    $(".span").slider().on('slideStop', function(ev) {
-        var newVal = $(".span").dat('slider').getValue();
-        if(originalVal != newVal) {
-            alert("Value changed!");
-            charge_force = newVal;
-            if(current_main_pathways.length > 0)
-                validate_and_visualize(current_main_pathways);
-        }
-    })
-
-  } );
-
-  $( function() {
-
-    var originalVal;
-
     $( "#max-len-slider" ).slider({
-        max: 60,
+        max: 20,
         value: 10,
     });
-
-    $( ".span" ).slider().on('slideStart', function(ev) {
-        originalVal = $('.span').data('slider').getValue();
-    });
-
-    $(".span").slider().on('slideStop', function(ev) {
-        var newVal = $(".span").dat('slider').getValue();
-        if(originalVal != newVal) {
-            alert("Value changed!");
-            charge_force = newVal;
-            if(current_main_pathways.length > 0)
-                validate_and_visualize(current_main_pathways);
-        }
-    })
-
-  } );
-
-    $( function() {
-
-    var originalVal;
 
     $( "#min-carbons-slider" ).slider({
-        max: 60,
-        value: 10,
+        max: 10,
+        value: 2,
     });
 
     $( ".span" ).slider().on('slideStart', function(ev) {
@@ -111,6 +71,7 @@ $(function () {
     })
 
   } );
+
 
 function load_search_result(search_id) {
     // localStorage.removeItem("search_id"); // TODO: uncomment
