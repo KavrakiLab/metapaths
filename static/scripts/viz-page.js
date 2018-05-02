@@ -46,29 +46,29 @@ $(function () {
         value: 10,
     });
 
-    $( "#max-len-slider" ).slider({
-        max: 20,
-        value: 10,
-    });
-
-    $( "#min-carbons-slider" ).slider({
-        max: 10,
-        value: 2,
-    });
-
-    // $( ".span" ).slider().on('slideStart', function(ev) {
-    //     originalVal = $('.span').data('slider').getValue();
+    // $( "#max-len-slider" ).slider({
+    //     max: 20,
+    //     value: 10,
     // });
 
-    // $(".span").slider().on('slideStop', function(ev) {
-    //     var newVal = $(".span").dat('slider').getValue();
-    //     if(originalVal != newVal) {
-    //         alert("Value changed!");
-    //         charge_force = newVal;
-    //         if(current_main_pathways.length > 0)
-    //             validate_and_visualize(current_main_pathways);
-    //     }
-    // })
+    // $( "#min-carbons-slider" ).slider({
+    //     max: 10,
+    //     value: 2,
+    // });
+
+    $( ".span" ).slider().on('slideStart', function(ev) {
+        originalVal = $('.span').data('slider').getValue();
+    });
+
+    $(".span").slider().on('slideStop', function(ev) {
+        var newVal = $(".span").dat('slider').getValue();
+        if(originalVal != newVal) {
+            alert("Value changed!");
+            charge_force = newVal;
+            if(current_main_pathways.length > 0)
+                validate_and_visualize(current_main_pathways);
+        }
+    })
 
   } );
 
