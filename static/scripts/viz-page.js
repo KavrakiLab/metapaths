@@ -45,11 +45,11 @@ $(function () {
         value: 10
     });
 
-    $("#max-len-slider" ).slider().on('slideStart', function(ev) {
-        oldValue = $("#max-len-slider" ).slider("option","value");
+    $("#max-len-slider" ).on('slidestart', function(ev) {
+        oldValue = $("#max-len-slider").slider("option","value");
     });
 
-    $("#max-len-slider" ).slider().on('slideStop', function(ev) {
+    $("#max-len-slider" ).on('slidestop', function(ev) {
         var newValue = $("#max-len-slider" ).slider("option","value");
         if(oldValue != newValue) {
             alert("Value of max len slider changed to " + newValue);
@@ -64,11 +64,11 @@ $(function () {
         value: 2
     });
 
-    $("#min-carbons-slider" ).slider().on('slideStart', function(ev) {
+    $("#min-carbons-slider" ).on('slidestart', function(ev) {
         oldValue = $("#min-carbons-slider" ).slider("option","value");
     });
 
-    $("#min-carbons-slider" ).slider().on('slideStop', function(ev) {
+    $("#min-carbons-slider" ).on('slidestop', function(ev) {
         var newValue = $("#min-carbons-slider" ).slider("option","value");
         if(oldValue != newValue) {
             alert("Value of min carbons slider changed to " + newValue);
@@ -84,11 +84,11 @@ $(function () {
         value: 10
     });
 
-    $("#force-slider").slider().on('slideStart', function(ev) {
+    $("#force-slider").on('slidestart', function(ev) {
         oldValue = $("#force-slider").slider("option","value");
     });
 
-    $("#force-slider").slider().on('slideStop', function(ev) {
+    $("#force-slider").on('slidestop', function(ev) {
         var newValue = $("#force-slider").slider("option","value");
         if(oldValue != newValue) {
             alert("Value of force slider changed to " + newValue);
