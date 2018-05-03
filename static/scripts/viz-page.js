@@ -275,7 +275,7 @@ function collect_pathways_into_graph(pathways) {
     var hub_node_list = Array.from(hub_nodes);
     var hub_link_list = Array.from(hub_links);
 
-    alert("Returning info soon!");
+    //alert("Returning info soon!");
     return {
         "nodes" : node_list,
         "links" : link_list,
@@ -504,7 +504,7 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
 
 function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
 
-    alert("b_nodes: " + b_nodes);
+    //alert("b_nodes: " + b_nodes);
     var b_nodes_list = [];
     if(b_nodes != null) {
         b_nodes_list = Object.keys(b_nodes);
