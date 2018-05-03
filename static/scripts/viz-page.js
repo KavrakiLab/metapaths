@@ -53,9 +53,8 @@ $(function () {
         var newValue = $("#max-len-slider" ).slider("option","value");
         if(oldValue != newValue) {
             alert("Value of max len slider changed to " + newValue);
-            charge_force = newValue;
-            //if(current_main_pathways.length > 0)
-            //    validate_and_visualize(current_main_pathways);
+            $("#max-path-len").val(newValue);
+            apply_filters();
         }
     });
 
