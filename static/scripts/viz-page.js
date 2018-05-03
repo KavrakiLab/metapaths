@@ -38,24 +38,16 @@ $(function () {
 });
 
   $( function() {
-  	var oldValue = 0;
 
     $( "#max-len-slider" ).slider({
         max: 20,
         value: 10
     });
 
-    $("#max-len-slider" ).on('slidestart', function(ev) {
-        oldValue = $("#max-len-slider").slider("option","value");
-    });
-
-    $("#max-len-slider" ).on('slidestop', function(ev) {
+    $("#max-len-slider" ).on('slide', function(ev) {
         var newValue = $("#max-len-slider" ).slider("option","value");
-        if(oldValue != newValue) {
-            alert("Value of max len slider changed to " + newValue);
-            $("#max-path-len").val(newValue);
-            apply_filters();
-        }
+        $("#max-path-len").val(newValue);
+        apply_filters();
     });
 
     $( "#min-carbons-slider" ).slider({
