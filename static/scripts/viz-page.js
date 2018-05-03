@@ -38,39 +38,69 @@ $(function () {
 });
 
   $( function() {
+  	var oldValue = 0;
 
-    var originalVal;
-
+  	// Force slider
     $( "#force-slider" ).slider({
         max: 60,
         value: 10
     });
+
+    $("#force-slider").slider().on('slideStart', function(ev) {
+        oldValue = $("#force-slider").slider("option","value");
+    });
+
+    $("#force-slider").slider().on('slideStop', function(ev) {
+        var newValue = $("#force-slider").slider("option","value");
+        if(oldValue != newValue) {
+            alert("Value of force slider changed to " + newValue);
+            charge_force = newValue;
+            //if(current_main_pathways.length > 0)
+            //    validate_and_visualize(current_main_pathways);
+        }
+    })
+
+
 
     $( "#max-len-slider" ).slider({
         max: 20,
         value: 10
     });
 
+    $("#max-len-slider" ).slider().on('slideStart', function(ev) {
+        oldValue = $("#max-len-slider" ).slider("option","value");
+    });
+
+    $("#max-len-slider" ).slider().on('slideStop', function(ev) {
+        var newValue = $("#max-len-slider" ).slider("option","value");
+        if(oldValue != newValue) {
+            alert("Value of max len slider changed to " + newValue);
+            charge_force = newValue;
+            //if(current_main_pathways.length > 0)
+            //    validate_and_visualize(current_main_pathways);
+        }
+    })
+
     $( "#min-carbons-slider" ).slider({
         max: 10,
         value: 2
     });
 
-    // $( ".span" ).slider().on('slideStart', function(ev) {
-    //     originalVal = $('.span').data('slider').getValue();
-    // });
+    $("#min-carbons-slider" ).slider().on('slideStart', function(ev) {
+        oldValue = $("#min-carbons-slider" ).slider("option","value");
+    });
 
-    // $(".span").slider().on('slideStop', function(ev) {
-    //     var newVal = $(".span").data('slider').getValue();
-    //     if(originalVal != newVal) {
-    //         alert("Value changed!");
-    //         charge_force = newVal;
-    //         if(current_main_pathways.length > 0)
-    //             validate_and_visualize(current_main_pathways);
-    //     }
-    // })
+    $("#min-carbons-slider" ).slider().on('slideStop', function(ev) {
+        var newValue = $("#min-carbons-slider" ).slider("option","value");
+        if(oldValue != newValue) {
+            alert("Value of min carbons slider changed to " + newValue);
+            charge_force = newValue;
+            //if(current_main_pathways.length > 0)
+            //    validate_and_visualize(current_main_pathways);
+        }
+    })
 
-  } );
+  });
 
 
 function load_search_result(search_id) {
