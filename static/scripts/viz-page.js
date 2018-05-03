@@ -40,28 +40,6 @@ $(function () {
   $( function() {
   	var oldValue = 0;
 
-  	// Force slider
-    $( "#force-slider" ).slider({
-        max: 60,
-        value: 10
-    });
-
-    $("#force-slider").slider().on('slideStart', function(ev) {
-        oldValue = $("#force-slider").slider("option","value");
-    });
-
-    $("#force-slider").slider().on('slideStop', function(ev) {
-        var newValue = $("#force-slider").slider("option","value");
-        if(oldValue != newValue) {
-            alert("Value of force slider changed to " + newValue);
-            charge_force = newValue;
-            //if(current_main_pathways.length > 0)
-            //    validate_and_visualize(current_main_pathways);
-        }
-    })
-
-
-
     $( "#max-len-slider" ).slider({
         max: 20,
         value: 10
@@ -79,7 +57,7 @@ $(function () {
             //if(current_main_pathways.length > 0)
             //    validate_and_visualize(current_main_pathways);
         }
-    })
+    });
 
     $( "#min-carbons-slider" ).slider({
         max: 10,
@@ -98,7 +76,27 @@ $(function () {
             //if(current_main_pathways.length > 0)
             //    validate_and_visualize(current_main_pathways);
         }
-    })
+    });
+
+        // Force slider
+    $( "#force-slider" ).slider({
+        max: 60,
+        value: 10
+    });
+
+    $("#force-slider").slider().on('slideStart', function(ev) {
+        oldValue = $("#force-slider").slider("option","value");
+    });
+
+    $("#force-slider").slider().on('slideStop', function(ev) {
+        var newValue = $("#force-slider").slider("option","value");
+        if(oldValue != newValue) {
+            alert("Value of force slider changed to " + newValue);
+            charge_force = newValue;
+            //if(current_main_pathways.length > 0)
+            //    validate_and_visualize(current_main_pathways);
+        }
+    });
 
   });
 
