@@ -13,7 +13,6 @@ def convert_lpat(filename):
     # Convert each path and write out to the same file
     for line in lines:
         tab_split = line.split("\t")
-        print tab_split
         carbons_conserved = ""
         if len(tab_split) == 3:
             carbons_conserved = tab_split[-1]
@@ -48,7 +47,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         tab_split_path = string_path.split("\t")
         carbons_conserved = []
         if len(tab_split_path) > 1:
-            carbons_conserved = re.findall("[0-9]+:[0-9]+", tab_split_path[-1])
+            carbons_conserved = re.findall("[0-9]+=[0-9]+", tab_split_path[-1])
         path_compounds = regex.findall(string_path)
         nodes = set([])
         links = []
