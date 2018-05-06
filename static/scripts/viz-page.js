@@ -57,7 +57,7 @@ $(function () {
 
     $("#min-carbons-slider" ).on('slide', function(ev) {
         var newValue = $("#min-carbons-slider" ).slider("option","value");
-        $("#min-carbons-slider").val(newValue);
+        $("#min-carbons-conserved").val(newValue);
         apply_filters();
     });
 
