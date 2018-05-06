@@ -18,6 +18,7 @@ def convert_lpat(filename):
             carbons_conserved = tab_split[-1]
         path_segments = []
         for item in line.split(";"):
+            print item
             if len(item) > 0:
                 cleaned_item = "".join(x for x in item if x.isalnum())
                 if cleaned_item[0] == "C":
