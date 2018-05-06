@@ -13,6 +13,10 @@ def convert_lpat(filename):
 
     # Convert each path and write out to the same file
     for line in lines:
+    	tab_split = line.split("\t")
+    	carbons_conserved = ""
+    	if len(tab_split) == 3:
+    		carbons_conserved = tab_split[-1]
         path_segments = []
         for item in line.split(";"):
             if len(item) > 0:
@@ -23,6 +27,8 @@ def convert_lpat(filename):
                     f.write(cleaned_item[0:7] + ",")
 
         f.seek(-1, os.SEEK_CUR)
+        if carbons_conserved != "":
+        	f.write("\t" + carbons_conserved)
         f.write("\n")
     f.close()
 
