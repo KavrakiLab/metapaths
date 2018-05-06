@@ -108,6 +108,12 @@
                                  data-content="Specify a maximum path length, must be an integer greater than 1">
                             </div>
 
+                            <div class="input-group">
+                                <label>Exclude pathways that conserve less than this number of carbons:</label>
+                                <input type="number" id="min-carbons-conserved" class="form-control" data-toggle="popover" data-placement="right" data-trigger="focus"
+                                 data-content="Specify a minimum number of carbons to conserve, must be an integer greater than 0">
+                            </div>
+
                             <button class="btn btn-primary btn-sm" onclick="apply_filters()">Apply</button>
                             <button class="btn btn-danger btn-sm" onclick="reset_filters()">Reset</button>
                             <button class="btn btn-default btn-sm" onclick="export_filtered()">Export Filtered</button>
