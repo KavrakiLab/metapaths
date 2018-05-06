@@ -13,12 +13,12 @@ def convert_lpat(filename):
     # Convert each path and write out to the same file
     for line in lines:
         tab_split = line.split("\t")
+        print tab_split
         carbons_conserved = ""
         if len(tab_split) == 3:
             carbons_conserved = tab_split[-1]
         path_segments = []
         for item in line.split(";"):
-            print item
             if len(item) > 0:
                 cleaned_item = "".join(x for x in item if x.isalnum())
                 if cleaned_item[0] == "C":
