@@ -55,18 +55,10 @@ $(function () {
         value: 2
     });
 
-    $("#min-carbons-slider" ).on('slidestart', function(ev) {
-        oldValue = $("#min-carbons-slider" ).slider("option","value");
-    });
-
-    $("#min-carbons-slider" ).on('slidestop', function(ev) {
+    $("#min-carbons-slider" ).on('slide', function(ev) {
         var newValue = $("#min-carbons-slider" ).slider("option","value");
-        if(oldValue != newValue) {
-            alert("Value of min carbons slider changed to " + newValue);
-            charge_force = newValue;
-            //if(current_main_pathways.length > 0)
-            //    validate_and_visualize(current_main_pathways);
-        }
+        $("#min-carbons-slider").val(newValue);
+        apply_filters();
     });
 
         // Force slider
