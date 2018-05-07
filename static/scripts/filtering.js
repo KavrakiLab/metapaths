@@ -109,6 +109,7 @@ function filter_pathways(str_info, str_pathways) {
             // Iterate in reverse so that we can remove elements with out worrying about indices changing
             var pathway = filtered_pathways.pathways[i];
             var num_carbons = pathway.atoms.length;
+            console.log("Number of carbons conserved in path: " + num_carbons);
 
             if (num_carbons < min_carbons) {
                 filtered_pathways.pathways.splice(i, 1);
