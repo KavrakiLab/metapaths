@@ -233,7 +233,7 @@ function collect_pathways_into_graph(pathways) {
         links = new Set([...links, ...pathway.links]);
         links = new Set([...links, ...pathway.hub_links]);
 
-        if(pathway.canonical == True) {
+        if(pathway.canonical == true) {
             canonical_nodes = new Set([...canonical_nodes,...pathway.nodes]);
             canonical_nodes = new Set([...canonical_nodes,...pathway.hub_nodes]);
             canonical_links = new Set([...canonical_links,...pathway.links]);
