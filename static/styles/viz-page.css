@@ -18,6 +18,11 @@
     fill: #efc406;
 }
 
+.canonical-node {
+    fill: #00f;
+}
+
+
 .hub-source-node {
     fill: #0a0;
 }
@@ -47,6 +52,11 @@
     cursor: pointer;
     stroke-dasharray: 10 5;
     stroke-width: 4px;
+}
+
+.canonical-link {
+    stroke-color: #00f;
+
 }
 
 .internal-link {
