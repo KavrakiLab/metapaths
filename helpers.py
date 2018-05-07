@@ -72,6 +72,16 @@ def write_config_file(search_id, config):
 
     return config_loc
 
+def is_pathway_canonical(cmpdlist, start, goal):
+    canonical_cmpds_file = open("searches/canonical_pathways/" + start + "_" + goal + ".txt", "r")
+    canonical_cmpds = canonical_cmpds_file.read()
+    canonical_cmpd_list = canonical_cmpds.split(",")
+    if(canonical_cmpd_list == cmpdlist):
+        return True
+    else:
+        return False
+
+
 
 def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     pathways = []
@@ -114,7 +124,8 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         pathway["nodes"] = [node[0:6] for node in (set(path_compounds) - hub_nodes)]
         pathway["links"] = list(links)
         pathway["hub_nodes"] = [hub_node[0:6] for hub_node in hub_nodes]
-        pathway["hub_links"] = list(hub_links) 
+        pathway["hub_links"] = list(hub_links)
+        pathway["canonical"] = is_pathway_canonical(path_compounds, start, goal)
         pathways.append(pathway)
         if(hubs_exist):
             all_hub_links = all_hub_links + hub_links
