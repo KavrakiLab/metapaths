@@ -108,7 +108,7 @@ def get_pathways_from_file(pathways_filename, background_hubs_filename, hub_db):
     pathways_file = open(pathways_filename, "r")
     return extract_pathways(pathways_file.readlines(), background_hubs_filename, hub_db)
 
-convert_lpat(sys.argv[1])
+#convert_lpat(sys.argv[1])
 output = get_pathways_from_file(sys.argv[1], "na", "na")
 
 print output
