@@ -275,6 +275,8 @@ function collect_pathways_into_graph(pathways) {
 
     var hub_node_list = Array.from(hub_nodes);
     var hub_link_list = Array.from(hub_links);
+    var canonical_nodes_list = Array.from(canonical_nodes);
+    var canonical_links_list = Array.from(canonical_links);
 
     //alert("Returning info soon!");
     return {
@@ -284,8 +286,8 @@ function collect_pathways_into_graph(pathways) {
         "hub_links" : hub_link_list,
         "start" : pathways.info.start,
         "goal" : pathways.info.goal,
-        "canonical_nodes" : canonical_nodes,
-        "canonical_links" : canonical_links,
+        "canonical_nodes" : canonical_nodes_list,
+        "canonical_links" : canonical_links_list,
         "num_pathways" : pathways.pathways.length
     };
 } // collect_pathways_into_graph
