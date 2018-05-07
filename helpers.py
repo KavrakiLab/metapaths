@@ -75,7 +75,7 @@ def write_config_file(search_id, config):
 def is_pathway_canonical(cmpdlist, start, goal):
     canonical_cmpds_file = open("searches/canonical_pathways/" + start + "_" + goal + ".txt", "r")
     canonical_cmpds = canonical_cmpds_file.read()
-    canonical_cmpd_list = canonical_cmpds.split(",")
+    canonical_cmpd_list = canonical_cmpds.replace("\n","").split(",")
     if(canonical_cmpd_list == cmpdlist):
         return True
     else:
