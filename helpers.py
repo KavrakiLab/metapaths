@@ -85,6 +85,10 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     hubs_exist = False
 
     for string_path in string_pathways:
+        tab_split_path = string_path.split("\t")
+        carbons_conserved = []
+        if len(tab_split_path) > 1:
+            carbons_conserved = re.findall("[0-9]+=[0-9]+", tab_split_path[-1])
         path_compounds = regex.findall(string_path)
         nodes = set([])
         links = []
@@ -106,7 +110,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
                 links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
 
         pathway = {}
-        pathway["atoms"] = 0 # TODO: actually calculate this
+        pathway["atoms"] = carbons_conserved # TODO: actually calculate this
         pathway["nodes"] = [node[0:6] for node in (set(path_compounds) - hub_nodes)]
         pathway["links"] = list(links)
         pathway["hub_nodes"] = [hub_node[0:6] for hub_node in hub_nodes]
