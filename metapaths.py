@@ -64,8 +64,8 @@ hub_compounds = {}
 
 # Working dir
 #working_dir = "/home/sarahkim/metapath/webserver/metapaths"
-#working_dir = "/usr/local/metapathssandbox/metapaths"
-working_dir = "/mnt/c/Users/skim2/git/metapaths"
+working_dir = "/usr/local/metapathssandbox/metapaths"
+#working_dir = "/mnt/c/Users/skim2/git/metapaths"
 
 
 B_HUBS_FILE = working_dir + "/searches/b_hub_file.txt"
