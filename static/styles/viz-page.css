@@ -120,3 +120,11 @@ a:hover {
 #select-dropdown {
     width: 100%;
 }
+
+#max-len-slider label {
+    position: absolute;
+    width: 20px;
+    margin-top: 20px;
+    margin-left: -10px;
+    text-align: center;
+}
