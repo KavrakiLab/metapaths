@@ -130,9 +130,12 @@ def convert_lpat(filename):
                 if len(final_1) > 0:
                     cc_str = get_str_cc(final_1, final_2)
                     #print cc_str
-                    for path1 in hub_path_list[cc1]:
-                        for path2 in second_path_list[cc2]:
-                            f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
+                    path1 = hub_path_list[cc1][0]
+                    path2 = second_path_list[cc2][0]
+                    f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
+                    # for path1 in hub_path_list[cc1]:
+                    #     for path2 in second_path_list[cc2]:
+                    #             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
 
     elif len(second_path_list) == 0:
         print "looking at paths with no hub to target part"
@@ -143,9 +146,12 @@ def convert_lpat(filename):
                 final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
                 if len(final_1) > 0:
                     cc_str = get_str_cc(final_1, final_2)
-                    for path1 in first_path_list[cc1]:
-                        for path2 in hub_path_list[cc2]:
-                            f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+                    path1 = first_path_list[cc1]
+                    path2 = hub_path_list[cc2]
+                    f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+                    # for path1 in first_path_list[cc1]:
+                    #     for path2 in hub_path_list[cc2]:
+                    #         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
 
     else:
         print "Full hub search"
@@ -154,10 +160,15 @@ def convert_lpat(filename):
                 for cc3 in second_path_list:
                     cc_str = get_carbons_conserved(cc1, cc2, cc3)
                     if len(cc_str) > 0:
-                        for path1 in first_path_list[cc1]:
-                            for path2 in hub_path_list[cc2]:
-                                for path3 in second_path_list[cc3]:
-                                    f.write(path1 + path2 + path3[11:-11] + "\t" + cc_str + "\n")        
+                        path1 = first_path_list[cc1]:
+                        path2 = hub_path_list[cc2]:
+                        path3 = second_path_list[cc3]:
+                        f.write(path1 + path2 + path3[11:-11] + "\t" + cc_str + "\n")        
+
+                        # for path1 in first_path_list[cc1]:
+                        #     for path2 in hub_path_list[cc2]:
+                        #         for path3 in second_path_list[cc3]:
+                        #             f.write(path1 + path2 + path3[11:-11] + "\t" + cc_str + "\n")        
 
     f.close()
 
