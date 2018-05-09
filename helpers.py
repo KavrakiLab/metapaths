@@ -73,11 +73,13 @@ def write_config_file(search_id, config):
     return config_loc
 
 def is_pathway_canonical(cmpdlist, start, goal):
-    canonical_cmpds_file = open("searches/canonical_pathways/" + start + "_" + goal + ".txt", "r")
-    canonical_cmpds = canonical_cmpds_file.read()
-    canonical_cmpd_list = canonical_cmpds.replace("\n","").split(",")
-    if(canonical_cmpd_list == cmpdlist):
-        return True
+    filename = "searches/canonical_pathways/" + start + "_" + goal + ".txt"
+    if os.path.isfile(filename):
+        canonical_cmpds_file = open(filename, "r")
+        canonical_cmpds = canonical_cmpds_file.read()
+        canonical_cmpd_list = canonical_cmpds.replace("\n","").split(",")
+        if(canonical_cmpd_list == cmpdlist):
+            return True
     else:
         return False
 
