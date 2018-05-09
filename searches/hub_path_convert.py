@@ -67,8 +67,11 @@ def convert_lpat(filename):
                 raw_path = tab_split_line[0].split(" ")
                 path = raw_path[0][0:6] + "_HS,"
                 for item in raw_path[1:-1]:
-                    path += item[0:6] + ","
-                print raw_path[-1][0:6]
+                    cleaned_item = "".join(x for x in item if x.isalnum())
+                    if cleaned_item[0] == "C":
+                        path += cleaned_item[0:6] + ","
+                    elif cleaned_item[0] == "R":
+                        path += cleaned_item[0:7] + ","
                 path += raw_path[-1][0:6] + "_HE,"
 
                 #print raw_path
