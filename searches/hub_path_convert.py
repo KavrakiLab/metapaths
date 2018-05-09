@@ -126,7 +126,7 @@ def convert_lpat(filename):
         for cc1 in first_path_list:
             for cc2 in hub_path_list:
                 for cc3 in second_path_list:
-                        cc_str = get_carbons_conserved(cc1, cc2, cc3)
+                    cc_str = get_carbons_conserved(cc1, cc2, cc3)
                     if len(cc_str) > 0:
                         for path1 in first_path_list[cc1]:
                             for path2 in hub_path_list[cc2]:
