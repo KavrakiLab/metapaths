@@ -107,6 +107,10 @@ def convert_lpat(filename):
     #print "Size of hub paths: " + str(len(hub_path_list))
     #print "Size of second paths: " + str(len(second_path_list))
 
+    print len(first_path_list)
+    print len(hub_path_list)
+    print lne(second_path_list)
+
     if len(first_path_list) == 0 and len(second_path_list) == 0:
         for cc in hub_path_list:
             for path in hub_path_list[cc]:
