@@ -131,6 +131,7 @@ def convert_lpat(filename):
                 hub_1, hub_2 = get_carbon_conserved_arrays(cc2)
                 final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
                 if len(final_1) > 0:
+                    print cc_str
                     cc_str = get_str_cc(final_1, final_2)
                     for path1 in first_path_list[cc1]:
                         for path2 in hub_path_list[cc2]:
@@ -174,7 +175,6 @@ def get_carbon_conserved_arrays(carbon_conserved_string):
     first_list = []
     second_list = []
     for item in cc_list:
-        print item
         ccs = item.split(":")
         if(len(ccs) == 2):
             first_list.append(ccs[0])
