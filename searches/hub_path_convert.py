@@ -78,7 +78,7 @@ def convert_lpat(filename):
 
                 #print raw_path
                 if len(tab_split_line) == 2:
-                    c_conserved = tab_split_line[1]
+                    c_conserved = tab_split_line[1].replace(":","=")
                     if c_conserved not in hub_path_list:
                         hub_path_list[c_conserved] = []
                     hub_path_list[c_conserved].append(path)
@@ -183,11 +183,11 @@ def convert_lpat(filename):
 
 
 def get_carbon_conserved_arrays(carbon_conserved_string):
-    cc_list = re.findall("[0-9]+:[0-9]+", carbon_conserved_string)
+    cc_list = re.findall("[0-9]+=[0-9]+", carbon_conserved_string)
     first_list = []
     second_list = []
     for item in cc_list:
-        ccs = item.split(":")
+        ccs = item.split("=")
         if(len(ccs) == 2):
             first_list.append(ccs[0])
             second_list.append(ccs[1])
@@ -220,7 +220,7 @@ def get_carbons_conserved(first_path_cc, hub_cc, second_path_cc):
 def get_str_cc(final_1, final_2):
     final_str = ""
     for i in range(len(final_1)):
-        final_str += final_1[i] + ":" + final_2[i]
+        final_str += final_1[i] + "=" + final_2[i]
     return final_str
 
 
