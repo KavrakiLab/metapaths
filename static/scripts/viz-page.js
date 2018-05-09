@@ -42,6 +42,14 @@ $( function() {
     $( "#max-len-slider" ).slider({
         max: 20,
         value: 10
+    })
+    .each(function()) {
+        var opt = $(this).data().uiSlider.options;
+         var vals = opt.max - opt.min;
+         for (var i = 0; i <= vals; i++) {
+             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+             $("#max-len-slider".append(el))
+        }
     });
     
     // $(document).ready(function() {
