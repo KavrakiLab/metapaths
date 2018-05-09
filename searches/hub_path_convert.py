@@ -8,8 +8,6 @@ def convert_lpat(filename):
     f = open(filename, "r+")
     content = f.read()
     split_content = content.split("*********")
-    print len(split_content)
-    lines = split_content[-1].split("\n")
     f.seek(0)
     f.truncate()
 
@@ -41,9 +39,10 @@ def convert_lpat(filename):
                     f.write("\n")
 
     # Convert each path and write out to the same file
+    lines = split_content[-1].split("\n")
     first_path = True
     for line in lines:
-        #print(line)
+        print line
         tab_split_line = line.split("\t")
         if("[" in line and first_path):
             path = ""
