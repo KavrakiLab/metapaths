@@ -160,9 +160,9 @@ def convert_lpat(filename):
                 for cc3 in second_path_list:
                     cc_str = get_carbons_conserved(cc1, cc2, cc3)
                     if len(cc_str) > 0:
-                        path1 = first_path_list[cc1]:
-                        path2 = hub_path_list[cc2]:
-                        path3 = second_path_list[cc3]:
+                        path1 = first_path_list[cc1]
+                        path2 = hub_path_list[cc2]
+                        path3 = second_path_list[cc3]
                         f.write(path1 + path2 + path3[11:-11] + "\t" + cc_str + "\n")        
 
                         # for path1 in first_path_list[cc1]:
