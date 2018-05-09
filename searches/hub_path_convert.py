@@ -8,7 +8,7 @@ def convert_lpat(filename):
     f = open(filename, "r+")
     content = f.read()
     split_content = content.split("*********")
-    print split_content
+    print len(split_content)
     lines = split_content[-1].split("\n")
     f.seek(0)
     f.truncate()
@@ -34,8 +34,7 @@ def convert_lpat(filename):
                             f.write(cleaned_item[0:6] + ",")
                         elif cleaned_item[0] == "R":
                             f.write(cleaned_item[0:7] + ",")
-
-        #f.seek(-1, os.SEEK_CUR)
+        f.seek(-1, os.SEEK_CUR)
         if carbons_conserved != "":
             f.write("\t" + carbons_conserved)
         f.write("\n")
@@ -105,9 +104,9 @@ def convert_lpat(filename):
         if len(first_path_info) > 1 and len(hub_middle_info) > 1 and len(second_path_info) > 1:
             carbons_conserved = get_carbons_conserved(first_path_info[1], hub_middle_info[1], second_path_info[1])
 
-        f.write(first_path_info[0] + hub_middle_info[0] + second_path_info[0] + "\t" + carbons_conserved + "\n")
-        #f.seek(-1, os.SEEK_CUR)
-        #f.write("\n")
+        f.write(first_path_info[0] + hub_middle_info[0] + second_path_info[0])
+        f.seek(-1, os.SEEK_CUR)
+        f.write("\t" + carbons_conserved + "\n")
     f.close()
 
 def get_carbon_conserved_arrays(carbon_conserved_string):
