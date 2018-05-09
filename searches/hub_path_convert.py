@@ -44,9 +44,8 @@ def convert_lpat(filename):
     for line in lines:
         #print line
         tab_split_line = line.split("\t")
-        print tab_split_line
-        
-        if("[" in line and first_path):
+
+        if(line[0] == "[" and first_path):
             path = ""
             for item in line.split(";"):
                 if len(item) > 0:
@@ -63,21 +62,21 @@ def convert_lpat(filename):
                     first_path_list[c_conserved] = []
                 first_path_list[c_conserved].append(path)
 
-        elif("[" not in line):
+        elif(line[0] != "["):
             first_path = False
             raw_path = line.split(" ")
             path = ""
             for item in raw_path[1:-1]:
                 path += item[0:6] + ","
 
-            print line
+            print raw_path
             if len(tab_split_line) == 2:
                 c_conserved = tab_split_line[1]
                 if c_conserved not in hub_path_list:
                     hub_path_list[c_conserved] = []
                 hub_path_list[c_conserved].append(path)
 
-        elif("[" in line):
+        elif(line[0] == "["):
             raw_path = line.split(";")
             cleaned_start_item = "".join(x for x in raw_path[0] if x.isalnum())
             path = cleaned_start_item[0:6] + "_HE,"
