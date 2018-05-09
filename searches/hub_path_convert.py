@@ -34,7 +34,7 @@ def convert_lpat(filename):
                         elif cleaned_item[0] == "R":
                             f.write(cleaned_item[0:7] + ",")
 
-        f.seek(-1, os.SEEK_CUR)
+        #f.seek(-1, os.SEEK_CUR)
         if carbons_conserved != "":
             f.write("\t" + carbons_conserved)
         f.write("\n")
