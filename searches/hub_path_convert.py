@@ -128,7 +128,12 @@ def convert_lpat(filename):
          for cc1 in first_path_list:
             for cc2 in hub_path_list:
                 first_1, first_2 = get_carbon_conserved_arrays(cc1)
+                print first_1
+                print first_2
                 hub_1, hub_2 = get_carbon_conserved_arrays(cc2)
+                print hub_1
+                print hub_2
+                print "******"
                 final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
                 if len(final_1) > 0:
                     print cc_str
