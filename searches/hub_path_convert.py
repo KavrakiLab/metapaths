@@ -170,7 +170,7 @@ def convert_lpat(filename):
 
 
 def get_carbon_conserved_arrays(carbon_conserved_string):
-    cc_list = re.findall(carbon_conserved_string,"[0-9]+:[0-9]+")
+    cc_list = re.findall("[0-9]+:[0-9]+", carbon_conserved_string)
     first_list = []
     second_list = []
     for item in cc_list:
