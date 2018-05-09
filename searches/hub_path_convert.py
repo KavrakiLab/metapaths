@@ -18,7 +18,7 @@ def convert_lpat(filename):
     hub_path_list = []
     second_path_list = []
 
-    for less_than_two_hub_paths in split_content[:-1]:
+    for less_than_two_hub_paths in split_content[1:-1]:
         if len(less_than_two_hub_paths) > 0:
             path_lines = less_than_two_hub_paths.split("\n")
             for line in path_lines:
