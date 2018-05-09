@@ -40,7 +40,7 @@ $(function () {
 $( function() {
 
     $( "#max-len-slider" ).slider({
-        max: 20,
+        max: 15,
         value: 10
     })
     .each(function() {
