@@ -27,6 +27,7 @@ def convert_lpat(filename):
                 if len(tab_split) == 3:
                     carbons_conserved = tab_split[-1]
                 path_segments = []
+                print line
                 for item in line.split(";"):
                     if len(item) > 0:
                         cleaned_item = "".join(x for x in item if x.isalnum())
