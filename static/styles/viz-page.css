@@ -128,3 +128,7 @@ a:hover {
     margin-left: -10px;
     text-align: center;
 }
+
+#max-len-slider {
+    width: 200px;
+}
