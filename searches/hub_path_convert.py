@@ -174,9 +174,11 @@ def get_carbon_conserved_arrays(carbon_conserved_string):
     first_list = []
     second_list = []
     for item in cc_list:
+        print item
         ccs = item.split(":")
-        first_list.append(ccs[0])
-        second_list.append(ccs[1])
+        if(len(ccs) == 2):
+            first_list.append(ccs[0])
+            second_list.append(ccs[1])
 
     return first_list, second_list
 
