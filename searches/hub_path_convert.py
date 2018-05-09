@@ -65,6 +65,8 @@ def convert_lpat(filename):
             elif(line[0] != "["):
                 first_path = False
                 raw_path = tab_split_line[0].split(" ")
+                while len(raw_path[-1]) == 0:
+                    raw_path = raw_path[:-1]
                 path = raw_path[0][0:6] + "_HS,"
                 for item in raw_path[1:-1]:
                     cleaned_item = "".join(x for x in item if x.isalnum())
