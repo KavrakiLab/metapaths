@@ -37,24 +37,26 @@ $(function () {
     }
 });
 
-  $( function() {
+$( function() {
 
     $( "#max-len-slider" ).slider({
         max: 20,
         value: 10
     });
-
-    var opt = $("#max-len-slider").data().uiSlider.options;
-    var vals = opt.max - opt.min;
-    for (var i = 0; i <= vals; i++) {
-        var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-        $("#max-len-slider".append(el))
-    }
+    
+    $(document).ready(function() {
+        var opt = $("#max-len-slider").data().uiSlider.options;
+        var vals = opt.max - opt.min;
+        for (var i = 0; i <= vals; i++) {
+            var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+            $("#max-len-slider".append(el))
+        }
+    });
 
     $("#max-len-slider" ).on('slide', function(ev) {
-        var newValue = $("#max-len-slider" ).slider("option","value");
-        $("#max-path-len").val(newValue);
-        apply_filters();
+            var newValue = $("#max-len-slider" ).slider("option","value");
+            $("#max-path-len").val(newValue);
+            apply_filters();
     });
 
     $( "#min-carbons-slider" ).slider({
