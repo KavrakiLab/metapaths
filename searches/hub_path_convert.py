@@ -136,7 +136,7 @@ def convert_lpat(filename):
 
     elif len(second_path_list) == 0:
         print "looking at paths with no hub to target part"
-         for cc1 in first_path_list:
+        for cc1 in first_path_list:
             for cc2 in hub_path_list:
                 first_1, first_2 = get_carbon_conserved_arrays(cc1)
                 hub_1, hub_2 = get_carbon_conserved_arrays(cc2)
