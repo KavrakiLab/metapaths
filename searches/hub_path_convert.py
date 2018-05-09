@@ -44,6 +44,8 @@ def convert_lpat(filename):
     for line in lines:
         #print line
         tab_split_line = line.split("\t")
+        print tab_split_line
+        
         if("[" in line and first_path):
             path = ""
             for item in line.split(";"):
@@ -68,7 +70,7 @@ def convert_lpat(filename):
             for item in raw_path[1:-1]:
                 path += item[0:6] + ","
 
-            print len(tab_split_line)
+            print line
             if len(tab_split_line) == 2:
                 c_conserved = tab_split_line[1]
                 if c_conserved not in hub_path_list:
