@@ -34,10 +34,10 @@ def convert_lpat(filename):
                             f.write(cleaned_item[0:6] + ",")
                         elif cleaned_item[0] == "R":
                             f.write(cleaned_item[0:7] + ",")
-        f.seek(-1, os.SEEK_CUR)
-        if carbons_conserved != "":
-            f.write("\t" + carbons_conserved)
-        f.write("\n")
+            f.seek(-1, os.SEEK_CUR)
+            if carbons_conserved != "":
+                f.write("\t" + carbons_conserved)
+            f.write("\n")
 
     # Convert each path and write out to the same file
     first_path = True
