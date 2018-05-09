@@ -43,7 +43,7 @@ $( function() {
         max: 20,
         value: 10
     })
-    .each(function()) {
+    .each(function() {
         var opt = $(this).data().uiSlider.options;
          var vals = opt.max - opt.min;
          for (var i = 0; i <= vals; i++) {
