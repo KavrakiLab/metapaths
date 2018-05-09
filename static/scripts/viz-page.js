@@ -220,6 +220,8 @@ function validate_and_visualize(pathways) {
 function collect_pathways_into_graph(pathways) {
     var nodes  = new Set([]);
     var links = new Set([]);
+    var canonical_nodes = new Set([]);
+    var canonical_links = new Set([]);
 
     // Subset of nodes and links which are hubs
     var hub_nodes = new Set([]);
@@ -230,6 +232,13 @@ function collect_pathways_into_graph(pathways) {
         nodes = new Set([...nodes, ...pathway.hub_nodes]);
         links = new Set([...links, ...pathway.links]);
         links = new Set([...links, ...pathway.hub_links]);
+
+        if(pathway.canonical == true) {
+            canonical_nodes = new Set([...canonical_nodes,...pathway.nodes]);
+            canonical_nodes = new Set([...canonical_nodes,...pathway.hub_nodes]);
+            canonical_links = new Set([...canonical_links,...pathway.links]);
+            canonical_links = new Set([...canonical_links,...pathway.hub_links]);
+        }
 
         pathway.hub_nodes.forEach(function (hub_node, index, array) {
             hub_nodes.add(hub_node);
@@ -266,6 +275,8 @@ function collect_pathways_into_graph(pathways) {
 
     var hub_node_list = Array.from(hub_nodes);
     var hub_link_list = Array.from(hub_links);
+    var canonical_nodes_list = Array.from(canonical_nodes);
+    var canonical_links_list = Array.from(canonical_links);
 
     //alert("Returning info soon!");
     return {
@@ -275,6 +286,8 @@ function collect_pathways_into_graph(pathways) {
         "hub_links" : hub_link_list,
         "start" : pathways.info.start,
         "goal" : pathways.info.goal,
+        "canonical_nodes" : canonical_nodes_list,
+        "canonical_links" : canonical_links_list,
         "num_pathways" : pathways.pathways.length
     };
 } // collect_pathways_into_graph
@@ -344,6 +357,8 @@ function load_viz(data_graph) {
         .attr("class", function(link) {
             if (data_graph.hub_links.includes(get_link_id(link))) {
                 return "hub-link";
+            } else if (data_graph.canonical_links.includes(get_link_id(link))){
+                return "canonical-link";
             } else {
                 return "link";
             }
@@ -368,6 +383,8 @@ function load_viz(data_graph) {
                 return "goal-node";
             } else if (data_graph.hub_nodes.includes(node.id)) {
                 return "hub-node";
+            } else if (data_graph.canonical_nodes.includes(node.id)) {
+                return "canonical-node";
             } else {
                 return "node";
             }
