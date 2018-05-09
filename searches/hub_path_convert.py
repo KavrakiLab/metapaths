@@ -68,6 +68,7 @@ def convert_lpat(filename):
             for item in raw_path[1:-1]:
                 path += item[0:6] + ","
 
+            print len(tab_split_line)
             if len(tab_split_line) == 2:
                 c_conserved = tab_split_line[1]
                 if c_conserved not in hub_path_list:
