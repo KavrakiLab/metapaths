@@ -64,15 +64,11 @@ def convert_lpat(filename):
 
             elif(line[0] != "["):
                 first_path = False
-                raw_path = line.split(" ")
+                raw_path = line.split("\t")[0].split(" ")
                 path = raw_path[0][0:6] + "_HS,"
-                for item in raw_path[1:-2]:
+                for item in raw_path[1:-1]:
                     path += item[0:6] + ","
-                if(raw_path[-1][0] == "C"):
-                    path += raw_path[-2][0:6]
-                    path += raw_path[-1][0:6] + "_HE"
-                else:
-                    path += raw_path[-2][0:6] + "_HE"
+                path += raw_path[-1][0:6] + "_HE"
 
                 #print raw_path
                 if len(tab_split_line) == 2:
