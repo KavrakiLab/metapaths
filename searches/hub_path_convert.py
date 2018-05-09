@@ -22,23 +22,23 @@ def convert_lpat(filename):
         if len(less_than_two_hub_paths) > 0:
             path_lines = less_than_two_hub_paths.split("\n")
             for line in path_lines:
-                tab_split = line.split("\t")
-                carbons_conserved = ""
-                if len(tab_split) == 3:
-                    carbons_conserved = tab_split[-1]
-                path_segments = []
-                print line
-                for item in line.split(";"):
-                    if len(item) > 0:
-                        cleaned_item = "".join(x for x in item if x.isalnum())
-                        if cleaned_item[0] == "C":
-                            f.write(cleaned_item[0:6] + ",")
-                        elif cleaned_item[0] == "R":
-                            f.write(cleaned_item[0:7] + ",")
-                f.seek(-1, os.SEEK_CUR)
-                if carbons_conserved != "":
-                    f.write("\t" + carbons_conserved)
-                f.write("\n")
+                if len(line) > 0:
+                    tab_split = line.split("\t")
+                    carbons_conserved = ""
+                    if len(tab_split) == 3:
+                        carbons_conserved = tab_split[-1]
+                    path_segments = []
+                    for item in line.split(";"):
+                        if len(item) > 0:
+                            cleaned_item = "".join(x for x in item if x.isalnum())
+                            if cleaned_item[0] == "C":
+                                f.write(cleaned_item[0:6] + ",")
+                            elif cleaned_item[0] == "R":
+                                f.write(cleaned_item[0:7] + ",")
+                    f.seek(-1, os.SEEK_CUR)
+                    if carbons_conserved != "":
+                        f.write("\t" + carbons_conserved)
+                    f.write("\n")
 
     # Convert each path and write out to the same file
     first_path = True
