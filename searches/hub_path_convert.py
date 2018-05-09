@@ -104,7 +104,7 @@ def convert_lpat(filename):
     if len(first_path_list) == 0 and len(second_path_list) == 0:
         for cc in hub_path_list:
             for path in hub_path_list[cc]:
-                f.write(path[:-1] + "\t" + cc + "\n")
+                f.write(path.replace(" ","")[:-1] + "\t" + cc + "\n")
 
     elif len(first_path_list) == 0:
         for cc1 in hub_path_list:
