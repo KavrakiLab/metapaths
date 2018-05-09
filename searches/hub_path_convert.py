@@ -68,6 +68,7 @@ def convert_lpat(filename):
                 path = raw_path[0][0:6] + "_HS,"
                 for item in raw_path[1:-1]:
                     path += item[0:6] + ","
+                print raw_path[-1][0:6]
                 path += raw_path[-1][0:6] + "_HE,"
 
                 #print raw_path
