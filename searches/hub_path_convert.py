@@ -44,56 +44,56 @@ def convert_lpat(filename):
     for line in lines:
         #print line
         tab_split_line = line.split("\t")
+        if len(line) > 0:
+            if(line[0] == "[" and first_path):
+                path = ""
+                for item in line.split(";"):
+                    if len(item) > 0:
+                        cleaned_item = "".join(x for x in item if x.isalnum())
+                        if cleaned_item[0] == "C":
+                            path += cleaned_item[0:6] + ","
+                        elif cleaned_item[0] == "R":
+                            path += cleaned_item[0:7] + ","
+                path = path[:-1] + "_HS,"
 
-        if(line[0] == "[" and first_path):
-            path = ""
-            for item in line.split(";"):
-                if len(item) > 0:
-                    cleaned_item = "".join(x for x in item if x.isalnum())
-                    if cleaned_item[0] == "C":
-                        path += cleaned_item[0:6] + ","
-                    elif cleaned_item[0] == "R":
-                        path += cleaned_item[0:7] + ","
-            path = path[:-1] + "_HS,"
+                if len(tab_split_line) == 3:
+                    c_conserved = tab_split_line[2]
+                    if c_conserved not in first_path_list:
+                        first_path_list[c_conserved] = []
+                    first_path_list[c_conserved].append(path)
 
-            if len(tab_split_line) == 3:
-                c_conserved = tab_split_line[2]
-                if c_conserved not in first_path_list:
-                    first_path_list[c_conserved] = []
-                first_path_list[c_conserved].append(path)
+            elif(line[0] != "["):
+                first_path = False
+                raw_path = line.split(" ")
+                path = ""
+                for item in raw_path[1:-1]:
+                    path += item[0:6] + ","
 
-        elif(line[0] != "["):
-            first_path = False
-            raw_path = line.split(" ")
-            path = ""
-            for item in raw_path[1:-1]:
-                path += item[0:6] + ","
+                print raw_path
+                if len(tab_split_line) == 2:
+                    c_conserved = tab_split_line[1]
+                    if c_conserved not in hub_path_list:
+                        hub_path_list[c_conserved] = []
+                    hub_path_list[c_conserved].append(path)
 
-            print raw_path
-            if len(tab_split_line) == 2:
-                c_conserved = tab_split_line[1]
-                if c_conserved not in hub_path_list:
-                    hub_path_list[c_conserved] = []
-                hub_path_list[c_conserved].append(path)
+            elif(line[0] == "["):
+                raw_path = line.split(";")
+                cleaned_start_item = "".join(x for x in raw_path[0] if x.isalnum())
+                path = cleaned_start_item[0:6] + "_HE,"
 
-        elif(line[0] == "["):
-            raw_path = line.split(";")
-            cleaned_start_item = "".join(x for x in raw_path[0] if x.isalnum())
-            path = cleaned_start_item[0:6] + "_HE,"
+                for item in raw_path[1:]:
+                    if len(item) > 0:
+                        cleaned_item = "".join(x for x in item if x.isalnum())
+                        if cleaned_item[0] == "C":
+                            path += cleaned_item[0:6] + ","
+                        elif cleaned_item[0] == "R":
+                            path += cleaned_item[0:7] + ","
 
-            for item in raw_path[1:]:
-                if len(item) > 0:
-                    cleaned_item = "".join(x for x in item if x.isalnum())
-                    if cleaned_item[0] == "C":
-                        path += cleaned_item[0:6] + ","
-                    elif cleaned_item[0] == "R":
-                        path += cleaned_item[0:7] + ","
-
-            if len(tab_split_line) == 3:
-                c_conserved = tab_split_line[2]
-                if c_conserved not in second_path_list:
-                    second_path_list[c_conserved] = []
-                second_path_list[c_conserved].append(path)
+                if len(tab_split_line) == 3:
+                    c_conserved = tab_split_line[2]
+                    if c_conserved not in second_path_list:
+                        second_path_list[c_conserved] = []
+                    second_path_list[c_conserved].append(path)
 
 
     print "Size of first paths: " + str(len(first_path_list))
