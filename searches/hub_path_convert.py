@@ -107,24 +107,21 @@ def convert_lpat(filename):
     #print "Size of hub paths: " + str(len(hub_path_list))
     #print "Size of second paths: " + str(len(second_path_list))
 
-    print len(first_path_list)
-    print len(hub_path_list)
-    print len(second_path_list)
-
     if len(first_path_list) == 0 and len(second_path_list) == 0:
+        print "looking at only hub to hub paths"
         for cc in hub_path_list:
             for path in hub_path_list[cc]:
                 f.write(path[:-1] + "\t" + cc + "\n")
 
     elif len(first_path_list) == 0:
-        print "looking at paths with no start to hub"
+        print "looking at paths with no start to hub part"
         for cc1 in hub_path_list:
             for cc2 in second_path_list:
                 hub_1, hub_2 = get_carbon_conserved_arrays(cc1)
                 #print "****"
                 #print hub_1
                 #print hub_2
-                print cc2
+                #print cc2
                 second_1, second_2 = get_carbon_conserved_arrays(cc2)
                 #print second_1
                 #print second_2
@@ -132,12 +129,13 @@ def convert_lpat(filename):
                 final_1, final_2 = get_merged_carbons_conserved(hub_1, hub_2, second_1, second_2)
                 if len(final_1) > 0:
                     cc_str = get_str_cc(final_1, final_2)
-                    print cc_str
+                    #print cc_str
                     for path1 in hub_path_list[cc1]:
                         for path2 in second_path_list[cc2]:
                             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
 
     elif len(second_path_list) == 0:
+        print "looking at paths with no hub to target part"
          for cc1 in first_path_list:
             for cc2 in hub_path_list:
                 first_1, first_2 = get_carbon_conserved_arrays(cc1)
@@ -150,6 +148,7 @@ def convert_lpat(filename):
                             f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
 
     else:
+        print "Full hub search"
         for cc1 in first_path_list:
             for cc2 in hub_path_list:
                 for cc3 in second_path_list:
@@ -220,7 +219,7 @@ def get_carbons_conserved(first_path_cc, hub_cc, second_path_cc):
 def get_str_cc(final_1, final_2):
     final_str = ""
     for i in range(len(final_1)):
-        final_str += final_1[i] + "=" + final_2[i]
+        final_str += final_1[i] + "=" + final_2[i] + ","
     return final_str
 
 
