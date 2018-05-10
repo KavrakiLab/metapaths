@@ -47,7 +47,7 @@ def generate_hub_config(start, start_name, target, target_name, carbon_track, al
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
     config += "HUBTABLE\tsearches/" + hub_db + "\n"
-    config += "IGNORE_CMPD\t" + selected_hub_compounds + "\n"
+    config += "IGNORE_CMPD\t" + ",".join(selected_hub_compounds) + "\n"
 
     output_loc = "searches/output/" + search_id + "|" + start_name + " (" + start + ")|" + target_name + " (" + target + ")|" + "Hub|" + hub_db + ".txt"
     output_loc = output_loc.replace(" ", "_")
