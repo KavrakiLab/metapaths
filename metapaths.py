@@ -273,7 +273,7 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
         raise Exception("Converting Hub output to visualization format failed, check Celery worker logs.")
         return None
 
-    return output_loc.replace(".txt", "|" + hub_db + ".txt")
+    return output_loc
 
 
 @celery.task()
