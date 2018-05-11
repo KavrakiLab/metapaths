@@ -73,12 +73,12 @@ function search() {
         var query = {
             "start" : $("#start-compound").val(),
             "target" : $("#target-compound").val(),
-            "hubcompounds" : JSON.stringify($("#hub-compounds option:selected").val()),
+            "hubcompounds" : JSON.stringify($("#select2-hub-compounds-results").val()),
             "carbontrack" : $("input[name=carbontracking]:checked").val(),
             "reversible" : $("#allow-reversible").is(":checked"),
             "hub_db" : $("#hub-db").val(),
         }
-        console.log(JSON.stringify($("#hub-compounds option:selected").val()));
+        //console.log(JSON.stringify($("#hub-compounds option:selected").val()));
         execute_search("/hub_search", query);
 
     } else if ($("#algorithm").val() === "1") {
