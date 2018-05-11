@@ -73,7 +73,7 @@ function search() {
         var query = {
             "start" : $("#start-compound").val(),
             "target" : $("#target-compound").val(),
-            "hubcompounds" : JSON.stringify($("#select2-hub-compounds-results").val()),
+            "hubcompounds" : JSON.stringify($("#hub-compounds").val()),
             "carbontrack" : $("input[name=carbontracking]:checked").val(),
             "reversible" : $("#allow-reversible").is(":checked"),
             "hub_db" : $("#hub-db").val(),
