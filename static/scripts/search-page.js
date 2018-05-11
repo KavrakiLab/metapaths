@@ -16,7 +16,7 @@ $(function () {
 
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
 
-    var hubdb_options = [{id:'HTK1M',text:"Standard Hub Table"}, {id:'UnionHubDB_10', text:'Merged Hub Table 10'}, {id:'UnionHubDB', text:'Merged Hub Table'}];
+    var hubdb_options = [{id:'HTK1M',text:"Standard Hub Table"}];
     $("#hub-db").select2({data: hubdb_options});
     $("#hub-db").val("UnionHubDB_10").trigger("change");
 
