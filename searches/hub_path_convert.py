@@ -148,7 +148,7 @@ def convert_lpat(filename, hub_list):
                     cc_str = get_str_cc(final_1, final_2)
                     path1 = first_path_list[cc1]
                     path2 = hub_path_list[cc2]
-                    f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+                    f.write(str(path1) + path2[11:-1] + "\t" + cc_str + "\n")
                     # for path1 in first_path_list[cc1]:
                     #     for path2 in hub_path_list[cc2]:
                     #         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
@@ -163,7 +163,7 @@ def convert_lpat(filename, hub_list):
                         path1 = first_path_list[cc1]
                         path2 = hub_path_list[cc2]
                         path3 = second_path_list[cc3]
-                        f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + cc_str + "\n")        
+                        f.write(str(path1) + path2[11:-10] + path3[:-1] + "\t" + cc_str + "\n")        
 
                         # for path1 in first_path_list[cc1]:
                         #     for path2 in hub_path_list[cc2]:
