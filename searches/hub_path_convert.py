@@ -3,7 +3,7 @@ import re
 import string
 import sys
 
-def convert_lpat(filename):
+def convert_lpat(filename, hub_list):
     # Read the original file and then empty it out
     f = open(filename, "r+")
     content = f.read()
@@ -70,10 +70,10 @@ def convert_lpat(filename):
                 path = raw_path[0][0:6] + "_HS,"
                 for item in raw_path[1:-1]:
                     cleaned_item = "".join(x for x in item if x.isalnum())
-                    if cleaned_item[0] == "C":
-                        path += cleaned_item[0:6] + ","
-                    elif cleaned_item[0] == "R":
-                        path += cleaned_item[0:7] + ","
+                    if cleaned_item[0] == "C" and cleaned_item[0:6] in hub_list:
+                        path += cleaned_item[0:6] + "_HM,"
+                    #elif cleaned_item[0] == "R":
+                    #    path += cleaned_item[0:7] + ","
                 path += raw_path[-1][0:6] + "_HE,"
 
                 #print raw_path
@@ -234,4 +234,4 @@ def get_str_cc(final_1, final_2):
     return final_str
 
 
-convert_lpat(sys.argv[1])
+convert_lpat(sys.argv[1], sys.argv[2])

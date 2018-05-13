@@ -86,7 +86,7 @@ def is_pathway_canonical(cmpdlist, start, goal):
 
 
 
-def extract_pathways(string_pathways, background_hubs_filename, hub_db):
+def extract_pathways(string_pathways, background_hubs_filename, hub_list, hub_db):
     pathways = []
     all_hub_nodes = set([])
     all_hub_links = []

@@ -267,7 +267,7 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
         raise Exception("Hub execution failed, check Celery worker logs.")
         return None
 
-    converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc, hub_db])
+    converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc, selected_hub_compounds])
     print("converter_output", converter_output)
     if converter_output != 0:
         raise Exception("Converting Hub output to visualization format failed, check Celery worker logs.")
