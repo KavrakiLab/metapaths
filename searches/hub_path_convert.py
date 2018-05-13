@@ -234,4 +234,9 @@ def get_str_cc(final_1, final_2):
     return final_str
 
 
-convert_lpat(sys.argv[1], sys.argv[2])
+def file_to_list(filename):
+    f = open(filename, "r")
+    contents = f.read()
+    return contents.split("\n")
+
+convert_lpat(sys.argv[1], file_to_list(sys.argv[2]))
