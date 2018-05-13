@@ -222,7 +222,7 @@ def get_carbons_conserved(first_path_cc, hub_cc, second_path_cc):
     last_1, last_2 = get_carbon_conserved_arrays(second_path_cc)
     temp_1, temp_2 = get_merged_carbons_conserved(first_1, first_2, middle_1, middle_2)
 
-    final_1, final_2 = get_merged_carbons_conserved(temp_1, temp_2, final_1, final_2)
+    final_1, final_2 = get_merged_carbons_conserved(temp_1, temp_2, last_1, last_2)
 
     return get_str_cc(final_1, final_2)
 
