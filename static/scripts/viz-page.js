@@ -70,6 +70,14 @@ $( function() {
     $( "#min-carbons-slider" ).slider({
         max: 10,
         value: 2
+    })
+    .each(function() {
+        var opt = $(this).data().uiSlider.options;
+         var vals = opt.max - opt.min;
+         for (var i = 0; i <= vals; i++) {
+             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+             $("#min-carbons-slider").append(el);
+        }
     });
 
     $("#min-carbons-slider" ).on('slide', function(ev) {
@@ -208,11 +216,35 @@ function uploadGraph() {
     }
 }
 
+function set_mins_and_maxes(pathways) {
+	var max_atoms_conserved = 0
+	var min_path_length = 100
+
+	pathways.pathways.forEach(function (pathway, index, array) {
+		// Atoms conserved
+		var temp_atoms = pathway.atoms.length
+		if(temp_atoms > max_atoms_conserved)
+			max_atoms_conserved = temp_atoms
+
+		// Path lengths
+		var temp_length = pathway.links.length
+		if(temp_length < min_path_length) {
+			min_path_length = temp_length
+		}
+	}
+
+	$('#max-len-slider').slider( "option", "min", min_path_length);
+	$('#min-carbons-slider').slider("option", "max", max_atoms_conserved);
+}
 
 function validate_and_visualize(pathways) {
     // The aggreate data of the nodes and links from the pathways
+
     var data_graph = collect_pathways_into_graph(pathways);
     console.log("data_graph", data_graph);
+
+    var num_path = pathways.pathways.length;
+    console.log("num_paths", num_path);
 
     var viz_graph = load_viz(data_graph);
     console.log("viz_graph", viz_graph);
