@@ -132,3 +132,16 @@ a:hover {
 #max-len-slider {
     width: 250px;
 }
+
+#min-carbons-slider label {
+    position: absolute;
+    width: 20px;
+    margin-top: 20px;
+    margin-left: -10px;
+    text-align: center;
+}
+
+#min-carbons-slider {
+    width: 250px;
+}
+
