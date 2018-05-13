@@ -233,8 +233,25 @@ function set_mins_and_maxes(pathways) {
 		}
 	});
 
-	$('#max-len-slider').slider( "option", "min", min_path_length);
-	$('#min-carbons-slider').slider("option", "max", max_atoms_conserved);
+	$('#max-len-slider').slider("option", "min", min_path_length)
+	.each(function() {
+        var opt = $(this).data().uiSlider.options;
+         var vals = opt.max - opt.min;
+         for (var i = 0; i <= vals; i++) {
+             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+             $("#max-len-slider").append(el);
+        }
+    });
+
+	$('#min-carbons-slider').slider("option", "max", max_atoms_conserved)
+	.each(function() {
+        var opt = $(this).data().uiSlider.options;
+         var vals = opt.max - opt.min;
+         for (var i = 0; i <= vals; i++) {
+             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+             $("#min-carbons-slider").append(el);
+        }
+    });
 }
 
 function validate_and_visualize(pathways) {
