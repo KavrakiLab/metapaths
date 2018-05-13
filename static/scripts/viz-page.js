@@ -231,7 +231,7 @@ function set_mins_and_maxes(pathways) {
 		if(temp_length < min_path_length) {
 			min_path_length = temp_length
 		}
-	}
+	});
 
 	$('#max-len-slider').slider( "option", "min", min_path_length);
 	$('#min-carbons-slider').slider("option", "max", max_atoms_conserved);
