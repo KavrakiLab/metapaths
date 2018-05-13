@@ -146,9 +146,9 @@ def convert_lpat(filename, hub_list):
                 final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
                 if len(final_1) > 0:
                     cc_str = get_str_cc(final_1, final_2)
-                    path1 = first_path_list[cc1]
-                    path2 = hub_path_list[cc2]
-                    f.write(str(path1) + path2[11:-1] + "\t" + cc_str + "\n")
+                    path1 = first_path_list[cc1][0]
+                    path2 = hub_path_list[cc2][0]
+                    f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
                     # for path1 in first_path_list[cc1]:
                     #     for path2 in hub_path_list[cc2]:
                     #         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
@@ -160,10 +160,10 @@ def convert_lpat(filename, hub_list):
                 for cc3 in second_path_list:
                     cc_str = get_carbons_conserved(cc1, cc2, cc3)
                     if len(cc_str) > 0:
-                        path1 = first_path_list[cc1]
-                        path2 = hub_path_list[cc2]
-                        path3 = second_path_list[cc3]
-                        f.write(str(path1) + path2[11:-10] + path3[:-1] + "\t" + cc_str + "\n")        
+                        path1 = first_path_list[cc1][0]
+                        path2 = hub_path_list[cc2][0]
+                        path3 = second_path_list[cc3][0]
+                        f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + cc_str + "\n")        
 
                         # for path1 in first_path_list[cc1]:
                         #     for path2 in hub_path_list[cc2]:
