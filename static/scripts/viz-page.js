@@ -396,10 +396,10 @@ function load_viz(data_graph) {
 
 
     var text_part = svg.append("text")
-    					.attr("x",100)
-    					.attr("y",100)
+    					.attr("x",75)
+    					.attr("y",75)
     					.text("Num of Paths: " + data_graph.num_pathways)
-    					.attr("fill","white");
+    					.attr("fill","black");
 
     var container = svg.append("g");
 
