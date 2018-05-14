@@ -23,6 +23,9 @@ var shown_hub = "";
 /* End of Globals */
 
 $( function() {
+	$("#max-path-len").val(10);
+	$("#min-carbons-conserved").val(2);
+
 	$( "#max-len-slider" ).slider({
 		max: 20,
         value: 10
@@ -119,7 +122,7 @@ function load_search_result(search_id) {
         set_mins_and_maxes(main_pathways);
 
         apply_filters();
-        
+
     }).fail(function(data) {
         console.log(data);
         // alert("Failed to retrieve search result.")
