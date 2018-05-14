@@ -22,34 +22,9 @@ var hub_pathways = {};
 var shown_hub = "";
 /* End of Globals */
 
-
-$(function () {
-    $('[data-toggle="popover"]').popover({container: 'body'}); // Enable popover
-
-    path_components = window.location.pathname.split("/");
-    if (path_components.length === 3) {
-        var search_id = path_components[2];
-        console.log(search_id);
-        $("#load-panel").hide();
-        load_search_result(search_id);
-    } else {
-        $("#graph-data")[0].focus();
-    }
-});
-
 $( function() {
-
-    $( "#max-len-slider" ).slider({
-        max: 13,
+	$( "#max-len-slider" ).slider({
         value: 10
-    })
-    .each(function() {
-        var opt = $(this).data().uiSlider.options;
-         var vals = opt.max - opt.min;
-         for (var i = 0; i <= vals; i++) {
-             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-             $("#max-len-slider").append(el);
-        }
     });
     
     // $(document).ready(function() {
@@ -68,16 +43,7 @@ $( function() {
     });
 
     $( "#min-carbons-slider" ).slider({
-        max: 10,
         value: 2
-    })
-    .each(function() {
-        var opt = $(this).data().uiSlider.options;
-         var vals = opt.max - opt.min;
-         for (var i = 0; i <= vals; i++) {
-             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-             $("#min-carbons-slider").append(el);
-        }
     });
 
     $("#min-carbons-slider" ).on('slide', function(ev) {
@@ -108,6 +74,19 @@ $( function() {
 
   });
 
+$(function () {
+    $('[data-toggle="popover"]').popover({container: 'body'}); // Enable popover
+
+    path_components = window.location.pathname.split("/");
+    if (path_components.length === 3) {
+        var search_id = path_components[2];
+        console.log(search_id);
+        $("#load-panel").hide();
+        load_search_result(search_id);
+    } else {
+        $("#graph-data")[0].focus();
+    }
+});
 
 function load_search_result(search_id) {
     // localStorage.removeItem("search_id"); // TODO: uncomment
@@ -122,6 +101,9 @@ function load_search_result(search_id) {
 
         // Visualize the pathways
         current_main_pathways = main_pathways;
+
+        set_mins_and_maxes(main_pathways);
+
         validate_and_visualize(main_pathways);
     }).fail(function(data) {
         console.log(data);
