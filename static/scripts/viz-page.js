@@ -27,6 +27,10 @@ $( function() {
 		max: 20,
         value: 10
     });
+
+    $( "#min-carbons-slider" ).slider({
+        value: 2
+    });
     
     // $(document).ready(function() {
     //     var opt = $("#max-len-slider").data().uiSlider.options;
@@ -43,11 +47,19 @@ $( function() {
             apply_filters();
     });
 
-    $( "#min-carbons-slider" ).slider({
-        value: 2
-    });
+    $("#max-len-slider").on('slidestop', function(ev) {
+			var newValue = $("#max-len-slider" ).slider("option","value");
+            $("#max-path-len").val(newValue);
+            apply_filters();
+    });    	
 
     $("#min-carbons-slider" ).on('slide', function(ev) {
+        var newValue = $("#min-carbons-slider" ).slider("option","value");
+        $("#min-carbons-conserved").val(newValue);
+        apply_filters();
+    });
+
+    $("#min-carbons-slider").on('slidestop', function(ev) {
         var newValue = $("#min-carbons-slider" ).slider("option","value");
         $("#min-carbons-conserved").val(newValue);
         apply_filters();
