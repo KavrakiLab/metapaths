@@ -29,6 +29,7 @@ $( function() {
     });
 
     $( "#min-carbons-slider" ).slider({
+    	min: 1,
         value: 2
     });
     
@@ -117,7 +118,8 @@ function load_search_result(search_id) {
 
         set_mins_and_maxes(main_pathways);
 
-        validate_and_visualize(main_pathways);
+        apply_filters();
+        
     }).fail(function(data) {
         console.log(data);
         // alert("Failed to retrieve search result.")
