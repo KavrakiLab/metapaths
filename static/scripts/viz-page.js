@@ -24,6 +24,7 @@ var shown_hub = "";
 
 $( function() {
 	$( "#max-len-slider" ).slider({
+		max: 20,
         value: 10
     });
     
@@ -219,7 +220,7 @@ function set_mins_and_maxes(pathways) {
 	.each(function() {
         var opt = $(this).data().uiSlider.options;
          var vals = opt.max - opt.min;
-         for (var i = 0; i <= vals; i++) {
+         for (var i = 0; i <= vals; i+=2) {
              var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
              $("#max-len-slider").append(el);
         }
