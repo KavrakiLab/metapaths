@@ -401,11 +401,6 @@ function load_viz(data_graph) {
     					.text("Num of Paths: " + data_graph.num_pathways)
     					.attr("fill","white");
 
-
-    	.attr("width",100)
-    	.attr("height",100)
-    	.style("fill","none");
-
     var container = svg.append("g");
 
     svg.append("defs").append("marker")
