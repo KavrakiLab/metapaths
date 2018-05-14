@@ -211,7 +211,7 @@ function set_mins_and_maxes(pathways) {
 
 		// Path lengths
 		var temp_length = pathway.links.length
-		if(temp_length < min_path_length) {
+		if(temp_length < min_path_length && temp_length > 0) {
 			min_path_length = temp_length
 		}
 	});
