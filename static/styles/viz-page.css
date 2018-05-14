@@ -121,7 +121,7 @@ a:hover {
     width: 100%;
 }
 
-#max-len-slider label {
+#max-len-slider label, #min-carbons-slider label {
     position: absolute;
     width: 10px;
     margin-top: 20px;
@@ -129,19 +129,8 @@ a:hover {
     text-align: center;
 }
 
-#max-len-slider {
+#max-len-slider, #min-carbons-slider {
     width: 250px;
 }
 
-#min-carbons-slider label {
-    position: absolute;
-    width: 10px;
-    margin-top: 20px;
-    margin-left: -10px;
-    text-align: center;
-}
-
-#min-carbons-slider {
-    width: 250px;
-}
 
