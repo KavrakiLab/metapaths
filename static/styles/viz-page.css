@@ -123,7 +123,7 @@ a:hover {
 
 #max-len-slider label {
     position: absolute;
-    width: 20px;
+    width: 10px;
     margin-top: 20px;
     margin-left: -10px;
     text-align: center;
@@ -135,7 +135,7 @@ a:hover {
 
 #min-carbons-slider label {
     position: absolute;
-    width: 20px;
+    width: 10px;
     margin-top: 20px;
     margin-left: -10px;
     text-align: center;
