@@ -73,17 +73,13 @@ def write_config_file(search_id, config):
 
     return config_loc
 
-def is_pathway_canonical(cmpdlist, start, goal):
+def get_canonical_cmpds(start, goal):
     filename = "searches/canonical_pathways/" + start + "_" + goal + ".txt"
     if os.path.isfile(filename):
         canonical_cmpds_file = open(filename, "r")
         canonical_cmpds = canonical_cmpds_file.read()
-        canonical_cmpd_list = canonical_cmpds.replace("\n","").split(",")
-        if(canonical_cmpd_list == cmpdlist):
-            return True
-    else:
-        return False
-
+        return canonical_cmpds.replace("\n","").split(",")
+    return None
 
 
 def extract_pathways(string_pathways, background_hubs_filename, hub_db):
@@ -128,18 +124,29 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         pathway["links"] = list(links)
         pathway["hub_nodes"] = [hub_node[0:6] for hub_node in hub_nodes]
         pathway["hub_links"] = list(hub_links)
-        pathway["canonical"] = is_pathway_canonical(path_compounds, start, goal)
+        #pathway["canonical"] = is_pathway_canonical(path_compounds, start, goal)
         pathways.append(pathway)
         if(hubs_exist):
             all_hub_links = all_hub_links + hub_links
 
+        canonical_cmpds = get_canonical_cmpds(start, goal)
+        canonical_links = []
+        if canonical_cmpds != None:
+            if len(canonical_cmpds) > 1:
+                first_cmpd = canonical_cmpds[0]
+                for cmpd in canonical_cmpds[1:]:
+                    canonical_links.append(first_cmpd + "-" + cmpd)
+                    first_cmpd = cmpd
+
     pathways_data = {
         "info" : {
             "start" : start,
-            "goal" : goal
+            "goal" : goal,
+            "canonical_nodes" : canonical_cmpds,
+            "canonical_links" : canonical_links,
             },
         "hub_db" : hub_db,
-        "pathways" : pathways
+        "pathways" : pathways,
     }
 
     # If this is a hub search, add in the rest of the hubs

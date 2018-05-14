@@ -281,8 +281,8 @@ function validate_and_visualize(pathways) {
 function collect_pathways_into_graph(pathways) {
     var nodes  = new Set([]);
     var links = new Set([]);
-    var canonical_nodes = new Set([]);
-    var canonical_links = new Set([]);
+    var canonical_nodes = new Set(pathways.info.canonical_nodes);
+    var canonical_links = new Set(pathways.info.canonical_links);
 
     // Subset of nodes and links which are hubs
     var hub_nodes = new Set([]);
@@ -294,12 +294,12 @@ function collect_pathways_into_graph(pathways) {
         links = new Set([...links, ...pathway.links]);
         links = new Set([...links, ...pathway.hub_links]);
 
-        if(pathway.canonical == true) {
-            canonical_nodes = new Set([...canonical_nodes,...pathway.nodes]);
-            canonical_nodes = new Set([...canonical_nodes,...pathway.hub_nodes]);
-            canonical_links = new Set([...canonical_links,...pathway.links]);
-            canonical_links = new Set([...canonical_links,...pathway.hub_links]);
-        }
+        // if(pathway.canonical == true) {
+        //     canonical_nodes = new Set([...canonical_nodes,...pathway.nodes]);
+        //     canonical_nodes = new Set([...canonical_nodes,...pathway.hub_nodes]);
+        //     canonical_links = new Set([...canonical_links,...pathway.links]);
+        //     canonical_links = new Set([...canonical_links,...pathway.hub_links]);
+        // }
 
         pathway.hub_nodes.forEach(function (hub_node, index, array) {
             hub_nodes.add(hub_node);
