@@ -79,10 +79,11 @@ def get_canonical_cmpds(goal):
         canonical_cmpds_file = open(filename, "r")
         canonical_paths = canonical_cmpds_file.readlines()
         canonical_cmpds = []
-        for canonical_path in canonical_paths:
-            cmpd_pairs = re.findall("C[0-9]{5}-C[0-9]{5}",canonical_path)
-            canonical_cmpds.append(cmpd_pairs.split(","))
-        return canonical_cmpds
+        if canonical_paths != None:
+            for canonical_path in canonical_paths:
+                cmpd_pairs = re.findall("C[0-9]{5}-C[0-9]{5}",canonical_path)
+                canonical_cmpds.append(cmpd_pairs.split(","))
+            return canonical_cmpds
     return None
 
 
