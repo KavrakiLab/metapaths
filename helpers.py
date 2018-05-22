@@ -136,7 +136,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         canonical_paths = get_canonical_cmpds(goal)
         canonical_links = set([])
         canonical_cmpds = set([])
-        if canonical_cmpds != None:
+        if canonical_paths != None:
             for canonical_cmpd_pairs in canonical_paths:
                 canonical_links = set(canonical_cmpd_pairs) | canonical_links
                 cmpds = canonical_cmpd_pairs.split("-")
