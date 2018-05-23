@@ -16,9 +16,9 @@ $(function () {
 
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
 
-    var hubdb_options = [{id:'HTK1M',text:"Standard Hub Table"}];
+    var hubdb_options = [{id:'HubT_all_edges', text:"Standard Hub Table"}, {id:'HTK1M',text:"Old Hub Table"}];
     $("#hub-db").select2({data: hubdb_options});
-    $("#hub-db").val("UnionHubDB_10").trigger("change");
+    $("#hub-db").val("HubT_all_edges").trigger("change");
 
     $.get("/get_compound_names").done(function(results_json) {
         var formatted_compounds = format_compounds(JSON.parse(results_json));
