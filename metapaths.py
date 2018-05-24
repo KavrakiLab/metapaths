@@ -105,6 +105,11 @@ def visualize_results(search_id):
         task = celery.AsyncResult(task_id)
 
         if task.state not in ["SUCCESS", "FAILURE"]:
+        	print search_id + ".txt"
+        	if search_id + ".txt" in os.listdir("searches/output"):
+        		searches[search_id] = "searches/output/" + search_id + ".txt"
+        		remove_input_file(search_id)
+        		return render_template('viz-page.html')
             return "The results for search ID '" + str(search_id) + "' are not yet available."
         elif task.state == "SUCCESS":
             value = task.get()
@@ -144,11 +149,14 @@ def load_results(search_id):
     representation of the graph
     """
     global searches
+    global working_dir
 
     if search_id in searches:
         search_result_file = searches[search_id]
         hub_db = search_result_file.split("|")[-1].replace(".txt", "")
         return json.dumps(get_pathways_from_file(search_result_file, B_HUBS_FILE, hub_db))
+    elif search_id + ".txt" in os.listdir("searches/output"):
+    	return json.dumps(get_pathways_from_file(search_id + ".txt", B_HUBS_FILE, hub_db))
     else:
         #print(search_id, "not in ", searches)
         return "500"
@@ -261,12 +269,14 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
     input_loc, output_loc = generate_hub_config(start, compound_names[start], target, compound_names[target], carbon_track,
             allow_reversible, search_id, selected_hub_compounds, hub_db)
 
+    print("starting search")
     alg_output = subprocess.call(["java", "-jar", "searches/HubPathwaySearch.jar", input_loc])
     print("alg_output", alg_output)
     if alg_output != 0:
         raise Exception("Hub execution failed, check Celery worker logs.")
         return None
 
+    print("starting conversion")
     converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc, selected_hub_compounds])
     print("converter_output", converter_output)
     if converter_output != 0:
