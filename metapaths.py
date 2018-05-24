@@ -105,12 +105,7 @@ def visualize_results(search_id):
         task = celery.AsyncResult(task_id)
 
         if task.state not in ["SUCCESS", "FAILURE"]:
-        	print search_id + ".txt"
-        	if search_id + ".txt" in os.listdir("searches/output"):
-        		searches[search_id] = "searches/output/" + search_id + ".txt"
-        		remove_input_file(search_id)
-        		return render_template('viz-page.html')
-            return "The results for search ID '" + str(search_id) + "' are not yet available."
+        	return "The results for search ID '" + str(search_id) + "' are not yet available."
         elif task.state == "SUCCESS":
             value = task.get()
             searches[search_id] = value
@@ -124,7 +119,12 @@ def visualize_results(search_id):
     elif search_id in searches.keys():
             return render_template('viz-page.html')
     else:
-        return "Search ID '" + str(search_id) + "' was not found. Please execute a new search."
+    	print search_id + ".txt"
+    	if search_id + ".txt" in os.listdir("searches/output"):
+    		searches[search_id] = "searches/output/" + search_id + ".txt"
+    		remove_input_file(search_id)
+    		return render_template('viz-page.html')
+		return "Search ID '" + str(search_id) + "' was not found. Please execute a new search."
 
 
 @app.route('/get_hub_paths/<hub_src>/<hub_dst>/<hub_db>')
