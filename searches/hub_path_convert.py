@@ -114,7 +114,7 @@ def convert_lpat(filename, hub_list):
         print "looking at only hub to hub paths"
         for cc in hub_path_list:
         	count = 0
-            for path in hub_path_list[cc]:
+        	for path in hub_path_list[cc]:
             	if count < 50:
                 	f.write(path[:-1] + "\t" + cc + "\n")
                 else:
