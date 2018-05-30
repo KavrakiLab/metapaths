@@ -170,6 +170,7 @@ def convert_lpat(filename, hub_list):
 
     else:
         print "Full hub search"
+        cc_str_dict = {}
         for cc1 in first_path_list:
             for cc2 in hub_path_list:
                 for cc3 in second_path_list:
