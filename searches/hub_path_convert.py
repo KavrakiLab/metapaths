@@ -115,42 +115,35 @@ def convert_lpat(filename, hub_list):
         for cc in hub_path_list:
         	count = 0
         	for path in hub_path_list[cc]:
-            	if count < 50:
-                	f.write(path[:-1] + "\t" + cc + "\n")
-                else:
-                	break
-                count += 1
+        		if count < 50:
+        			f.write(path[:-1] + "\t" + cc + "\n")
+        		else:
+        			break
+        		count += 1
 
     elif len(first_path_list) == 0:
-        print "looking at paths with no start to hub part"
+    	print "looking at paths with no start to hub part"
         cc_str_dict = {}
         for cc1 in hub_path_list:
-            for cc2 in second_path_list:
-                hub_1, hub_2 = get_carbon_conserved_arrays(cc1)
-                #print "****"
-                #print hub_1
-                #print hub_2
-                #print cc2
-                second_1, second_2 = get_carbon_conserved_arrays(cc2)
-                #print second_1
-                #print second_2
-                #print "****"
-                final_1, final_2 = get_merged_carbons_conserved(hub_1, hub_2, second_1, second_2)
-                if len(final_1) > 0:
-                    cc_str = get_str_cc(final_1, final_2)
-                    if cc_str not in cc_str_dict:
-                    	cc_str_dict[cc_str] = 1
-                    elif cc_str_dict[cc_str] > 5:
-                    	continue
-                    else:
-                    	#print cc_str
-                    	path1 = hub_path_list[cc1][0]
-                    	path2 = second_path_list[cc2][0]
-                    	f.write(path1[:-10] + path2[:-1] + "\t" + cc_str + "\n")
-                    	cc_str_dict[cc_str] += 1
-	                    # for path1 in hub_path_list[cc1]:
-	                    #     for path2 in second_path_list[cc2]:
-	                    #             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
+        	for cc2 in second_path_list:
+        		hub_1, hub_2 = get_carbon_conserved_arrays(cc1)
+        		second_1, second_2 = get_carbon_conserved_arrays(cc2)
+        		final_1, final_2 = get_merged_carbons_conserved(hub_1, hub_2, second_1, second_2)
+        		if len(final_1) > 0:
+        			cc_str = get_str_cc(final_1, final_2)
+        			if cc_str not in cc_str_dict:
+        				cc_str_dict[cc_str] = 1
+        			elif cc_str_dict[cc_str] > 5:
+        				continue
+        			else:
+        				#print cc_str
+        				path1 = hub_path_list[cc1][0]
+        				path2 = second_path_list[cc2][0]
+        				f.write(path1[:-10] + path2[:-1] + "\t" + cc_str + "\n")
+        				cc_str_dict[cc_str] += 1
+        				# for path1 in hub_path_list[cc1]:
+        				#     for path2 in second_path_list[cc2]:
+        				#             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
 
     elif len(second_path_list) == 0:
         print "looking at paths with no hub to target part"
