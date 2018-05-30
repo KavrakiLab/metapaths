@@ -7,10 +7,13 @@ def convert_lpat(filename, hub_list):
     # Read the original file and then empty it out
     f = open(filename, "r+")
     content = f.read()
+    # Split input by ******* to get different sections: (0) info/stats, (1) no hub paths,
+    # (2) one hub paths, (3) hub to hub paths
     split_content = content.split("*********")
     f.seek(0)
     f.truncate()
 
+    # Go through all sections, ignoring the info/stats section
     for less_than_two_hub_paths in split_content[1:-1]:
         if len(less_than_two_hub_paths) > 0:
             path_lines = less_than_two_hub_paths.split("\n")
@@ -110,11 +113,17 @@ def convert_lpat(filename, hub_list):
     if len(first_path_list) == 0 and len(second_path_list) == 0:
         print "looking at only hub to hub paths"
         for cc in hub_path_list:
+        	count = 0
             for path in hub_path_list[cc]:
-                f.write(path[:-1] + "\t" + cc + "\n")
+            	if count < 50:
+                	f.write(path[:-1] + "\t" + cc + "\n")
+                else:
+                	break
+                count += 1
 
     elif len(first_path_list) == 0:
         print "looking at paths with no start to hub part"
+        cc_str_dict = {}
         for cc1 in hub_path_list:
             for cc2 in second_path_list:
                 hub_1, hub_2 = get_carbon_conserved_arrays(cc1)
@@ -129,16 +138,23 @@ def convert_lpat(filename, hub_list):
                 final_1, final_2 = get_merged_carbons_conserved(hub_1, hub_2, second_1, second_2)
                 if len(final_1) > 0:
                     cc_str = get_str_cc(final_1, final_2)
-                    #print cc_str
-                    path1 = hub_path_list[cc1][0]
-                    path2 = second_path_list[cc2][0]
-                    f.write(path1[:-10] + path2[:-1] + "\t" + cc_str + "\n")
-                    # for path1 in hub_path_list[cc1]:
-                    #     for path2 in second_path_list[cc2]:
-                    #             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
+                    if cc_str not in cc_str_dict:
+                    	cc_str_dict[cc_str] = 1
+                    elif cc_str_dict[cc_str] > 5:
+                    	continue
+                    else:
+                    	#print cc_str
+                    	path1 = hub_path_list[cc1][0]
+                    	path2 = second_path_list[cc2][0]
+                    	f.write(path1[:-10] + path2[:-1] + "\t" + cc_str + "\n")
+                    	cc_str_dict[cc_str] += 1
+	                    # for path1 in hub_path_list[cc1]:
+	                    #     for path2 in second_path_list[cc2]:
+	                    #             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
 
     elif len(second_path_list) == 0:
         print "looking at paths with no hub to target part"
+        cc_str_dict = {}
         for cc1 in first_path_list:
             for cc2 in hub_path_list:
                 first_1, first_2 = get_carbon_conserved_arrays(cc1)
@@ -146,9 +162,15 @@ def convert_lpat(filename, hub_list):
                 final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
                 if len(final_1) > 0:
                     cc_str = get_str_cc(final_1, final_2)
-                    path1 = first_path_list[cc1][0]
-                    path2 = hub_path_list[cc2][0]
-                    f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+                    if cc_str not in cc_str_dict:
+                    	cc_str_dict[cc_str] = 1
+                    elif cc_str_dict[cc_str] > 5:
+                    	continue
+                    else:
+                    	path1 = first_path_list[cc1][0]
+                    	path2 = hub_path_list[cc2][0]
+                    	f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+                    	cc_str_dict[cc_str] += 1
                     # for path1 in first_path_list[cc1]:
                     #     for path2 in hub_path_list[cc2]:
                     #         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
@@ -160,10 +182,16 @@ def convert_lpat(filename, hub_list):
                 for cc3 in second_path_list:
                     cc_str = get_carbons_conserved(cc1, cc2, cc3)
                     if len(cc_str) > 0:
-                        path1 = first_path_list[cc1][0]
-                        path2 = hub_path_list[cc2][0]
-                        path3 = second_path_list[cc3][0]
-                        f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + cc_str + "\n")        
+                    	if cc_str not in cc_str_dict:
+                    		cc_str_dict[cc_str] = 1
+                    	elif cc_str_dict[cc_str] > 5:
+                    		continue
+                    	else:
+                    		path1 = first_path_list[cc1][0]
+                    		path2 = hub_path_list[cc2][0]
+                    		path3 = second_path_list[cc3][0]
+                    		f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + cc_str + "\n")        
+                    		cc_str_dict[cc_str] += 1
 
                         # for path1 in first_path_list[cc1]:
                         #     for path2 in hub_path_list[cc2]:
