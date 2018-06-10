@@ -129,7 +129,7 @@ def convert_lpat(filename, hub_list):
 		for cc in hub_path_list:
 			count = 0
 			for path in hub_path_list[cc]:
-				hub_path_id = path[0:6] + "_" + path[-9:-4]
+				hub_path_id = path[0:6] + "_" + path[-10:-4]
 				if count < 50:
 					f.write(path[:-1] + "\t" + hub_path_len_dict[cc][hub_path_id] + "\t" + cc + "\n")
 				else:
@@ -153,7 +153,7 @@ def convert_lpat(filename, hub_list):
 					else:
 						#print cc_str
 						path1 = hub_path_list[cc1][0]
-						hub_path_id = path1[0:6] + "_" + path1[-9:-4]
+						hub_path_id = path1[0:6] + "_" + path1[-10:-4]
 
 						path2 = second_path_list[cc2][0]
 						f.write(path1[:-10] + path2[:-1] + "\t" + hub_path_len_dict[cc1][hub_path_id] + "\t" + cc_str + "\n")
@@ -179,7 +179,7 @@ def convert_lpat(filename, hub_list):
 					else:
 						path1 = first_path_list[cc1][0]
 						path2 = hub_path_list[cc2][0]
-						hub_path_id = path2[0:6] + "_" + path2[-9:-4]
+						hub_path_id = path2[0:6] + "_" + path2[-10:-4]
 
 						f.write(path1 + path2[11:-1] + "\t" + hub_path_len_dict[cc2][hub_path_id] + "\t" + cc_str + "\n")
 						cc_str_dict[cc_str] += 1
@@ -202,7 +202,7 @@ def convert_lpat(filename, hub_list):
 						else:
 							path1 = first_path_list[cc1][0]
 							path2 = hub_path_list[cc2][0]
-							hub_path_id = path2[0:6] + "_" + path2[-9:-4]
+							hub_path_id = path2[0:6] + "_" + path2[-10:-4]
 							path3 = second_path_list[cc3][0]
 							f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + hub_path_len_dict[cc2][hub_path_id] + "\t" + cc_str + "\n")        
 							cc_str_dict[cc_str] += 1
