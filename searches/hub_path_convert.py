@@ -188,7 +188,7 @@ def convert_lpat(filename, hub_list):
                     #         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
 
     else:
-        print "Full hub search"
+        print "Full hub search!"
         cc_str_dict = {}
         for cc1 in first_path_list:
             for cc2 in hub_path_list:
