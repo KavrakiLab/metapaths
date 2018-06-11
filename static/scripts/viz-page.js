@@ -732,6 +732,8 @@ function attach_motion_watcher(viz_graph) {
     $("#motion-toggle")[0].onclick = function() {
         if ($("#motion-toggle").hasClass("active")) {
             viz_graph.node.data().forEach(function (node, index, array) {
+            	node.fx = node.x;
+        		node.fy = node.y;
                 node.fixed = true;
             });
             $("#motion-toggle").removeClass("active");
