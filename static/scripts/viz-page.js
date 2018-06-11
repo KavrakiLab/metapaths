@@ -502,7 +502,7 @@ function load_viz(data_graph) {
     } // ticked
 
     function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        if (!d3.event.active) simulation.alphaTarget(0).restart();
         d.fx = d.x;
         d.fy = d.y;
         d.fixed = true;
