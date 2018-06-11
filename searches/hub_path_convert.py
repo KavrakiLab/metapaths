@@ -2,6 +2,7 @@ import os
 import re
 import string
 import sys
+import MySQLdb
 from get_ATP_usage import get_net_ATP_usage, get_all_KEGG_ReactionIDs, get_KEGG_ReactionID_from_RPAIR
 
 def convert_lpat(filename, hub_list):
@@ -14,6 +15,12 @@ def convert_lpat(filename, hub_list):
 	f.seek(0)
 	f.truncate()
 
+	db = MySQLdb.connect(host="localhost",
+	                    user="MetaDBUser",
+	                    passwd="meta",
+	                    db="MetaDB_2015")
+	cursor = db.cursor()
+
 	# Go through all sections, ignoring the info/stats section
 	for less_than_two_hub_paths in split_content[1:-1]:
 		if len(less_than_two_hub_paths) > 0:
@@ -25,7 +32,7 @@ def convert_lpat(filename, hub_list):
 					if len(tab_split) == 3:
 						carbons_conserved = tab_split[-1]
 					path_segments = []
-					atp_used = get_net_ATP_usage(line)
+					atp_used = get_net_ATP_usage(line, cursor)
 					for item in line.split(";"):
 						if len(item) > 0:
 							cleaned_item = "".join(x for x in item if x.isalnum())
@@ -53,7 +60,7 @@ def convert_lpat(filename, hub_list):
 		#print line
 		tab_split_line = line.split("\t")
 		if len(line) > 0:
-			atp_used = get_net_ATP_usage(line)
+			atp_used = get_net_ATP_usage(line, cursor)
 			if(line[0] == "[" and first_path):
 				path = ""
 				for item in line.split(";"):
@@ -127,6 +134,7 @@ def convert_lpat(filename, hub_list):
 	#print "Size of first paths: " + str(len(first_path_list))
 	#print "Size of hub paths: " + str(len(hub_path_list))
 	#print "Size of second paths: " + str(len(second_path_list))
+	db.close()
 
 	if len(first_path_list) == 0 and len(second_path_list) == 0:
 		print "looking at only hub to hub paths"
@@ -167,7 +175,7 @@ def convert_lpat(filename, hub_list):
 						path2_segs = second_path_list[cc2][0].split("\t")
 						path2 = path2_segs[0]
 						atp_used += int(path2_segs[1])
-						f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + atp_used + "\t" + cc_str + "\n")
+						f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
 						cc_str_dict[cc_str] += 1
 						# for path1 in hub_path_list[cc1]:
 						#     for path2 in second_path_list[cc2]:
@@ -195,7 +203,7 @@ def convert_lpat(filename, hub_list):
 						atp_used = int(path1_segs[1]) + int(path2_segs[1])
 						hub_path_id = path2[0:6] + "_" + path2[-10:-4]
 
-						f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + atp_used + "\t" + cc_str + "\n")
+						f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
 						cc_str_dict[cc_str] += 1
 					# for path1 in first_path_list[cc1]:
 					#     for path2 in hub_path_list[cc2]:
@@ -222,7 +230,7 @@ def convert_lpat(filename, hub_list):
 							path3_segs = second_path_list[cc3][0].split("\t")
 							path3 = path3_segs[0]
 							atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
-							f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + atp_used + "\t" + cc_str + "\n")        
+							f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
 							cc_str_dict[cc_str] += 1
 
 						# for path1 in first_path_list[cc1]:
