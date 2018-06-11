@@ -99,10 +99,16 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     hubs_exist = False
 
     for string_path in string_pathways:
+        atp_used = 0
+        hub_len = 0
         tab_split_path = string_path.split("\t")
         carbons_conserved = []
         if len(tab_split_path) > 1:
             carbons_conserved = re.findall("[0-9]+=[0-9]+", tab_split_path[-1])
+        if len(tab_split_path) == 3:
+            atp_used = int(tab_split_path[-2])
+        if len(tab_split_path) == 4:
+            hub_len = tab_split_path[1]
         path_compounds = regex.findall(string_path)
         nodes = set([])
         links = []
@@ -125,10 +131,12 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
 
         pathway = {}
         pathway["atoms"] = carbons_conserved # TODO: actually calculate this
+        pathway["atp"] = atp_used
         pathway["nodes"] = [node[0:6] for node in (set(path_compounds) - hub_nodes)]
         pathway["links"] = list(links)
         pathway["hub_nodes"] = [hub_node[0:6] for hub_node in hub_nodes]
         pathway["hub_links"] = list(hub_links)
+        pathway["hub_len"] = int(hub_len)
         #pathway["canonical"] = is_pathway_canonical(path_compounds, start, goal)
         pathways.append(pathway)
         if(hubs_exist):

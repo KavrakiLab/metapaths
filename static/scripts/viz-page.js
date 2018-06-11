@@ -25,6 +25,7 @@ var shown_hub = "";
 $( function() {
 	$("#max-path-len").val(10);
 	$("#min-carbons-conserved").val(2);
+	$("#min-atp-used").val(0);
 
 	$( "#max-len-slider" ).slider({
 		max: 20,
@@ -34,6 +35,11 @@ $( function() {
     $( "#min-carbons-slider" ).slider({
     	min: 1,
         value: 2
+    });
+
+    $( "#min-atp-slider" ).slider({
+		min: -5,
+	    value: 0
     });
     
     // $(document).ready(function() {
@@ -66,6 +72,19 @@ $( function() {
     $("#min-carbons-slider").on('slidestop', function(ev) {
         var newValue = $("#min-carbons-slider" ).slider("option","value");
         $("#min-carbons-conserved").val(newValue);
+        apply_filters();
+    });
+
+
+    $("#min-atp-slider" ).on('slide', function(ev) {
+        var newValue = $("#min-atp-slider" ).slider("option","value");
+        $("#min-atp-used").val(newValue);
+        apply_filters();
+    });
+
+    $("#min-atp-slider").on('slidestop', function(ev) {
+        var newValue = $("#min-atp-slider" ).slider("option","value");
+        $("#min-atp-used").val(newValue);
         apply_filters();
     });
 
@@ -219,6 +238,7 @@ function uploadGraph() {
 function set_mins_and_maxes(pathways) {
 	var max_atoms_conserved = 0
 	var min_path_length = 100
+	var min_atp_used = 0
 
 	pathways.pathways.forEach(function (pathway, index, array) {
 		// Atoms conserved
@@ -227,9 +247,14 @@ function set_mins_and_maxes(pathways) {
 			max_atoms_conserved = temp_atoms
 
 		// Path lengths
-		var temp_length = pathway.links.length
+		var temp_length = pathway.links.length + pathway.hub_len
 		if(temp_length < min_path_length && temp_length > 0) {
 			min_path_length = temp_length
+		}
+
+		var temp_atp = pathway.atp
+		if(temp_atp > min_atp_used) {
+			min_atp_used = temp_atp
 		}
 	});
 
@@ -250,6 +275,16 @@ function set_mins_and_maxes(pathways) {
          for (var i = 0; i <= vals; i++) {
              var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
              $("#min-carbons-slider").append(el);
+        }
+    });
+
+ 	$('#min-atp-used').slider("option", "min", min_atp_used)
+	.each(function() {
+        var opt = $(this).data().uiSlider.options;
+         var vals = opt.max - opt.min;
+         for (var i = 0; i <= vals; i++) {
+             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+             $("#min-atp-used").append(el);
         }
     });
 }

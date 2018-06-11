@@ -94,7 +94,7 @@ function filter_pathways(str_info, str_pathways) {
         for (var i = filtered_pathways.pathways.length - 1; i >= 0; i--) {
             // Iterate in reverse so that we can remove elements with out worrying about indices changing
             var pathway = filtered_pathways.pathways[i];
-            var path_len = pathway.links.length + pathway.hub_links.length;
+            var path_len = pathway.links.length + pathway.hub_len;
 
             if (path_len > max_path_len) {
                 filtered_pathways.pathways.splice(i, 1);
@@ -112,6 +112,21 @@ function filter_pathways(str_info, str_pathways) {
             console.log("Number of carbons conserved in path: " + num_carbons);
 
             if (num_carbons < min_carbons) {
+                filtered_pathways.pathways.splice(i, 1);
+            }
+        }
+    }
+
+    if ($("#min-atp-used").val() !== "") {
+        var min_atp = parseInt($("#min-atp-used").val());
+
+        for (var i = filtered_pathways.pathways.length - 1; i >= 0; i--) {
+            // Iterate in reverse so that we can remove elements with out worrying about indices changing
+            var pathway = filtered_pathways.pathways[i];
+            var atp_used = pathway.atp;
+            console.log("Number of atp used in path: " + atp_used);
+
+            if (atp_used < min_atp) {
                 filtered_pathways.pathways.splice(i, 1);
             }
         }
