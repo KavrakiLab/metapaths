@@ -282,8 +282,8 @@ function set_mins_and_maxes(pathways) {
 	.each(function() {
         var opt = $(this).data().uiSlider.options;
          var vals = opt.max - opt.min;
-         for (var i = 0; i <= vals; i++) {
-             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+         for (var i = opt.min; i <= opt.max; i++) {
+             var el = $('<label>' + i + '</label>').css('left', (i/vals*100) + '%');
              $("#min-atp-slider").append(el);
         }
     });
