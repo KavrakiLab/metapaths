@@ -278,13 +278,13 @@ function set_mins_and_maxes(pathways) {
         }
     });
 
- 	$('#min-atp-used').slider("option", "min", min_atp_used)
+ 	$('#min-atp-slider').slider("option", "min", min_atp_used)
 	.each(function() {
         var opt = $(this).data().uiSlider.options;
          var vals = opt.max - opt.min;
          for (var i = 0; i <= vals; i++) {
              var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-             $("#min-atp-used").append(el);
+             $("#min-atp-slider").append(el);
         }
     });
 }
