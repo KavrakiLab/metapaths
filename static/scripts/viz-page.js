@@ -38,7 +38,8 @@ $( function() {
     });
 
     $( "#min-atp-slider" ).slider({
-		min: -5,
+		min: -10,
+		max: 10,
 	    value: 0
     });
     
