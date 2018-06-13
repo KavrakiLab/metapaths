@@ -25,7 +25,7 @@ var shown_hub = "";
 $( function() {
 	$("#max-path-len").val(10);
 	$("#min-carbons-conserved").val(2);
-	$("#min-atp-used").val(0);
+	$("#min-atp-used").val(-1);
 
 	$( "#max-len-slider" ).slider({
 		max: 20,
@@ -40,7 +40,7 @@ $( function() {
     $( "#min-atp-slider" ).slider({
 		min: -10,
 		max: 10,
-	    value: 0
+	    value: -1
     });
     
     // $(document).ready(function() {
@@ -279,12 +279,12 @@ function set_mins_and_maxes(pathways) {
         }
     });
 
- 	$('#min-atp-slider').slider("option", "min", min_atp_used)
+ 	$('#min-atp-slider').slider("option", "max", min_atp_used)
 	.each(function() {
         var opt = $(this).data().uiSlider.options;
          var vals = opt.max - opt.min;
-         for (var i = opt.min; i <= opt.max; i++) {
-             var el = $('<label>' + i + '</label>').css('left', (i/vals*100) + '%');
+         for (var i = 0; i <= vals; i++) {
+             var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
              $("#min-atp-slider").append(el);
         }
     });
