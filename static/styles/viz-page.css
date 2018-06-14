@@ -19,7 +19,8 @@
 }
 
 .canonical-node {
-    fill: #00f;
+    stroke: rgb(0,0,255);
+    stroke-width: 7px;
 }
 
 
@@ -121,7 +122,7 @@ a:hover {
     width: 100%;
 }
 
-#max-len-slider label, #min-carbons-slider label {
+#max-len-slider label, #min-carbons-slider label, #min-atp-slider label {
     position: absolute;
     width: 10px;
     margin-top: 20px;
@@ -129,7 +130,7 @@ a:hover {
     text-align: center;
 }
 
-#max-len-slider, #min-carbons-slider {
+#max-len-slider, #min-carbons-slider, #min-atp-slider {
     width: 250px;
 }
 
