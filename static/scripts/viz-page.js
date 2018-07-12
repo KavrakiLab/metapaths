@@ -51,11 +51,11 @@ $( function() {
     //     }
     // });
 
-    $("#max-len-slider" ).on('slide', function(ev) {
-            var newValue = $("#max-len-slider" ).slider("option","value");
-            $("#max-path-len").val(newValue);
-            apply_filters();
-    });
+    // $("#max-len-slider" ).on('slide', function(ev) {
+    //         var newValue = $("#max-len-slider" ).slider("option","value");
+    //         $("#max-path-len").val(newValue);
+    //         apply_filters();
+    // });
 
     $("#max-len-slider").on('slidestop', function(ev) {
 			var newValue = $("#max-len-slider" ).slider("option","value");
@@ -63,11 +63,11 @@ $( function() {
             apply_filters();
     });    	
 
-    $("#min-carbons-slider" ).on('slide', function(ev) {
-        var newValue = $("#min-carbons-slider" ).slider("option","value");
-        $("#min-carbons-conserved").val(newValue);
-        apply_filters();
-    });
+    // $("#min-carbons-slider" ).on('slide', function(ev) {
+    //     var newValue = $("#min-carbons-slider" ).slider("option","value");
+    //     $("#min-carbons-conserved").val(newValue);
+    //     apply_filters();
+    // });
 
     $("#min-carbons-slider").on('slidestop', function(ev) {
         var newValue = $("#min-carbons-slider" ).slider("option","value");
@@ -76,11 +76,11 @@ $( function() {
     });
 
 
-    $("#min-atp-slider" ).on('slide', function(ev) {
-        var newValue = $("#min-atp-slider" ).slider("option","value");
-        $("#min-atp-used").val(newValue);
-        apply_filters();
-    });
+    // $("#min-atp-slider" ).on('slide', function(ev) {
+    //     var newValue = $("#min-atp-slider" ).slider("option","value");
+    //     $("#min-atp-used").val(newValue);
+    //     apply_filters();
+    // });
 
     $("#min-atp-slider").on('slidestop', function(ev) {
         var newValue = $("#min-atp-slider" ).slider("option","value");
