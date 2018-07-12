@@ -23,6 +23,9 @@ var shown_hub = "";
 /* End of Globals */
 
 $( function() {
+    $("#min-carbons-conserved").val(2);
+    $("#min-atp-used").val(-2);
+
 	$( "#max-len-slider" ).slider({
 		max: 20,
         value: 10
@@ -256,8 +259,6 @@ function set_mins_and_maxes(pathways) {
 	});
 
     $("#max-path-len").val(min_path_length);
-    $("#min-carbons-conserved").val(max_atoms_conserved);
-    $("#min-atp-used").val(min_atp_used);
 
 	$('#max-len-slider').slider("option", "min", min_path_length)
 	.each(function() {
