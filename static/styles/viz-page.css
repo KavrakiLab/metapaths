@@ -1,4 +1,8 @@
 
+.node {
+    fill: #555;
+}
+
 .nodes circle {
     cursor: pointer;
     pointer-events: all;
@@ -14,16 +18,15 @@
     fill: #f00;
 }
 
-.hub-node {
-    fill: #efc406;
-}
-
 .canonical-node {
     stroke: #00f;
     stroke-width: 7px;
     fill: #555;
 }
 
+.hub-node {
+    fill: #efc406;
+}
 
 .hub-source-node {
     fill: #0a0;
@@ -37,9 +40,6 @@
     fill: #999;
 }
 
-.node {
-    fill: #555;
-}
 
 .links line {
     pointer-events: all;
