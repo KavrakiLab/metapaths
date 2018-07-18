@@ -49,10 +49,11 @@ function apply_filters() {
     }
 }
 
-function filter_pathways(str_info, str_pathways) {
+function filter_pathways(str_info, str_pathways, background_hubs) {
     var filtered_pathways = {};
     filtered_pathways["info"] = JSON.parse(str_info);
     filtered_pathways["pathways"] = JSON.parse(str_pathways);
+    filtered_pathways["background_hubs"] = JSON.parse(background_hubs);
 
     // First pass: remove pathways which contain an excluded compound
     if ($("#excluded-ids").val() !== "") {
