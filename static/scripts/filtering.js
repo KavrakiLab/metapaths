@@ -31,7 +31,7 @@ function add_included_node(compound_id) {
 
 function apply_filters() {
     // Always apply filters to a fresh copy of the original pathways
-    var filtered_main_pathways = filter_pathways(JSON.stringify(orig_pathways["info"]), JSON.stringify(orig_pathways["pathways"]));
+    var filtered_main_pathways = filter_pathways(JSON.stringify(orig_pathways["info"]), JSON.stringify(orig_pathways["pathways"]), JSON.stringify(orig_pathways["background_hubs"]));
 
     if (filtered_main_pathways.pathways.length === 0) {
         alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
