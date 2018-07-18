@@ -615,7 +615,7 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fx = right_x;
             node.fy = mid_y;
         } else if (hub_nodes.includes(node.id)) {
-
+            node.setAttribute(class, "hub-node")
         }
 
     });
@@ -649,6 +649,7 @@ function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
             node.fx = right_x;
             node.fy = mid_y;
         } else if (hub_nodes.includes(node.id)) {
+            node.setAttribute(class, "hub-node")
 
         } else if (b_nodes_list.includes(node.id)) {
             var mid_x = $("#viz-column")[0].offsetWidth / 2;
