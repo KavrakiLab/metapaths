@@ -624,51 +624,51 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
 
 }
 
-function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
+// function style_nodes(viz_graph, start, goal, hub_nodes, b_nodes) {
 
-    //alert("b_nodes: " + b_nodes);
-    var b_nodes_list = [];
-    if(b_nodes != null) {
-        b_nodes_list = Object.keys(b_nodes);
-    }
-    viz_graph.node.data().forEach(function (node, index, array) {
-        if (node.id === start) {
-            var mid_x = $("#viz-column")[0].offsetWidth / 2;
-            var mid_y = $("#viz-column")[0].offsetHeight / 2;
-            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
-            left_x = mid_x - (0.5 * main_viz_width);
+//     //alert("b_nodes: " + b_nodes);
+//     var b_nodes_list = [];
+//     if(b_nodes != null) {
+//         b_nodes_list = Object.keys(b_nodes);
+//     }
+//     viz_graph.node.data().forEach(function (node, index, array) {
+//         if (node.id === start) {
+//             var mid_x = $("#viz-column")[0].offsetWidth / 2;
+//             var mid_y = $("#viz-column")[0].offsetHeight / 2;
+//             var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+//             left_x = mid_x - (0.5 * main_viz_width);
 
-            node.fixed = true;
-            node.fx = left_x;
-            node.fy = mid_y;
-        } else if (node.id === goal) {
-            var mid_x = $("#viz-column")[0].offsetWidth / 2;
-            var mid_y = $("#viz-column")[0].offsetHeight / 2;
-            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
-            right_x = mid_x + (0.5 * main_viz_width);
+//             node.fixed = true;
+//             node.fx = left_x;
+//             node.fy = mid_y;
+//         } else if (node.id === goal) {
+//             var mid_x = $("#viz-column")[0].offsetWidth / 2;
+//             var mid_y = $("#viz-column")[0].offsetHeight / 2;
+//             var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+//             right_x = mid_x + (0.5 * main_viz_width);
 
-            node.fixed = true;
-            node.fx = right_x;
-            node.fy = mid_y;
-        } else if (hub_nodes.includes(node.id)) {
-            document.getElementById(node.id).classList.add("hub-node")
+//             node.fixed = true;
+//             node.fx = right_x;
+//             node.fy = mid_y;
+//         } else if (hub_nodes.includes(node.id)) {
+//             document.getElementById(node.id).classList.add("hub-node")
 
-        } else if (b_nodes_list.includes(node.id)) {
-            var mid_x = $("#viz-column")[0].offsetWidth / 2;
-            var mid_y = $("#viz-column")[0].offsetHeight / 2;
-            var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
-            //alert("x: " + b_nodes[node.id][0]);
-            //alert("y: " + b_nodes[node.id][1]);
-            actual_x = mid_x + (b_nodes[node.id][0] * main_viz_width);
-            actual_y = mid_y + (b_nodes[node.id][1] * $("#viz-column")[0].offsetHeight);
+//         } else if (b_nodes_list.includes(node.id)) {
+//             var mid_x = $("#viz-column")[0].offsetWidth / 2;
+//             var mid_y = $("#viz-column")[0].offsetHeight / 2;
+//             var main_viz_width = main_path_width * 100 // Num edges in the first path times 30px per edge
+//             //alert("x: " + b_nodes[node.id][0]);
+//             //alert("y: " + b_nodes[node.id][1]);
+//             actual_x = mid_x + (b_nodes[node.id][0] * main_viz_width);
+//             actual_y = mid_y + (b_nodes[node.id][1] * $("#viz-column")[0].offsetHeight);
 
-            node.fx = actual_x;
-            node.fy = actual_y;
-        }
+//             node.fx = actual_x;
+//             node.fy = actual_y;
+//         }
 
-    });
+//     });
 
-}
+// }
 
 
 function get_kegg_data(graph_nodes) {
