@@ -596,7 +596,6 @@ function generate_title(start, goal, count) {
 
 
 function style_nodes(viz_graph, start, goal, hub_nodes) {
-
     viz_graph.node.data().forEach(function (node, index, array) {
 
         if (node.id === start) {
@@ -617,10 +616,8 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fixed = true;
             node.fx = right_x;
             node.fy = mid_y;
-        } else if (hub_nodes != undefined) {
-            if(hub_nodes.indexOf(node.id) > -1) {
+        } else if(hub_nodes.includes(node.id) > -1) {
                 document.getElementById(node.id).classList.add("hub-node")
-            }
         }
 
     });
