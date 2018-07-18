@@ -306,8 +306,8 @@ function validate_and_visualize(pathways) {
     get_kegg_data(data_graph.nodes);
 
     //stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal)
-    console.log(pathways.background_hubs)
-    
+    console.log(pathways)
+
     stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs);
 
     attach_node_watchers(viz_graph);
