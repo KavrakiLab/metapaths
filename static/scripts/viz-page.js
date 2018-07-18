@@ -597,6 +597,9 @@ function generate_title(start, goal, count) {
 function style_nodes(viz_graph, start, goal, hub_nodes) {
 
     viz_graph.node.data().forEach(function (node, index, array) {
+
+        console.log(hub_nodes);
+        
         if (node.id === start) {
             var mid_x = $("#viz-column")[0].offsetWidth / 2;
             var mid_y = $("#viz-column")[0].offsetHeight / 2;
