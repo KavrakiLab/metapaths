@@ -169,28 +169,33 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
 
     # If this is a hub search, add in the rest of the hubs
     if(hubs_exist):
-        pathways_data["background_hubs"] = get_background_hubs_from_file(background_hubs_filename, set(all_hub_links))
+        #pathways_data["background_hubs"] = get_background_hubs_from_file(background_hubs_filename, set(all_hub_links))
+        pathways_data["background_hubs"] = get_background_hubs_from_file(background_hubs_filename)
 
     return pathways_data
 
-def get_background_hubs_from_file(background_hubs_filename, all_hub_links):
-    b_hubs_file = open(background_hubs_filename, "r")
-    b_nodes = {}
-    b_links = []
-    on_links = False
-    for line in b_hubs_file:
-        line.replace("\n", "")
-        if not on_links:
-            if "LINKS" not in line:
-                node_info = line.split(",")
-                b_nodes[node_info[0]] = (float(node_info[1]), float(node_info[2]))
-            else:
-                on_links = True
-        else:
-            if(line not in all_hub_links):
-                b_links.append(line.replace("\r","").replace("\n",""))
+# def get_background_hubs_from_file(background_hubs_filename, all_hub_links):
+#     b_hubs_file = open(background_hubs_filename, "r")
+#     b_nodes = {}
+#     b_links = []
+#     on_links = False
+#     for line in b_hubs_file:
+#         line.replace("\n", "")
+#         if not on_links:
+#             if "LINKS" not in line:
+#                 node_info = line.split(",")
+#                 b_nodes[node_info[0]] = (float(node_info[1]), float(node_info[2]))
+#             else:
+#                 on_links = True
+#         else:
+#             if(line not in all_hub_links):
+#                 b_links.append(line.replace("\r","").replace("\n",""))
 
-    return { "b_nodes" : b_nodes, "b_links" : b_links }
+#     return { "b_nodes" : b_nodes, "b_links" : b_links }
+
+def get_background_hubs_from_file(background_hubs_filename):
+    b_hubs_file = open(background_hubs_filename, "r")
+    return b_hubs_file.read().split("\n")
 
 
 def get_pathways_from_file(pathways_filename, background_hubs_filename, hub_db):
