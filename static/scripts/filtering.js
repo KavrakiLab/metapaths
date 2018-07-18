@@ -31,7 +31,7 @@ function add_included_node(compound_id) {
 
 function apply_filters() {
     // Always apply filters to a fresh copy of the original pathways
-    var filtered_main_pathways = filter_pathways(JSON.stringify(orig_pathways["info"]), JSON.stringify(orig_pathways["pathways"]), JSON.stringify(orig_pathways["background_hubs"]));
+    var filtered_main_pathways = filter_pathways(JSON.stringify(orig_pathways["info"]), JSON.stringify(orig_pathways["pathways"]), orig_pathways["background_hubs"]);
 
     if (filtered_main_pathways.pathways.length === 0) {
         alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
@@ -53,7 +53,7 @@ function filter_pathways(str_info, str_pathways, background_hubs) {
     var filtered_pathways = {};
     filtered_pathways["info"] = JSON.parse(str_info);
     filtered_pathways["pathways"] = JSON.parse(str_pathways);
-    filtered_pathways["background_hubs"] = JSON.parse(background_hubs);
+    filtered_pathways["background_hubs"] = background_hubs;
 
     // First pass: remove pathways which contain an excluded compound
     if ($("#excluded-ids").val() !== "") {
