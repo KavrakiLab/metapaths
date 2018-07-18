@@ -581,7 +581,7 @@ function stylize(data_graph, viz_graph, start, goal, b_nodes) {
 
 
     // style_nodes(viz_graph, start, goal, data_graph.hub_nodes, b_nodes);
-    style_nodes(viz_graph, start, goal, data_graph.hub_nodes, b_nodes);
+    style_nodes(viz_graph, start, goal, b_nodes);
 
     // Show the info panel and options
     $("#info-panel")[0].style.visibility = "visible";
@@ -616,6 +616,7 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fx = right_x;
             node.fy = mid_y;
         } else if (hub_nodes.includes(node.id)) {
+
             document.getElementById(node.id).classList.add("hub-node")
         }
 
