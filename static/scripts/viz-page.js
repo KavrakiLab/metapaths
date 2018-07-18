@@ -305,9 +305,9 @@ function validate_and_visualize(pathways) {
 
     get_kegg_data(data_graph.nodes);
 
-    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal)
+    //stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal)
 
-    //stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs.b_nodes);
+    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs.b_nodes);
 
     attach_node_watchers(viz_graph);
 
@@ -580,6 +580,7 @@ function stylize(data_graph, viz_graph, start, goal, b_nodes) {
     $("#title")[0].innerHTML = generate_title(start, goal, data_graph.num_pathways);
 
 
+    // style_nodes(viz_graph, start, goal, data_graph.hub_nodes, b_nodes);
     style_nodes(viz_graph, start, goal, data_graph.hub_nodes, b_nodes);
 
     // Show the info panel and options
