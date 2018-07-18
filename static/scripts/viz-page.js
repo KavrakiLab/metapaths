@@ -306,7 +306,7 @@ function validate_and_visualize(pathways) {
     get_kegg_data(data_graph.nodes);
 
     //stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal)
-    console.log(pathways)
+    // console.log(pathways)
 
     stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs);
 
@@ -619,8 +619,10 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fixed = true;
             node.fx = right_x;
             node.fy = mid_y;
-        } else if (hub_nodes.indexOf(node.id) > -1) {
-            document.getElementById(node.id).classList.add("hub-node")
+        } else if (hub_nodes != undefined) {
+            if(hub_nodes.indexOf(node.id) > -1) {
+                document.getElementById(node.id).classList.add("hub-node")
+            }
         }
 
     });
