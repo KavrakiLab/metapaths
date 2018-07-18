@@ -170,7 +170,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     # If this is a hub search, add in the rest of the hubs
     if(hubs_exist):
         #pathways_data["background_hubs"] = get_background_hubs_from_file(background_hubs_filename, set(all_hub_links))
-        pathways_data["background_hubs"] = { "b_hubs" : get_background_hubs_from_file(background_hubs_filename) }
+        pathways_data["background_hubs"] = get_background_hubs_from_file(background_hubs_filename)
 
     return pathways_data
 
