@@ -559,19 +559,19 @@ function load_viz(data_graph) {
 } // load_viz
 
 
-function stylize(data_graph, viz_graph, start, goal) {
-    // Hide the upload panel
-    $("#load-panel")[0].style.display = "none";
+// function stylize(data_graph, viz_graph, start, goal) {
+//     // Hide the upload panel
+//     $("#load-panel")[0].style.display = "none";
 
-    $("#title")[0].innerHTML = generate_title(start, goal, data_graph.num_pathways);
+//     $("#title")[0].innerHTML = generate_title(start, goal, data_graph.num_pathways);
 
 
-    style_nodes(viz_graph, start, goal, data_graph.hub_nodes);
+//     style_nodes(viz_graph, start, goal, data_graph.hub_nodes);
 
-    // Show the info panel and options
-    $("#info-panel")[0].style.visibility = "visible";
-    $("#options-column")[0].style.visibility = "visible";
-}
+//     // Show the info panel and options
+//     $("#info-panel")[0].style.visibility = "visible";
+//     $("#options-column")[0].style.visibility = "visible";
+// }
 
 function stylize(data_graph, viz_graph, start, goal, b_nodes) {
     // Hide the upload panel
@@ -615,8 +615,7 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fixed = true;
             node.fx = right_x;
             node.fy = mid_y;
-        } else if (hub_nodes.includes(node.id)) {
-
+        } else if (hub_nodes.indexOf(node.id) > -1) {
             document.getElementById(node.id).classList.add("hub-node")
         }
 
