@@ -307,7 +307,7 @@ function validate_and_visualize(pathways) {
 
     //stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal)
 
-    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs.b_nodes);
+    stylize(data_graph, viz_graph, pathways.info.start, pathways.info.goal, pathways.background_hubs);
 
     attach_node_watchers(viz_graph);
 
