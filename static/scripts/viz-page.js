@@ -596,7 +596,12 @@ function generate_title(start, goal, count) {
 
 
 function style_nodes(viz_graph, start, goal, hub_nodes) {
+    console.log("Hub nodes: " + hub_nodes)
+
     viz_graph.node.data().forEach(function (node, index, array) {
+        if(node.id == "C00111") {
+            console.log("This should be true: " + hub_nodes.includes(node.id))
+        }
 
         if (node.id === start) {
             var mid_x = $("#viz-column")[0].offsetWidth / 2;
@@ -616,8 +621,8 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fixed = true;
             node.fx = right_x;
             node.fy = mid_y;
-        } else if(hub_nodes.includes(node.id) > -1) {
-                document.getElementById(node.id).classList.add("hub-node")
+        } else if(hub_nodes.includes(node.id)) {
+            document.getElementById(node.id).classList.add("hub-node")
         }
 
     });
