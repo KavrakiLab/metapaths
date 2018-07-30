@@ -170,6 +170,7 @@ def convert_lpat(filename, hub_list):
 	#print "Size of hub paths: " + str(len(hub_path_list))
 	#print "Size of second paths: " + str(len(second_path_list))
 	db.close()
+	print hub_path_list
 
 	if len(first_path_list) == 0 and len(second_path_list) == 0:
 		print "looking at only hub to hub paths"
