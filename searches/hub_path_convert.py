@@ -147,7 +147,7 @@ def convert_lpat(filename, hub_list):
 	remove_from_first_list = set(end_first_list) - set(start_hub_list)
 	remove_from_hub_list = set(end_hub_list) - set(start_end_list)
 
-	for cc in reversed(first_path_list):
+	for cc in reversed(first_path_list.keys()):
 		for path in reversed(first_path_list[cc]):
 			compound = path.split("_HS")[0][-6:]
 			if compound in remove_from_first_list:
@@ -156,7 +156,7 @@ def convert_lpat(filename, hub_list):
 		if len(first_path_list[cc]) == 0:
 			first_path_list.remove(cc)
 
-	for cc in reversed(hub_path_list):
+	for cc in reversed(hub_path_list.keys()):
 		for path in reversed(hub_path_list[cc]):
 			compound = path.split("_HE")[0][-6:]
 			if compound in remove_from_hub_list:
