@@ -154,7 +154,7 @@ def convert_lpat(filename, hub_list):
 				fist_path_list[cc].remove(path)
 				print "Removing " + path 
 		if len(first_path_list[cc]) == 0:
-			first_path_list.remove(cc)
+			first_path_list.pop(cc, None)
 
 	for cc in reversed(hub_path_list.keys()):
 		for path in reversed(hub_path_list[cc]):
@@ -163,7 +163,7 @@ def convert_lpat(filename, hub_list):
 				hub_path_list[cc].remove(path)
 				print "Removing " + path
 		if len(hub_path_list[cc]) == 0:
-			hub_path_list.remove(cc)	
+			hub_path_list.pop(cc, None)	
 
 
 	#print "Size of first paths: " + str(len(first_path_list))
