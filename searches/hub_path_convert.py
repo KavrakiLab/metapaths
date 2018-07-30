@@ -217,7 +217,7 @@ def convert_lpat(filename, hub_list):
 					path2 = path2_segs[0]
 					atp_used += int(path2_segs[1])
 					f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
-					cc_str_dict[cc_str] += 1
+					#cc_str_dict[cc_str] += 1
 					# for path1 in hub_path_list[cc1]:
 					#     for path2 in second_path_list[cc2]:
 					#             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
@@ -245,7 +245,7 @@ def convert_lpat(filename, hub_list):
 					hub_path_id = path2[0:6] + "_" + path2[-10:-4]
 
 					f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
-					cc_str_dict[cc_str] += 1
+					#cc_str_dict[cc_str] += 1
 				# for path1 in first_path_list[cc1]:
 				#     for path2 in hub_path_list[cc2]:
 				#         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
@@ -272,7 +272,7 @@ def convert_lpat(filename, hub_list):
 						path3 = path3_segs[0]
 						atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
 						f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
-						cc_str_dict[cc_str] += 1
+						#cc_str_dict[cc_str] += 1
 
 						# for path1 in first_path_list[cc1]:
 						#     for path2 in hub_path_list[cc2]:
