@@ -145,7 +145,8 @@ def convert_lpat(filename, hub_list):
 
 	#Filter out any partially completed paths that should not be there
 	remove_from_first_list = set(end_first_list) - set(start_hub_list)
-	remove_from_hub_list = set(end_hub_list) - set(start_end_list)
+	if len(start_end_list) > 0:
+		remove_from_hub_list = set(end_hub_list) - set(start_end_list)
 
 	for cc in reversed(first_path_list.keys()):
 		for path in reversed(first_path_list[cc]):
