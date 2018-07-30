@@ -101,7 +101,7 @@ def convert_lpat(filename, hub_list):
 					#elif cleaned_item[0] == "R":
 					#    path += cleaned_item[0:7] + ","
 				path += raw_path[-1][0:6] + "_HE," + "\t" + atp_used
-				end_hub_list = raw_path[-1][0:6]
+				end_hub_list.append(raw_path[-1][0:6])
 
 				#print raw_path
 				if len(tab_split_line) == 2:
@@ -145,11 +145,7 @@ def convert_lpat(filename, hub_list):
 
 	#Filter out any partially completed paths that should not be there
 	remove_from_first_list = set(end_first_list) - set(start_hub_list)
-	print end_first_list
-	print start_hub_list
 	remove_from_hub_list = set(end_hub_list) - set(start_end_list)
-	print end_hub_list
-	print start_end_list
 
 	for cc in reversed(first_path_list.keys()):
 		for path in reversed(first_path_list[cc]):
