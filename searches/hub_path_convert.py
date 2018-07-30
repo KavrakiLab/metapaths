@@ -56,6 +56,12 @@ def convert_lpat(filename, hub_list):
 	first_path = True
 	hub_path_len_dict = {}
 
+	end_first_list = []
+	end_hub_list = []
+
+	start_hub_list = []
+	start_end_list = []
+
 	for line in lines:
 		#print line
 		tab_split_line = line.split("\t")
@@ -70,6 +76,8 @@ def convert_lpat(filename, hub_list):
 							path += cleaned_item[0:6] + ","
 						elif cleaned_item[0] == "R":
 							path += cleaned_item[0:7] + ","
+				
+				end_first_list.append(path[-7:-1])
 				path = path[:-1] + "_HS," + "\t" + atp_used
 
 				if len(tab_split_line) == 3:
@@ -84,6 +92,8 @@ def convert_lpat(filename, hub_list):
 				while len(raw_path[-1]) == 0:
 					raw_path = raw_path[:-1]
 				path = raw_path[0][0:6] + "_HS,"
+				start_hub_list.append(raw_path[0][0:6])
+
 				for item in raw_path[1:-1]:
 					cleaned_item = "".join(x for x in item if x.isalnum())
 					if cleaned_item[0] == "C" and cleaned_item[0:6] in hub_list:
@@ -91,6 +101,7 @@ def convert_lpat(filename, hub_list):
 					#elif cleaned_item[0] == "R":
 					#    path += cleaned_item[0:7] + ","
 				path += raw_path[-1][0:6] + "_HE," + "\t" + atp_used
+				end_hub_list = raw_path[-1][0:6]
 
 				#print raw_path
 				if len(tab_split_line) == 2:
@@ -115,6 +126,7 @@ def convert_lpat(filename, hub_list):
 				raw_path = line.split(";")
 				cleaned_start_item = "".join(x for x in raw_path[0] if x.isalnum())
 				path = cleaned_start_item[0:6] + "_HE,"
+				start_end_list.append(cleaned_start_item[0:6])
 
 				for item in raw_path[1:]:
 					if len(item) > 0:
@@ -129,6 +141,27 @@ def convert_lpat(filename, hub_list):
 					if c_conserved not in second_path_list:
 						second_path_list[c_conserved] = []
 					second_path_list[c_conserved].append(path + "\t" + atp_used)
+
+
+	#Filter out any partially completed paths that should not be there
+	remove_from_first_list = set(end_first_list) - set(start_hub_list)
+	remove_from_hub_list = set(end_hub_list) - set(start_end_list)
+
+	for cc in reversed(first_path_list):
+		for path in reversed(first_path_list[cc]):
+			compound = path.split("_HS")[0][-6:]
+			if compound in remove_from_first_list:
+				fist_path_list[cc].remove(path)
+		if len(first_path_list[cc]) == 0:
+			first_path_list.remove(cc)
+
+	for cc in reversed(hub_path_list):
+		for path in reversed(hub_path_list[cc]):
+			compound = path.split("_HE")[0][-6:]
+			if compound in remove_from_hub_list:
+				hub_path_list[cc].remove(path)
+		if len(hub_path_list[cc]) == 0:
+			hub_path_list.remove(cc)	
 
 
 	#print "Size of first paths: " + str(len(first_path_list))
