@@ -180,10 +180,10 @@ def convert_lpat(filename, hub_list):
 				path_segs = raw_path.split("\t")
 				path = path_segs[0]
 				hub_path_id = path[0:6] + "_" + path[-10:-4]
-				if count < 50:
-					f.write(path[:-1] + "\t" + str(hub_path_len_dict[cc][hub_path_id]) + "\t" + path_segs[1] + "\t" + cc + "\n")
-				else:
-					break
+				#if count < 50:
+				f.write(path[:-1] + "\t" + str(hub_path_len_dict[cc][hub_path_id]) + "\t" + path_segs[1] + "\t" + cc + "\n")
+				#else:
+				#	break
 				count += 1
 
 	elif len(first_path_list) == 0:
@@ -192,36 +192,33 @@ def convert_lpat(filename, hub_list):
 		for cc1 in hub_path_list:
 			for cc2 in second_path_list:
 				hub_1, hub_2 = get_carbon_conserved_arrays(cc1)
-				print hub_1
-				print hub_2
+
 				second_1, second_2 = get_carbon_conserved_arrays(cc2)
-				print second_1
-				print second_2
+
 				final_1, final_2 = get_merged_carbons_conserved(hub_1, hub_2, second_1, second_2)
-				print final_1
-				print final_2
+
 				if len(final_1) > 0:
 					cc_str = get_str_cc(final_1, final_2)
-					if cc_str not in cc_str_dict:
-						cc_str_dict[cc_str] = 1
-					elif cc_str_dict[cc_str] > 5:
-						continue
-					else:
-						#print cc_str
-						atp_used = 0
-						path1_segs = hub_path_list[cc1][0].split("\t")
-						path1 = path1_segs[0]
-						atp_used += int(path1_segs[1])
-						hub_path_id = path1[0:6] + "_" + path1[-10:-4]
+					# if cc_str not in cc_str_dict:
+					# 	cc_str_dict[cc_str] = 1
+					#if cc_str_dict[cc_str] > 5:
+					#	continue
 
-						path2_segs = second_path_list[cc2][0].split("\t")
-						path2 = path2_segs[0]
-						atp_used += int(path2_segs[1])
-						f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
-						cc_str_dict[cc_str] += 1
-						# for path1 in hub_path_list[cc1]:
-						#     for path2 in second_path_list[cc2]:
-						#             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
+					#print cc_str
+					atp_used = 0
+					path1_segs = hub_path_list[cc1][0].split("\t")
+					path1 = path1_segs[0]
+					atp_used += int(path1_segs[1])
+					hub_path_id = path1[0:6] + "_" + path1[-10:-4]
+
+					path2_segs = second_path_list[cc2][0].split("\t")
+					path2 = path2_segs[0]
+					atp_used += int(path2_segs[1])
+					f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+					cc_str_dict[cc_str] += 1
+					# for path1 in hub_path_list[cc1]:
+					#     for path2 in second_path_list[cc2]:
+					#             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
 
 	elif len(second_path_list) == 0:
 		print "looking at paths with no hub to target part"
@@ -233,23 +230,23 @@ def convert_lpat(filename, hub_list):
 				final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
 				if len(final_1) > 0:
 					cc_str = get_str_cc(final_1, final_2)
-					if cc_str not in cc_str_dict:
-						cc_str_dict[cc_str] = 1
-					elif cc_str_dict[cc_str] > 5:
-						continue
-					else:
-						path1_segs = first_path_list[cc1][0].split("\t")
-						path2_segs = hub_path_list[cc2][0].split("\t")
-						path1 = path1_segs[0]
-						path2 = path2_segs[0]
-						atp_used = int(path1_segs[1]) + int(path2_segs[1])
-						hub_path_id = path2[0:6] + "_" + path2[-10:-4]
+					# if cc_str not in cc_str_dict:
+					# 	cc_str_dict[cc_str] = 1
+					# elif cc_str_dict[cc_str] > 5:
+					# 	continue
+					# else:
+					path1_segs = first_path_list[cc1][0].split("\t")
+					path2_segs = hub_path_list[cc2][0].split("\t")
+					path1 = path1_segs[0]
+					path2 = path2_segs[0]
+					atp_used = int(path1_segs[1]) + int(path2_segs[1])
+					hub_path_id = path2[0:6] + "_" + path2[-10:-4]
 
-						f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
-						cc_str_dict[cc_str] += 1
-					# for path1 in first_path_list[cc1]:
-					#     for path2 in hub_path_list[cc2]:
-					#         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+					f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+					cc_str_dict[cc_str] += 1
+				# for path1 in first_path_list[cc1]:
+				#     for path2 in hub_path_list[cc2]:
+				#         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
 
 	else:
 		print "Full hub search!"
@@ -259,21 +256,21 @@ def convert_lpat(filename, hub_list):
 				for cc3 in second_path_list:
 					cc_str = get_carbons_conserved(cc1, cc2, cc3)
 					if len(cc_str) > 0:
-						if cc_str not in cc_str_dict:
-							cc_str_dict[cc_str] = 1
-						elif cc_str_dict[cc_str] > 5:
-							continue
-						else:
-							path1_segs = first_path_list[cc1][0].split("\t")
-							path2_segs = hub_path_list[cc2][0].split("\t")
-							path1 = path1_segs[0]
-							path2 = path2_segs[0]
-							hub_path_id = path2[0:6] + "_" + path2[-10:-4]
-							path3_segs = second_path_list[cc3][0].split("\t")
-							path3 = path3_segs[0]
-							atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
-							f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
-							cc_str_dict[cc_str] += 1
+						# if cc_str not in cc_str_dict:
+						# 	cc_str_dict[cc_str] = 1
+						# elif cc_str_dict[cc_str] > 5:
+						# 	continue
+						# else:
+						path1_segs = first_path_list[cc1][0].split("\t")
+						path2_segs = hub_path_list[cc2][0].split("\t")
+						path1 = path1_segs[0]
+						path2 = path2_segs[0]
+						hub_path_id = path2[0:6] + "_" + path2[-10:-4]
+						path3_segs = second_path_list[cc3][0].split("\t")
+						path3 = path3_segs[0]
+						atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
+						f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
+						cc_str_dict[cc_str] += 1
 
 						# for path1 in first_path_list[cc1]:
 						#     for path2 in hub_path_list[cc2]:
