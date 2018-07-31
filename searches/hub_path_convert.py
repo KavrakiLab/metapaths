@@ -94,10 +94,13 @@ def convert_lpat(filename, hub_list):
 				path = raw_path[0][0:6] + "_HS,"
 				start_hub_list.append(raw_path[0][0:6])
 
+				prev_item = ""
 				for item in raw_path[1:-1]:
 					cleaned_item = "".join(x for x in item if x.isalnum())
-					if cleaned_item[0] == "C" and cleaned_item[0:6] in hub_list:
-						path += cleaned_item[0:6] + "_HM,"
+					tentative_cmpd = cleaned_item[0:6]
+					if cleaned_item[0] == "C" and tentative_cmpd in hub_list and tentative_cmpd != prev_item:
+						path += tentative_cmpd + "_HM,"
+						prev_item = tentative_cmpd
 					#elif cleaned_item[0] == "R":
 					#    path += cleaned_item[0:7] + ","
 				path += raw_path[-1][0:6] + "_HE," + "\t" + atp_used
