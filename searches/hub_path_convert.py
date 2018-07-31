@@ -42,8 +42,8 @@ def convert_lpat(filename, hub_list):
 								f.write(cleaned_item[0:7] + ",")
 					f.seek(-1, os.SEEK_CUR)
 					if carbons_conserved != "":
-						f.write("\t" + carbons_conserved)
 						f.write("\t" + atp_used)
+						f.write("\t" + carbons_conserved)
 					f.write("\n")
 
 	# Convert each path and write out to the same file
