@@ -99,6 +99,8 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     hubs_exist = False
 
     for string_path in string_pathways:
+        if string_path == "":
+            continue
         atp_used = 0
         hub_len = 0
         tab_split_path = string_path.split("\t")
