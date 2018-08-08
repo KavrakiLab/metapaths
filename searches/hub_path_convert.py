@@ -5,7 +5,7 @@ import sys
 import MySQLdb
 from get_ATP_usage import get_net_ATP_usage, get_all_KEGG_ReactionIDs, get_KEGG_ReactionID_from_RPAIR
 
-def convert_lpat(filename, hub_list):
+def convert_lpat(filename, hub_list, target_cmpd):
 	# Read the original file and then empty it out
 	f = open(filename, "r+")
 	content = f.read()
@@ -46,221 +46,198 @@ def convert_lpat(filename, hub_list):
 						f.write("\t" + carbons_conserved)
 					f.write("\n")
 
-	# Convert each path and write out to the same file
-	lines = split_content[-1].split("\n")
-	#print(lines)
-	first_path_list = {}
-	hub_path_list = {}
-	second_path_list = {}
-	
-	first_path = True
-	hub_path_len_dict = {}
+	all_hub_path_info = split_content[-1]
 
-	end_first_list = []
-	end_hub_list = []
+	if target_cmpd in all_hub_path_info:
+		# Convert each path and write out to the same file
+		lines = split_content[-1].split("\n")
+		#print(lines)
+		first_path_list = {}
+		hub_path_list = {}
+		second_path_list = {}
+		
+		first_path = True
+		hub_path_len_dict = {}
 
-	start_hub_list = []
-	start_end_list = []
+		end_first_list = []
+		end_hub_list = []
 
-	for line in lines:
-		#print line
-		tab_split_line = line.split("\t")
-		if len(line) > 0:
-			atp_used = get_net_ATP_usage(line, cursor)
-			if(line[0] == "[" and first_path):
-				path = ""
-				for item in line.split(";"):
-					if len(item) > 0:
+		start_hub_list = []
+		start_end_list = []
+
+		for line in lines:
+			#print line
+			tab_split_line = line.split("\t")
+			if len(line) > 0:
+				atp_used = get_net_ATP_usage(line, cursor)
+				if(line[0] == "[" and first_path):
+					path = ""
+					for item in line.split(";"):
+						if len(item) > 0:
+							cleaned_item = "".join(x for x in item if x.isalnum())
+							if cleaned_item[0] == "C":
+								path += cleaned_item[0:6] + ","
+							elif cleaned_item[0] == "R":
+								path += cleaned_item[0:7] + ","
+					
+					end_first_list.append(path[-7:-1])
+					path = path[:-1] + "_HS," + "\t" + atp_used
+
+					if len(tab_split_line) == 3:
+						c_conserved = tab_split_line[2]
+						if c_conserved not in first_path_list:
+							first_path_list[c_conserved] = []
+						first_path_list[c_conserved].append(path)
+
+				elif(line[0] != "["):
+					first_path = False
+					raw_path = tab_split_line[0].split(" ")
+					while len(raw_path[-1]) == 0:
+						raw_path = raw_path[:-1]
+					path = raw_path[0][0:6] + "_HS,"
+					start_hub_list.append(raw_path[0][0:6])
+
+					prev_item = ""
+					for item in raw_path[1:-1]:
 						cleaned_item = "".join(x for x in item if x.isalnum())
-						if cleaned_item[0] == "C":
-							path += cleaned_item[0:6] + ","
-						elif cleaned_item[0] == "R":
-							path += cleaned_item[0:7] + ","
-				
-				end_first_list.append(path[-7:-1])
-				path = path[:-1] + "_HS," + "\t" + atp_used
+						tentative_cmpd = cleaned_item[0:6]
+						if cleaned_item[0] == "C" and tentative_cmpd in hub_list and tentative_cmpd != prev_item:
+							path += tentative_cmpd + "_HM,"
+							prev_item = tentative_cmpd
+						#elif cleaned_item[0] == "R":
+						#    path += cleaned_item[0:7] + ","
+					path += raw_path[-1][0:6] + "_HE," + "\t" + atp_used
+					end_hub_list.append(raw_path[-1][0:6])
 
-				if len(tab_split_line) == 3:
-					c_conserved = tab_split_line[2]
-					if c_conserved not in first_path_list:
-						first_path_list[c_conserved] = []
-					first_path_list[c_conserved].append(path)
+					#print raw_path
+					if len(tab_split_line) == 2:
+						c_conserved = tab_split_line[1].replace(":","=")
+						if c_conserved not in hub_path_list:
+							hub_path_list[c_conserved] = []
 
-			elif(line[0] != "["):
-				first_path = False
-				raw_path = tab_split_line[0].split(" ")
-				while len(raw_path[-1]) == 0:
-					raw_path = raw_path[:-1]
-				path = raw_path[0][0:6] + "_HS,"
-				start_hub_list.append(raw_path[0][0:6])
+						hub_path_len = len(re.findall("RP[0-9]{5}",tab_split_line[0]))
+						if c_conserved not in hub_path_len_dict:
+							hub_path_len_dict[c_conserved] = {}
 
-				prev_item = ""
-				for item in raw_path[1:-1]:
-					cleaned_item = "".join(x for x in item if x.isalnum())
-					tentative_cmpd = cleaned_item[0:6]
-					if cleaned_item[0] == "C" and tentative_cmpd in hub_list and tentative_cmpd != prev_item:
-						path += tentative_cmpd + "_HM,"
-						prev_item = tentative_cmpd
-					#elif cleaned_item[0] == "R":
-					#    path += cleaned_item[0:7] + ","
-				path += raw_path[-1][0:6] + "_HE," + "\t" + atp_used
-				end_hub_list.append(raw_path[-1][0:6])
-
-				#print raw_path
-				if len(tab_split_line) == 2:
-					c_conserved = tab_split_line[1].replace(":","=")
-					if c_conserved not in hub_path_list:
-						hub_path_list[c_conserved] = []
-
-					hub_path_len = len(re.findall("RP[0-9]{5}",tab_split_line[0]))
-					if c_conserved not in hub_path_len_dict:
-						hub_path_len_dict[c_conserved] = {}
-
-					hub_path_id = raw_path[0][0:6] + "_" + raw_path[-1][0:6]               
-					if hub_path_id not in hub_path_len_dict[c_conserved]:
-						hub_path_len_dict[c_conserved][hub_path_id] = hub_path_len
-					else:
-						if hub_path_len < hub_path_len_dict[c_conserved][hub_path_id]:
+						hub_path_id = raw_path[0][0:6] + "_" + raw_path[-1][0:6]               
+						if hub_path_id not in hub_path_len_dict[c_conserved]:
 							hub_path_len_dict[c_conserved][hub_path_id] = hub_path_len
+						else:
+							if hub_path_len < hub_path_len_dict[c_conserved][hub_path_id]:
+								hub_path_len_dict[c_conserved][hub_path_id] = hub_path_len
 
-					hub_path_list[c_conserved].append(path)
+						hub_path_list[c_conserved].append(path)
 
-			elif(line[0] == "["):
-				raw_path = line.split(";")
-				cleaned_start_item = "".join(x for x in raw_path[0] if x.isalnum())
-				path = cleaned_start_item[0:6] + "_HE,"
-				start_end_list.append(cleaned_start_item[0:6])
+				elif(line[0] == "["):
+					raw_path = line.split(";")
+					cleaned_start_item = "".join(x for x in raw_path[0] if x.isalnum())
+					path = cleaned_start_item[0:6] + "_HE,"
+					start_end_list.append(cleaned_start_item[0:6])
 
-				for item in raw_path[1:]:
-					if len(item) > 0:
-						cleaned_item = "".join(x for x in item if x.isalnum())
-						if cleaned_item[0] == "C":
-							path += cleaned_item[0:6] + ","
-						elif cleaned_item[0] == "R":
-							path += cleaned_item[0:7] + ","
+					for item in raw_path[1:]:
+						if len(item) > 0:
+							cleaned_item = "".join(x for x in item if x.isalnum())
+							if cleaned_item[0] == "C":
+								path += cleaned_item[0:6] + ","
+							elif cleaned_item[0] == "R":
+								path += cleaned_item[0:7] + ","
 
-				if len(tab_split_line) == 3:
-					c_conserved = tab_split_line[2]
-					if c_conserved not in second_path_list:
-						second_path_list[c_conserved] = []
-					second_path_list[c_conserved].append(path + "\t" + atp_used)
-
-
-	#Filter out any partially completed paths that should not be there
-	remove_from_first_list = set(end_first_list) - set(start_hub_list)
-	remove_from_hub_list = []
-	if len(start_end_list) > 0:
-		remove_from_hub_list = set(end_hub_list) - set(start_end_list)
-
-	for cc in reversed(first_path_list.keys()):
-		for path in reversed(first_path_list[cc]):
-			compound = path.split("_HS")[0][-6:]
-			if compound in remove_from_first_list:
-				fist_path_list[cc].remove(path)
-				print "Removing " + path 
-		if len(first_path_list[cc]) == 0:
-			first_path_list.pop(cc, None)
-
-	for cc in reversed(hub_path_list.keys()):
-		for path in reversed(hub_path_list[cc]):
-			compound = path.split("_HE")[0][-6:]
-			if compound in remove_from_hub_list:
-				hub_path_list[cc].remove(path)
-				print "Removing " + path
-		if len(hub_path_list[cc]) == 0:
-			hub_path_list.pop(cc, None)	
+					if len(tab_split_line) == 3:
+						c_conserved = tab_split_line[2]
+						if c_conserved not in second_path_list:
+							second_path_list[c_conserved] = []
+						second_path_list[c_conserved].append(path + "\t" + atp_used)
 
 
-	#print "Size of first paths: " + str(len(first_path_list))
-	#print "Size of hub paths: " + str(len(hub_path_list))
-	#print "Size of second paths: " + str(len(second_path_list))
-	db.close()
-	#print hub_path_list
+		#Filter out any partially completed paths that should not be there
+		remove_from_first_list = set(end_first_list) - set(start_hub_list)
+		remove_from_hub_list = []
+		if len(start_end_list) > 0:
+			remove_from_hub_list = set(end_hub_list) - set(start_end_list)
 
-	if len(first_path_list) == 0 and len(second_path_list) == 0:
-		print "looking at only hub to hub paths"
-		for cc in hub_path_list:
-			count = 0
-			for raw_path in hub_path_list[cc]:
-				path_segs = raw_path.split("\t")
-				path = path_segs[0]
-				hub_path_id = path[0:6] + "_" + path[-10:-4]
-				#if count < 50:
-				f.write(path[:-1] + "\t" + str(hub_path_len_dict[cc][hub_path_id]) + "\t" + path_segs[1] + "\t" + cc + "\n")
-				#else:
-				#	break
-				count += 1
+		for cc in reversed(first_path_list.keys()):
+			for path in reversed(first_path_list[cc]):
+				compound = path.split("_HS")[0][-6:]
+				if compound in remove_from_first_list:
+					fist_path_list[cc].remove(path)
+					print "Removing " + path 
+			if len(first_path_list[cc]) == 0:
+				first_path_list.pop(cc, None)
 
-	elif len(first_path_list) == 0:
-		print "looking at paths with no start to hub part"
-		cc_str_dict = {}
-		for cc1 in hub_path_list:
-			for cc2 in second_path_list:
-				hub_1, hub_2 = get_carbon_conserved_arrays(cc1)
+		for cc in reversed(hub_path_list.keys()):
+			for path in reversed(hub_path_list[cc]):
+				compound = path.split("_HE")[0][-6:]
+				if compound in remove_from_hub_list:
+					hub_path_list[cc].remove(path)
+					print "Removing " + path
+			if len(hub_path_list[cc]) == 0:
+				hub_path_list.pop(cc, None)	
 
-				second_1, second_2 = get_carbon_conserved_arrays(cc2)
 
-				final_1, final_2 = get_merged_carbons_conserved(hub_1, hub_2, second_1, second_2)
+		#print "Size of first paths: " + str(len(first_path_list))
+		#print "Size of hub paths: " + str(len(hub_path_list))
+		#print "Size of second paths: " + str(len(second_path_list))
+		db.close()
+		#print hub_path_list
 
-				if len(final_1) > 0:
-					cc_str = get_str_cc(final_1, final_2)
-					# if cc_str not in cc_str_dict:
-					# 	cc_str_dict[cc_str] = 1
-					#if cc_str_dict[cc_str] > 5:
-					#	continue
+		if len(first_path_list) == 0 and len(second_path_list) == 0:
+			print "looking at only hub to hub paths"
+			for cc in hub_path_list:
+				count = 0
+				for raw_path in hub_path_list[cc]:
+					path_segs = raw_path.split("\t")
+					path = path_segs[0]
+					hub_path_id = path[0:6] + "_" + path[-10:-4]
+					#if count < 50:
+					f.write(path[:-1] + "\t" + str(hub_path_len_dict[cc][hub_path_id]) + "\t" + path_segs[1] + "\t" + cc + "\n")
+					#else:
+					#	break
+					count += 1
 
-					#print cc_str
-					atp_used = 0
-					path1_segs = hub_path_list[cc1][0].split("\t")
-					path1 = path1_segs[0]
-					atp_used += int(path1_segs[1])
-					hub_path_id = path1[0:6] + "_" + path1[-10:-4]
+		elif len(first_path_list) == 0:
+			print "looking at paths with no start to hub part"
+			cc_str_dict = {}
+			for cc1 in hub_path_list:
+				for cc2 in second_path_list:
+					hub_1, hub_2 = get_carbon_conserved_arrays(cc1)
 
-					path2_segs = second_path_list[cc2][0].split("\t")
-					path2 = path2_segs[0]
-					atp_used += int(path2_segs[1])
-					f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
-					#cc_str_dict[cc_str] += 1
-					# for path1 in hub_path_list[cc1]:
-					#     for path2 in second_path_list[cc2]:
-					#             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
+					second_1, second_2 = get_carbon_conserved_arrays(cc2)
 
-	elif len(second_path_list) == 0:
-		print "looking at paths with no hub to target part"
-		cc_str_dict = {}
-		for cc1 in first_path_list:
-			for cc2 in hub_path_list:
-				first_1, first_2 = get_carbon_conserved_arrays(cc1)
-				hub_1, hub_2 = get_carbon_conserved_arrays(cc2)
-				final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
-				if len(final_1) > 0:
-					cc_str = get_str_cc(final_1, final_2)
-					# if cc_str not in cc_str_dict:
-					# 	cc_str_dict[cc_str] = 1
-					# elif cc_str_dict[cc_str] > 5:
-					# 	continue
-					# else:
-					path1_segs = first_path_list[cc1][0].split("\t")
-					path2_segs = hub_path_list[cc2][0].split("\t")
-					path1 = path1_segs[0]
-					path2 = path2_segs[0]
-					atp_used = int(path1_segs[1]) + int(path2_segs[1])
-					hub_path_id = path2[0:6] + "_" + path2[-10:-4]
+					final_1, final_2 = get_merged_carbons_conserved(hub_1, hub_2, second_1, second_2)
 
-					f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
-					#cc_str_dict[cc_str] += 1
-				# for path1 in first_path_list[cc1]:
-				#     for path2 in hub_path_list[cc2]:
-				#         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+					if len(final_1) > 0:
+						cc_str = get_str_cc(final_1, final_2)
+						# if cc_str not in cc_str_dict:
+						# 	cc_str_dict[cc_str] = 1
+						#if cc_str_dict[cc_str] > 5:
+						#	continue
 
-	else:
-		print "Full hub search!"
-		cc_str_dict = {}
-		for cc1 in first_path_list:
-			for cc2 in hub_path_list:
-				for cc3 in second_path_list:
-					cc_str = get_carbons_conserved(cc1, cc2, cc3)
-					if len(cc_str) > 0:
+						#print cc_str
+						atp_used = 0
+						path1_segs = hub_path_list[cc1][0].split("\t")
+						path1 = path1_segs[0]
+						atp_used += int(path1_segs[1])
+						hub_path_id = path1[0:6] + "_" + path1[-10:-4]
+
+						path2_segs = second_path_list[cc2][0].split("\t")
+						path2 = path2_segs[0]
+						atp_used += int(path2_segs[1])
+						f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+						#cc_str_dict[cc_str] += 1
+						# for path1 in hub_path_list[cc1]:
+						#     for path2 in second_path_list[cc2]:
+						#             f.write(path1 + path2[:-11] + "\t" + cc_str + "\n")
+
+		elif len(second_path_list) == 0:
+			print "looking at paths with no hub to target part"
+			cc_str_dict = {}
+			for cc1 in first_path_list:
+				for cc2 in hub_path_list:
+					first_1, first_2 = get_carbon_conserved_arrays(cc1)
+					hub_1, hub_2 = get_carbon_conserved_arrays(cc2)
+					final_1, final_2 = get_merged_carbons_conserved(first_1, first_2, hub_1, hub_2)
+					if len(final_1) > 0:
+						cc_str = get_str_cc(final_1, final_2)
 						# if cc_str not in cc_str_dict:
 						# 	cc_str_dict[cc_str] = 1
 						# elif cc_str_dict[cc_str] > 5:
@@ -270,17 +247,43 @@ def convert_lpat(filename, hub_list):
 						path2_segs = hub_path_list[cc2][0].split("\t")
 						path1 = path1_segs[0]
 						path2 = path2_segs[0]
+						atp_used = int(path1_segs[1]) + int(path2_segs[1])
 						hub_path_id = path2[0:6] + "_" + path2[-10:-4]
-						path3_segs = second_path_list[cc3][0].split("\t")
-						path3 = path3_segs[0]
-						atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
-						f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
-						#cc_str_dict[cc_str] += 1
 
-						# for path1 in first_path_list[cc1]:
-						#     for path2 in hub_path_list[cc2]:
-						#         for path3 in second_path_list[cc3]:
-						#             f.write(path1 + path2 + path3[11:-11] + "\t" + cc_str + "\n")        
+						f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+						#cc_str_dict[cc_str] += 1
+					# for path1 in first_path_list[cc1]:
+					#     for path2 in hub_path_list[cc2]:
+					#         f.write(path1 + path2[11:-1] + "\t" + cc_str + "\n")
+
+		else:
+			print "Full hub search!"
+			cc_str_dict = {}
+			for cc1 in first_path_list:
+				for cc2 in hub_path_list:
+					for cc3 in second_path_list:
+						cc_str = get_carbons_conserved(cc1, cc2, cc3)
+						if len(cc_str) > 0:
+							# if cc_str not in cc_str_dict:
+							# 	cc_str_dict[cc_str] = 1
+							# elif cc_str_dict[cc_str] > 5:
+							# 	continue
+							# else:
+							path1_segs = first_path_list[cc1][0].split("\t")
+							path2_segs = hub_path_list[cc2][0].split("\t")
+							path1 = path1_segs[0]
+							path2 = path2_segs[0]
+							hub_path_id = path2[0:6] + "_" + path2[-10:-4]
+							path3_segs = second_path_list[cc3][0].split("\t")
+							path3 = path3_segs[0]
+							atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
+							f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
+							#cc_str_dict[cc_str] += 1
+
+							# for path1 in first_path_list[cc1]:
+							#     for path2 in hub_path_list[cc2]:
+							#         for path3 in second_path_list[cc3]:
+							#             f.write(path1 + path2 + path3[11:-11] + "\t" + cc_str + "\n")        
 
 	f.close()
 
@@ -351,4 +354,4 @@ def file_to_list(filename):
 	contents = f.read()
 	return contents.split("\n")
 
-convert_lpat(sys.argv[1], file_to_list(sys.argv[2]))
+convert_lpat(sys.argv[1], file_to_list(sys.argv[2]), sys.argv[3])
