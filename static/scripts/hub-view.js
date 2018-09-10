@@ -149,7 +149,7 @@ function load_hub_viz(hub_data_graph) {
         .attr("id", function(node) {return node.id;})
         .attr("class", function(node) {
             if (node.id === hub_data_graph.source) {
-                var hub_viz_width = hub_path_width * 100 // Num edges in the first path times 30px per edge
+                var hub_viz_width = hub_path_width * 30 // Num edges in the first path times 30px per edge
                 left_x = (width / 2) - (0.5 * hub_viz_width);
 
                 node.fixed = true;
@@ -157,7 +157,7 @@ function load_hub_viz(hub_data_graph) {
                 node.fy = height / 2;
                 return "hub-source-node";
             } else if (node.id === hub_data_graph.target) {
-                var path_width = main_pathways.pathways[0].links.length * 100 // Num edges in the first path times 30px per edge
+                var path_width = main_pathways.pathways[0].links.length * 30 // Num edges in the first path times 30px per edge
                 right_x = (width / 2) + (0.5 * path_width);
 
                 node.fixed = true;
