@@ -486,6 +486,7 @@ function load_viz(data_graph) {
     link.data().forEach(function (l, index, array) {
         l.id = get_link_id(l);
         l.isHub = data_graph.hub_links.includes(l.id);
+        l.rxns = get_rxns(l);
     })
 
     var node = container.append("g")
@@ -830,6 +831,10 @@ function get_link_id(link) {
     } else {
         return link.source + "-" + link.target;
     }
+}
+
+function get_rxns(link) {
+    return link.rxns;
 }
 
 
