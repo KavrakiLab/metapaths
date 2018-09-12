@@ -373,8 +373,14 @@ function collect_pathways_into_graph(pathways) {
 
     var link_list = [];
     links.forEach(function(link) {
-        var compounds = link.split("-");
-        link_list.push({"source":compounds[0], "target":compounds[1]});
+        var raw_link_info = link.split(":"); 
+        var raw_compounds = raw_link_info[0];
+        var rpair = "";
+        if(raw_link_info.length > 1) {
+            rpair = raw_link_info[1];
+        }
+        var compounds = raw_compounds.split("-");
+        link_list.push({"source":compounds[0], "target":compounds[1], "rpair":rpair});
     });
 
     var hub_node_list = Array.from(hub_nodes);
