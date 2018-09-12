@@ -1,5 +1,6 @@
 /* Globals */
 var KEGG_REST_URL = "http://togows.org/entry/kegg-compound/";
+var KEGG_REST_RXN_URL = "http://togows.org/entry/kegg-reaction/";
 var KEGG_ENTRY_URL = "http://www.kegg.jp/dbget-bin/www_bget?";
 var KEGG_FIGURE_URL = "http://www.kegg.jp/Fig/compound/";
 var kegg_data = {};
@@ -762,6 +763,10 @@ function attach_link_watchers(viz_graph, data_graph) {
             // from viz-modal.js
             init_hub_view(link);
         }
+        else {
+            var ids = link.rxns.split(",");
+            update_info_panel_with_rxn(ids);
+        }
     });
 
     viz_graph.link.on("dblclick", function(link) {
@@ -806,6 +811,16 @@ function update_info_panel(id) {
     var more_info = "<a onclick=detail_popup('" + id +"')>more info</a><br>";
 
     $("#info-panel-body")[0].innerHTML = link + image + more_info;
+}
+
+function update_info_panel_with_rxn(ids) {
+    var output_html = "";
+
+    ids.forEach(function (id) {
+        output_html += "<h4><a target=none href='" + KEGG_ENTRY_URL + id + "'>" + id + "</a></h4><br>";
+    });
+
+    $("#info-panel-body")[0].innerHTML = output_html;
 }
 
 
