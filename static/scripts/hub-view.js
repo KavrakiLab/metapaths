@@ -61,8 +61,9 @@ function extract_hub_data_graph(hub_info) {
         nodes.push({ "id" : n });
     }
     for (var l of link_set) {
-        ends = l.split(",");
-        links.push({ "source" : ends[0], "target" : ends[1] });
+        raw_link_info = l.split(":");
+        ends = raw_link_info[0].split(",");
+        links.push({ "source" : ends[0], "target" : ends[1], "rpair" : raw_link_info[1] });
     }
 
     return {
