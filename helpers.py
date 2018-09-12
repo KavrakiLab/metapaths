@@ -93,6 +93,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     all_hub_links = []
     # Finds compound IDs by extracting words that start with the letter 'C'
     regex = re.compile("C\w+")
+    regex2 = re.compile("RP[0-9]{5}")
 
     start = None
     goal = None
@@ -112,6 +113,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         if len(tab_split_path) == 4:
             hub_len = tab_split_path[1]
         path_compounds = regex.findall(string_path)
+        path_rpairs = regex2.findall(string_path)
         nodes = set([])
         links = []
         hub_nodes = set([])
@@ -129,7 +131,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
                 hub_nodes.add(path_compounds[j])
                 hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
             else:
-                links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
+                links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + path_rpairs[i])
 
         pathway = {}
         pathway["atoms"] = carbons_conserved # TODO: actually calculate this
