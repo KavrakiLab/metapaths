@@ -58,11 +58,13 @@
 }
 
 .canonical-link {
+    cursor: pointer;
     stroke: #00f;
     stroke-width: 4px;
 }
 
 .internal-link {
+    cursor: pointer;
     stroke-width: 3px;
 }
 
