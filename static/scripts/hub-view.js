@@ -62,8 +62,8 @@ function extract_hub_data_graph(hub_info) {
     }
     for (var l of link_set) {
         raw_link_info = l.split(":");
-        ends = raw_link_info[0].split(",");
-        links.push({ "source" : ends[0], "target" : ends[1], "rpair" : raw_link_info[1] });
+        ends = raw_link_info[0].split("-");
+        links.push({ "source" : ends[0], "target" : ends[1], "rxns" : raw_link_info[1] });
     }
 
     return {

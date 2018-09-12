@@ -1,5 +1,6 @@
 import re
 import os
+import MySQLdb
 from flask import jsonify
 
 def generate_LPAT_config(start, start_name, target, target_name, carbon_track, allow_reversible, search_id):
@@ -98,6 +99,9 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     start = None
     goal = None
     hubs_exist = False
+    rxn_db = {}
+    db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db="MetaDB_2015")
+    cursor = db.cursor()
 
     for string_path in string_pathways:
         if string_path == "":
@@ -114,6 +118,18 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
             hub_len = tab_split_path[1]
         path_compounds = regex.findall(string_path)
         path_rpairs = regex2.findall(string_path)
+        path_rxns = []
+
+        for rpair in path_rpairs:
+            if rpair not in rxn_db:
+                cursor.execute("SELECT KEGGReactionID FROM KEGGReactionsRpair WHERE KEGGRpairID='" + rpair + "'")
+                list_of_rxns = []
+                for item in cursor.fetchall():
+                    list_of_rxns.append(item[0])
+                rxn_db[rpair] = list_of_rxns
+
+            path_rxns.append(rxn_db[rpair])
+
         #print path_compounds
         #print path_rpairs
         nodes = set([])
@@ -134,7 +150,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
                 hub_nodes.add(path_compounds[j])
                 hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
             else:
-                links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + path_rpairs[rpair_idx])
+                links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + ",".join(path_rxns[rpair_idx]))
                 rpair_idx += 1
 
         pathway = {}
@@ -164,6 +180,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         canonical_links = list(canonical_links)
         canonical_cmpds = list(canonical_cmpds)
 
+    cursor.close()
     pathways_data = {
         "info" : {
             "start" : start,
@@ -213,6 +230,9 @@ def get_pathways_from_file(pathways_filename, background_hubs_filename, hub_db):
 
 def hub_paths_to_json(hub_src, hub_dst, hub_db, string_hub_pathways):
     pathways = []
+    rxn_db = {}
+    db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db="MetaDB_2015")
+    cursor = db.cursor()
 
     # Finds compound IDs by extracting words that start with the letter 'C'
     regex = re.compile("C\w+")
@@ -225,15 +245,26 @@ def hub_paths_to_json(hub_src, hub_dst, hub_db, string_hub_pathways):
             path_atoms = len(raw_atoms)
             print raw_atoms
             path_compounds = regex.findall(path)
-            path_rxns = regex2.findall(path)
+            path_rpairs = regex2.findall(path)
             
             if len(path_compounds) <= 1:
                 continue
 
+            path_rxns = []
+            for rpair in path_rpairs:
+                if rpair not in rxn_db:
+                    cursor.execute("SELECT KEGGReactionID FROM KEGGReactionsRpair WHERE KEGGRpairID='" + rpair + "'")
+                    list_of_rxns = []
+                    for item in cursor.fetchall():
+                        list_of_rxns.append(item[0])
+                    rxn_db[rpair] = list_of_rxns
+
+                path_rxns.append(rxn_db[rpair])
+
             links = []
             for i in range(len(path_compounds) - 1):
                 j = i + 1
-                links.append(path_compounds[i] + "," + path_compounds[j] + ":" + path_rxns[i])
+                links.append(path_compounds[i] + "-" + path_compounds[j] + ":" + ",".join(path_rxns[i]))
 
             pathway = {}
             pathway["atoms"] = path_atoms # TODO: actually calculate this

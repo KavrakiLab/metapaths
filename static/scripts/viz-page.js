@@ -375,12 +375,12 @@ function collect_pathways_into_graph(pathways) {
     links.forEach(function(link) {
         var raw_link_info = link.split(":"); 
         var raw_compounds = raw_link_info[0];
-        var rpair = "";
+        var rxns = "";
         if(raw_link_info.length > 1) {
-            rpair = raw_link_info[1];
+            rxns = raw_link_info[1];
         }
         var compounds = raw_compounds.split("-");
-        link_list.push({"source":compounds[0], "target":compounds[1], "rpair":rpair});
+        link_list.push({"source":compounds[0], "target":compounds[1], "rxns":rxns});
     });
 
     var hub_node_list = Array.from(hub_nodes);
