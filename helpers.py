@@ -210,25 +210,35 @@ def hub_paths_to_json(hub_src, hub_dst, hub_db, string_hub_pathways):
 
     # Finds compound IDs by extracting words that start with the letter 'C'
     regex = re.compile("C\w+")
+    regex2 = re.compile("RP[0-9]{5}")
 
     for string_path in string_hub_pathways:
-        path_compounds = regex.findall(string_path[0])
+        paths = string_path[0].split("},")
+        for path in paths:
+            raw_atoms = re.findall("[0-9]+",path.split("{")[1])
+            path_atoms = len(raw_atoms)
+            print raw_atoms
+            path_compounds = regex.findall(path)
+            path_rxns = regex2.findall(path)
+            
+            if len(path_compounds) <= 1:
+                continue
 
-        links = []
-        for i in range(len(path_compounds) - 1):
-            j = i + 1
-            links.append(path_compounds[i] + "," + path_compounds[j])
+            links = []
+            for i in range(len(path_compounds) - 1):
+                j = i + 1
+                links.append(path_compounds[i] + "," + path_compounds[j] + ":" + path_rxns[i])
 
-        pathway = {}
-        pathway["atoms"] = 0 # TODO: actually calculate this
-        pathway["nodes"] = path_compounds
-        pathway["links"] = links
+            pathway = {}
+            pathway["atoms"] = path_atoms # TODO: actually calculate this
+            pathway["nodes"] = path_compounds
+            pathway["links"] = links
 
-        # Empty list since hub pathways don't contain hubs themselves
-        pathway["hub_links"] = []
-        pathway["hub_nodes"] = []
+            # Empty list since hub pathways don't contain hubs themselves
+            pathway["hub_links"] = []
+            pathway["hub_nodes"] = []
 
-        pathways.append(pathway)
+            pathways.append(pathway)
 
 
     hub = {
