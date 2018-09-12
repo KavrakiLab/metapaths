@@ -114,6 +114,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
             hub_len = tab_split_path[1]
         path_compounds = regex.findall(string_path)
         path_rpairs = regex2.findall(string_path)
+        print path_rpairs
         nodes = set([])
         links = []
         hub_nodes = set([])
