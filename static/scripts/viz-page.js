@@ -386,7 +386,16 @@ function collect_pathways_into_graph(pathways) {
     });
 
     var hub_node_list = Array.from(hub_nodes);
-    var hub_link_list = Array.from(hub_links);
+    var hub_link_list = [];
+    hub_links.forEach(function(link) {
+        var raw_link_info = link.split(":");
+        var raw_compounds = raw_link_info[0];
+        var link_data = raw_link_info[1].split(",");
+        var min_length = link_data[0];
+        var num_paths = link_data[1];
+        hub_link_list.push({"source":compounds[0], "target":compounds[1], "min_len":min_length, "num_paths":num_paths});
+    });
+
     var canonical_nodes_list = Array.from(canonical_nodes);
     var canonical_links_list = Array.from(canonical_links);
 
@@ -403,6 +412,15 @@ function collect_pathways_into_graph(pathways) {
         "num_pathways" : pathways.pathways.length
     };
 } // collect_pathways_into_graph
+
+function get_hub_link_ids(hub_links) {
+    var hub_link_ids = [];
+
+    hub_links.forEach(function (element) {
+        hub_link_ids.push(element.split(":")[0]);
+    });
+    return hub_link_ids;
+}
 
 
 function load_viz(data_graph) {
@@ -474,7 +492,8 @@ function load_viz(data_graph) {
         .enter().append("line")
         .attr("id", function(link) {return get_link_id(link);})
         .attr("class", function(link) {
-            if (data_graph.hub_links.includes(get_link_id(link))) {
+
+            if (get_hub_link_ids(data_graph.hub_links).includes(get_link_id(link))) {
                 return "hub-link";
             } else if (data_graph.canonical_links.includes(get_link_id(link))){
                 return "canonical-link";
@@ -486,7 +505,7 @@ function load_viz(data_graph) {
 
     link.data().forEach(function (l, index, array) {
         l.id = get_link_id(l);
-        l.isHub = data_graph.hub_links.includes(l.id);
+        l.isHub = get_hub_link_ids(data_graph.hub_links).includes(l.id);
         l.rxns = get_rxns(l);
     })
 
