@@ -11,6 +11,7 @@ function get_hub_pathways(pathways, hub_db) {
         var source = raw_link_info.split("-")[0];
         var target = raw_link_info.split("-")[1];
         var request_url = "/get_hub_paths/" + source + "/" + target + "/" + hub_db;
+        console.log(request_url);
 
         $.get(request_url).done(function (response) {
             orig_hub_pathways[hub_link_id] = response;
