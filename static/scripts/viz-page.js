@@ -390,6 +390,7 @@ function collect_pathways_into_graph(pathways) {
     hub_links.forEach(function(link) {
         var raw_link_info = link.split(":");
         var raw_compounds = raw_link_info[0];
+        var compounds = raw_compounds.split("-");
         var link_data = raw_link_info[1].split(",");
         var min_length = link_data[0];
         var num_paths = link_data[1];
@@ -412,6 +413,7 @@ function collect_pathways_into_graph(pathways) {
         "num_pathways" : pathways.pathways.length
     };
 } // collect_pathways_into_graph
+
 
 function get_hub_link_ids(hub_links) {
     var hub_link_ids = [];
