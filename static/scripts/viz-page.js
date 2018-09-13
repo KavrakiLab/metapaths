@@ -419,8 +419,7 @@ function get_hub_link_ids(hub_links) {
     var hub_link_ids = [];
 
     hub_links.forEach(function (hub_link) {
-        var hub_link = hub_link.split(":")[0];
-        hub_link_ids.push();
+        hub_link_ids.push(get_link_id(hub_link));
     });
     return hub_link_ids;
 }
