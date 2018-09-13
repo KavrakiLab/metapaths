@@ -418,8 +418,9 @@ function collect_pathways_into_graph(pathways) {
 function get_hub_link_ids(hub_links) {
     var hub_link_ids = [];
 
-    hub_links.forEach(function (element) {
-        hub_link_ids.push(element.split(":")[0]);
+    hub_links.forEach(function (item) {
+        var hub_link = item.split(":")[0];
+        hub_link_ids.push();
     });
     return hub_link_ids;
 }
@@ -487,6 +488,8 @@ function load_viz(data_graph) {
         .attr("d", "M 0 0 L 10 5 L 0 10 z")
         .attr("fill", "#555");
 
+    var hub_link_ids = get_hub_link_ids(data_graph.hub_links)
+
     var link = container.append("g")
         .attr("class", "links")
         .selectAll("line")
@@ -495,7 +498,7 @@ function load_viz(data_graph) {
         .attr("id", function(link) {return get_link_id(link);})
         .attr("class", function(link) {
 
-            if (get_hub_link_ids(data_graph.hub_links).includes(get_link_id(link))) {
+            if (hub_link_ids.includes(get_link_id(link))) {
                 return "hub-link";
             } else if (data_graph.canonical_links.includes(get_link_id(link))){
                 return "canonical-link";
@@ -507,7 +510,7 @@ function load_viz(data_graph) {
 
     link.data().forEach(function (l, index, array) {
         l.id = get_link_id(l);
-        l.isHub = get_hub_link_ids(data_graph.hub_links).includes(l.id);
+        l.isHub = hub_link_ids.includes(l.id);
         l.rxns = get_rxns(l);
     })
 
