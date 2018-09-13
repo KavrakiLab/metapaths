@@ -5,6 +5,7 @@ function get_hub_pathways(pathways, hub_db) {
             all_hub_links.add(hub_link)
         });
     });
+    console.log(all_hub_links);
 
     all_hub_links.forEach(function(hub_link_id) {
         var raw_link_info = hub_link_id.split(":")[0];
