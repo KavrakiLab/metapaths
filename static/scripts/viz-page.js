@@ -418,8 +418,8 @@ function collect_pathways_into_graph(pathways) {
 function get_hub_link_ids(hub_links) {
     var hub_link_ids = [];
 
-    hub_links.forEach(function (item) {
-        var hub_link = item.split(":")[0];
+    hub_links.forEach(function (hub_link) {
+        var hub_link = hub_link.split(":")[0];
         hub_link_ids.push();
     });
     return hub_link_ids;
