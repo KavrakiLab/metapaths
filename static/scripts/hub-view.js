@@ -7,8 +7,9 @@ function get_hub_pathways(pathways, hub_db) {
     });
 
     all_hub_links.forEach(function(hub_link_id) {
-        var source = hub_link_id.split("-")[0];
-        var target = hub_link_id.split("-")[1];
+        var raw_link_info = hub_link_id.split(":")[0];
+        var source = raw_link_info.split("-")[0];
+        var target = raw_link_info.split("-")[1];
         var request_url = "/get_hub_paths/" + source + "/" + target + "/" + hub_db;
 
         $.get(request_url).done(function (response) {

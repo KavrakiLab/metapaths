@@ -88,6 +88,27 @@ def get_canonical_cmpds(goal):
     return None
 
 
+def get_min_len_and_num_hub_paths(hub_cursor, hub1, hub2):
+    hub_cursor.execute("SELECT paths FROM " + hub1 + "_" + hub2 + "")
+    paths = hub_cursor.fetchall()
+    num_paths = 0
+    min_length = 100
+    for item in paths:
+        raw_paths = item[0].split("},")
+        num_paths += len(raw_paths)
+
+        split_path = raw_paths[0].split("\t")
+        if len(split_path) < 3:
+            continue
+        current_length = int(split_path[1].replace(".0",""))
+        if current_length < min_length:
+            min_length = current_length
+
+    return str(num_paths) + "," + str(min_length)
+
+
+
+
 def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     pathways = []
     all_hub_nodes = set([])
@@ -102,6 +123,9 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     rxn_db = {}
     db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db="MetaDB_2015")
     cursor = db.cursor()
+
+    hub_db_object = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
+    hub_cursor = hub_db_object.cursor()
 
     for string_path in string_pathways:
         if string_path == "":
@@ -148,7 +172,8 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
                 hubs_exist = True
                 hub_nodes.add(path_compounds[i])
                 hub_nodes.add(path_compounds[j])
-                hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6])
+                min_len_num_hubs = get_min_len_and_num_hub_paths(hub_cursor, path_compounds[i][0:6], path_compounds[j][0:6])
+                hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + min_len_num_hubs)
             else:
                 links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + ",".join(path_rxns[rpair_idx]))
                 rpair_idx += 1
