@@ -5,14 +5,15 @@ function get_hub_pathways(pathways, hub_db) {
             all_hub_links.add(hub_link)
         });
     });
-    console.log(all_hub_links);
+    //console.log(all_hub_links);
 
-    all_hub_links.forEach(function(hub_link_id) {
-        var raw_link_info = hub_link_id.split(":")[0];
+    all_hub_links.forEach(function(raw_hub_link_id) {
+        var raw_link_info = raw_hub_link_id.split(":")[0];
         var source = raw_link_info.split("-")[0];
         var target = raw_link_info.split("-")[1];
+        var hub_link_id = source + "-" + target
         var request_url = "/get_hub_paths/" + source + "/" + target + "/" + hub_db;
-        console.log(request_url);
+        //console.log(request_url);
 
         $.get(request_url).done(function (response) {
             orig_hub_pathways[hub_link_id] = response;
