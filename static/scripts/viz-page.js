@@ -510,7 +510,7 @@ function load_viz(data_graph) {
             var link_id = get_link_id(link);
             if (hub_link_ids.includes(link_id)) {
                 if(hub_link_ids_dict[link_id].num_paths == "1") {
-                    return "#999";
+                    return "#900";
                 }
             }
             return "#555";
@@ -808,15 +808,18 @@ function attach_link_watchers(viz_graph, data_graph) {
     });
 
     viz_graph.link.on("mouseover", function(link) {
-        if (link.isHub) {
+        /*if (link.isHub) {
             $("#" + link.id)[0].style.stroke = "#999";
         }
+        */
     });
 
     viz_graph.link.on("mouseout", function(link) {
+        /*
         if (link.isHub && $("#" + link.id)[0]) {
             $("#" + link.id)[0].style.stroke = "#555";
         }
+        */
     });
 }
 
