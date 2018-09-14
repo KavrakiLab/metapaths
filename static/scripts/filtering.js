@@ -95,6 +95,7 @@ function filter_pathways(str_info, str_pathways, background_hubs) {
             // Iterate in reverse so that we can remove elements with out worrying about indices changing
             var pathway = filtered_pathways.pathways[i];
             var path_len = pathway.links.length + pathway.hub_len;
+            console.log("Length of path: " + path_len);
 
             if (path_len > max_path_len) {
                 filtered_pathways.pathways.splice(i, 1);
@@ -109,7 +110,7 @@ function filter_pathways(str_info, str_pathways, background_hubs) {
             // Iterate in reverse so that we can remove elements with out worrying about indices changing
             var pathway = filtered_pathways.pathways[i];
             var num_carbons = pathway.atoms.length;
-            console.log("Number of carbons conserved in path: " + num_carbons);
+            //console.log("Number of carbons conserved in path: " + num_carbons);
 
             if (num_carbons < min_carbons) {
                 filtered_pathways.pathways.splice(i, 1);
@@ -124,7 +125,7 @@ function filter_pathways(str_info, str_pathways, background_hubs) {
             // Iterate in reverse so that we can remove elements with out worrying about indices changing
             var pathway = filtered_pathways.pathways[i];
             var atp_used = pathway.atp;
-            console.log("Number of atp used in path: " + atp_used);
+            //console.log("Number of atp used in path: " + atp_used);
 
             if (atp_used < min_atp) {
                 filtered_pathways.pathways.splice(i, 1);
