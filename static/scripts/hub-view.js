@@ -235,6 +235,7 @@ function load_hub_viz(hub_data_graph) {
     // Attach the same node watchers as for the full viz
     attach_node_watchers(hub_viz_graph);
     attach_link_watchers(hub_viz_graph);
+    attach_motion_watcher(viz_graph);
 
     return hub_viz_graph;
 } // load_hub_viz

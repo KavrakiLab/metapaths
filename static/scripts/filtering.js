@@ -98,7 +98,7 @@ function filter_pathways(str_info, str_pathways, background_hubs) {
             if(!isNaN(pathway.hub_len)) {
                 path_len += pathway.hub_len;
             }
-            console.log("Length of path: " + path_len);
+            //console.log("Length of path: " + path_len);
 
             if (path_len > max_path_len) {
                 filtered_pathways.pathways.splice(i, 1);
@@ -141,7 +141,7 @@ function filter_pathways(str_info, str_pathways, background_hubs) {
 
 function filter_all_hubs() {
     hub_pathways = JSON.parse(JSON.stringify(orig_hub_pathways));
-    
+
     for (var hub_link_id in hub_pathways) {
         var filtered = filter_pathways(
             JSON.stringify(hub_pathways[hub_link_id].info),
