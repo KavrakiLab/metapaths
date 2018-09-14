@@ -31,21 +31,20 @@ function add_included_node(compound_id) {
 
 function apply_filters() {
     // Always apply filters to a fresh copy of the original pathways
-    var filtered_main_pathways = filter_pathways(JSON.stringify(orig_pathways["info"]), JSON.stringify(orig_pathways["pathways"]), JSON.stringify(orig_pathways["background_hubs"]));
+    if (shown_hub == "") {
+        var filtered_main_pathways = filter_pathways(JSON.stringify(orig_pathways["info"]), JSON.stringify(orig_pathways["pathways"]), JSON.stringify(orig_pathways["background_hubs"]));
 
-    if (filtered_main_pathways.pathways.length === 0) {
-        alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
-        return;
-    } else {
-        main_pathways = filtered_main_pathways;
+        if (filtered_main_pathways.pathways.length === 0) {
+            alert("There are no pathways that meet the specified filtering criteria, please adjust the filters.");
+            return;
+        } else {
+            main_pathways = filtered_main_pathways;
+        }
+         validate_and_visualize(main_pathways);
     }
-
+    else {
     filter_all_hubs();
-
-    if (shown_hub !== "") {
-        load_hub_viz(extract_hub_data_graph(hub_pathways[shown_hub]));
-    } else {
-        validate_and_visualize(main_pathways);
+    load_hub_viz(extract_hub_data_graph(hub_pathways[shown_hub]));
     }
 }
 
