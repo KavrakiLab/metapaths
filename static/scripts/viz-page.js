@@ -488,7 +488,7 @@ function load_viz(data_graph) {
         .attr("fill", "#555");
 
     var hub_link_ids_dict = get_hub_link_ids(data_graph.hub_links)
-    var hub_link_ids = hub_link_ids_dict.keys()
+    var hub_link_ids = Object.keys(hub_link_ids_dict)
 
     var link = container.append("g")
         .attr("class", "links")
