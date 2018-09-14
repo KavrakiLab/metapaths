@@ -94,7 +94,10 @@ function filter_pathways(str_info, str_pathways, background_hubs) {
         for (var i = filtered_pathways.pathways.length - 1; i >= 0; i--) {
             // Iterate in reverse so that we can remove elements with out worrying about indices changing
             var pathway = filtered_pathways.pathways[i];
-            var path_len = pathway.links.length + pathway.hub_len;
+            var path_len = pathway.links.length;
+            if(!isNaN(pathway.hub_len)) {
+                path_len += pathway.hub_len;
+            }
             console.log("Length of path: " + path_len);
 
             if (path_len > max_path_len) {
