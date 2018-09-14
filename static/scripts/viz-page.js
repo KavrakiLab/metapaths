@@ -416,10 +416,10 @@ function collect_pathways_into_graph(pathways) {
 
 
 function get_hub_link_ids(hub_links) {
-    var hub_link_ids = [];
+    var hub_link_ids = {};
 
     hub_links.forEach(function (hub_link) {
-        hub_link_ids.push(get_link_id(hub_link));
+        hub_link_ids[get_link_id(hub_link)] = hub_link;
     });
     return hub_link_ids;
 }
@@ -487,7 +487,8 @@ function load_viz(data_graph) {
         .attr("d", "M 0 0 L 10 5 L 0 10 z")
         .attr("fill", "#555");
 
-    var hub_link_ids = get_hub_link_ids(data_graph.hub_links)
+    var hub_link_ids_dict = get_hub_link_ids(data_graph.hub_links)
+    var hub_link_ids = hub_link_ids_dict.keys()
 
     var link = container.append("g")
         .attr("class", "links")
@@ -504,6 +505,15 @@ function load_viz(data_graph) {
             } else {
                 return "link";
             }
+        })
+        .attr("stroke", function(link) {
+            var link_id = get_link_id(link);
+            if (hub_link_ids.includes(link_id)) {
+                if(hub_link_ids_dict[link_id].num_paths == "1") {
+                    return "#999";
+                }
+            }
+            return "#555";
         })
         .attr("marker-end", "url(#arrowhead)");
 
