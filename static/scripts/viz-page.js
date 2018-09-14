@@ -314,7 +314,7 @@ function validate_and_visualize(pathways) {
 
     attach_node_watchers(viz_graph);
 
-    attach_link_watchers(viz_graph, data_graph);
+    attach_link_watchers(viz_graph);
 
     attach_motion_watcher(viz_graph);
 
@@ -790,7 +790,7 @@ function attach_node_watchers(viz_graph) {
 }
 
 
-function attach_link_watchers(viz_graph, data_graph) {
+function attach_link_watchers(viz_graph) {
     viz_graph.link.on("click", function(link) {
         if (link.isHub) {
             $("#" + link.id)[0].style.stroke = "#555";
