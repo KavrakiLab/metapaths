@@ -144,6 +144,8 @@ function load_hub_viz(hub_data_graph) {
 
     link.data().forEach(function (l, index, array) {
         l.id = get_link_id(l);
+        l.isHub = false;
+        l.rxns = get_rxns(l);
     });
 
     var node = container.append("g")
