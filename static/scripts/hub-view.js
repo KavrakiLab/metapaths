@@ -8,11 +8,11 @@ function get_hub_pathways(pathways, hub_db) {
     //console.log(all_hub_links);
 
     all_hub_links.forEach(function(raw_hub_link_id) {
-        var raw_link_info = raw_hub_link_id.split("=")[0];
-        has_mapping = raw_hub_link_id.split("=").length > 1
+        var raw_link_info = raw_hub_link_id.split(":")[0];
+        has_mapping = raw_hub_link_id.split(":").length > 1
         var mapping = ""
         if(has_mapping) {
-            mapping = raw_hub_link_id.split("=")[1];
+            mapping = raw_hub_link_id.split(":")[1].replace("=",":");
         }
         var source = raw_link_info.split("-")[0];
         var target = raw_link_info.split("-")[1];
