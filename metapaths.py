@@ -143,7 +143,7 @@ def get_hub_paths(hub_src, hub_dst, hub_db):
 
 
 @app.route('/get_hub_paths/<hub_src>/<hub_dst>/<hub_map>/<hub_db>')
-def get_hub_paths(hub_src, hub_dst, hub_map, hub_db):
+def get_selected_hub_paths(hub_src, hub_dst, hub_map, hub_db):
     """
     Returns visualization formatted JSON describing the pathways between the
     two hub compounds
