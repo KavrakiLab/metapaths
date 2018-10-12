@@ -20,7 +20,7 @@ function get_hub_pathways(pathways, hub_db) {
         var request_url = "/get_hub_paths/" + source + "/" + target + "/" + hub_db;
         
         if(has_mapping) {
-            var request_url = "/get_hub_paths/" + source + "/" + target + "/" + mapping + "/" hub_db;
+            var request_url = "/get_hub_paths/" + source + "/" + target + "/" + mapping + "/" + hub_db;
         }
         //console.log(request_url);
 
