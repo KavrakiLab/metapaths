@@ -394,7 +394,7 @@ function collect_pathways_into_graph(pathways) {
         var link_data = ""
         if(raw_link_info.length > 1)
             link_data = raw_link_info[1];
-        hub_link_list.push({"source":compounds[0], "target":compounds[1], "min_len":link_data});
+        hub_link_list.push({"source":compounds[0], "target":compounds[1], "link_data":link_data, "rxns":""});
     });
 
     var canonical_nodes_list = Array.from(canonical_nodes);
