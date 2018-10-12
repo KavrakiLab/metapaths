@@ -391,10 +391,10 @@ function collect_pathways_into_graph(pathways) {
         var raw_link_info = link.split(":");
         var raw_compounds = raw_link_info[0];
         var compounds = raw_compounds.split("-");
-        var link_data = raw_link_info[1].split(",");
-        var min_length = link_data[0];
-        var num_paths = link_data[1];
-        hub_link_list.push({"source":compounds[0], "target":compounds[1], "min_len":min_length, "num_paths":num_paths});
+        var link_data = ""
+        if(raw_link_info.length > 1)
+            link_data = raw_link_info[1];
+        hub_link_list.push({"source":compounds[0], "target":compounds[1], "min_len":link_data});
     });
 
     var canonical_nodes_list = Array.from(canonical_nodes);
