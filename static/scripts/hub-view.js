@@ -12,7 +12,13 @@ function get_hub_pathways(pathways, hub_db) {
         has_mapping = raw_hub_link_id.split(":").length > 1
         var mapping = ""
         if(has_mapping) {
-            mapping = raw_hub_link_id.split(":")[1].replace("=",":");
+            potential_mapping = raw_hub_link_id.split(":")[1]
+            if(potental_mapping.contains("=")) {
+                mapping = raw_hub_link_id.split(":")[1].replace("=",":");
+            }
+            else {
+                has_mapping = false;
+            }
         }
         var source = raw_link_info.split("-")[0];
         var target = raw_link_info.split("-")[1];
