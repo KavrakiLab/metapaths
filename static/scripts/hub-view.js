@@ -12,7 +12,7 @@ function get_hub_pathways(pathways, hub_db) {
         has_mapping = raw_hub_link_id.split(":").length > 1
         var mapping = ""
         if(has_mapping) {
-            potential_mapping = raw_hub_link_id.split(":")[1]
+            var potential_mapping = raw_hub_link_id.split(":")[1]
             if(potental_mapping.contains("=")) {
                 mapping = raw_hub_link_id.split(":")[1].replace("=",":");
             }
