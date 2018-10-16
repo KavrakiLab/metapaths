@@ -13,7 +13,7 @@ function get_hub_pathways(pathways, hub_db) {
         var mapping = ""
         if(has_mapping) {
             var potential_mapping = raw_hub_link_id.split(":")[1]
-            if(potential_mapping.contains("=")) {
+            if(potential_mapping.includes("=")) {
                 mapping = raw_hub_link_id.split(":")[1].replace("=",":");
             }
             else {
