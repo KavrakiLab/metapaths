@@ -6,10 +6,10 @@ $(function () {
     $("#algorithm").select2({data: alg_options});
     $("#algorithm").on("select2:select", function(e) {
         if ($("#algorithm").val() === "0") {
-            $("#hub-compounds-group").show();
+            //$("#hub-compounds-group").show();
 	        $("#hub-database-group").show();
         } else {
-            $("#hub-compounds-group").hide();
+            //$("#hub-compounds-group").hide();
 	        $("#hub-database-group").hide();
         }
     });
@@ -36,10 +36,10 @@ $(function () {
         });
 
         if ($("#algorithm").val() === "0") {
-            $("#hub-compounds-group").show();
+            //$("#hub-compounds-group").show();
 	        $("#hub-database-group").show();
         } else {
-            $("#hub-compounds-group").hide();
+            //$("#hub-compounds-group").hide();
 	        $("#hub-database-group").hide();
         }
     });
