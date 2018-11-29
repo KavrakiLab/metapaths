@@ -30,7 +30,7 @@ def generate_LPAT_config(start, start_name, target, target_name, carbon_track, a
     return input_loc, output_loc
 
 def generate_hub_config(start, start_name, target, target_name, carbon_track, allow_reversible,
-        search_id, selected_hub_compounds, hub_db):
+        search_id, hub_list, hub_db):
 
     config = "DBHOST\tlocalhost\n"
     config += "DBPORT\t3306\n"
@@ -48,14 +48,14 @@ def generate_hub_config(start, start_name, target, target_name, carbon_track, al
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
     config += "HUBTABLE\tsearches/" + hub_db + "\n"
-    config += "IGNORE_CMPD\t" + ",".join(selected_hub_compounds) + "\n"
+    config += "IGNORE_CMPD\t" + hub_list_file + "\n"
+    config += "NUMCLOSESTHUBS\t3\n"
+    config += "HUBSEARCHDEPTH\t2\n"
+    config += "MAXRXNINHUBPATH\t15\n"
 
-    output_loc = "searches/output/" + search_id + "|" + start_name + " (" + start + ")|" + target_name + " (" + target + ")|" + "Hub|" + hub_db + ".txt"
+    output_loc = "searches/output/" + search_id + "|" + start_name + " (" + start + ")|" + target_name + " (" + target + ")|" + "Hub.txt"
     output_loc = output_loc.replace(" ", "_")
     config += "OUTPUTDIR\t"+ output_loc + "\n"
-#    config += "USEHUBTABLE\t1\n"
-#    config += "HUBS\t" + ",".join(selected_hub_compounds)
-
 
     input_loc = write_config_file(search_id, config)
     return input_loc, output_loc
