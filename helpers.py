@@ -50,8 +50,8 @@ def generate_hub_config(start, start_name, target, target_name, carbon_track, al
     config += "HUBTABLE\tsearches/" + hub_db + "\n"
     config += "IGNORE_CMPD\t" + hub_list + "\n"
     config += "NUMCLOSESTHUBS\t3\n"
-    config += "HUBSEARCHDEPTH\t2\n"
-    config += "MAXRXNINHUBPATH\t15\n"
+    config += "HUBSEARCHDEPTH\t10\n"
+    config += "MAXRXNINHUBPATH\t10\n"
 
     output_loc = "searches/output/" + search_id + "|" + start_name + " (" + start + ")|" + target_name + " (" + target + ")|" + "Hub.txt"
     output_loc = output_loc.replace(" ", "_")
