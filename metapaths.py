@@ -202,7 +202,7 @@ def hub_search():
     result = execute_hub_search.delay(search_id, request.args["start"],
             request.args["target"], request.args["carbontrack"],
             request.args["reversible"],
-            json.loads(request.args["hubcompounds"]),
+            request.args["hubcompounds"],
             request.args["hub_db"])
     tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
