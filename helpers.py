@@ -48,7 +48,7 @@ def generate_hub_config(start, start_name, target, target_name, carbon_track, al
     config += "PERCENTCARBON\t1.0\n"
     config += "WEIGHTTYPE\tWEIGHT_OF_ONE\n"
     config += "HUBTABLE\tsearches/" + hub_db + "\n"
-    config += "IGNORE_CMPD\t" + hub_list + "\n"
+    config += "IGNORE_CMPD\tsearches/" + hub_list + "\n"
     config += "NUMCLOSESTHUBS\t3\n"
     config += "HUBSEARCHDEPTH\t10\n"
     config += "MAXRXNINHUBPATH\t10\n"
