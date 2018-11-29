@@ -16,9 +16,9 @@ $(function () {
 
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
 
-    var hubdb_options = [{id:'HubT_all_edges_2', text:"Standard Hub Table"}, {id:'HTK1M',text:"Old Hub Table"}];
+    var hubdb_options = [{id:'HubT_all_edges_2;hub_list.txt', text:"Standard Hub Table"}, {id:'HTK1M;hub_list.txt',text:"Old Hub Table"}];
     $("#hub-db").select2({data: hubdb_options});
-    $("#hub-db").val("HubT_all_edges_2").trigger("change");
+    $("#hub-db").val("HubT_all_edges_2;hub_list.txt").trigger("change");
 
     $.get("/get_compound_names").done(function(results_json) {
         var formatted_compounds = format_compounds(JSON.parse(results_json));
@@ -67,16 +67,18 @@ function format_compounds(name_map) {
 }
 
 function search() {
+    hub_db_value = $("#hub-db").val()
+    split_hub_db = hub_db_value.split(";")
 
     // If user selected hub search
     if ($("#algorithm").val() === "0") {
         var query = {
             "start" : $("#start-compound").val(),
             "target" : $("#target-compound").val(),
-            "hubcompounds" : JSON.stringify($("#hub-compounds").val()),
+            "hubcompounds" : split_hub_db[1],
             "carbontrack" : $("input[name=carbontracking]:checked").val(),
             "reversible" : $("#allow-reversible").is(":checked"),
-            "hub_db" : $("#hub-db").val(),
+            "hub_db" : split_hub_db[0],
         }
         //console.log(JSON.stringify($("#hub-compounds option:selected").val()));
         execute_search("/hub_search", query);

@@ -275,14 +275,14 @@ def get_available_searches():
 #
 
 @celery.task()
-def execute_hub_search(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds, hub_db):
+def execute_hub_search(search_id, start, target, carbon_track, allow_reversible, hub_list_file, hub_db):
     global searches
 
     print "Executing Hub search with:"
-    print(search_id, start, target, carbon_track, allow_reversible, selected_hub_compounds)
-    print("hub compounds", type(selected_hub_compounds), selected_hub_compounds)
+    print(search_id, start, target, carbon_track, allow_reversible, hub_list_file)
+    print("hub compounds", type(hub_list_file), hub_list_file)
     input_loc, output_loc = generate_hub_config(start, compound_names[start], target, compound_names[target], carbon_track,
-            allow_reversible, search_id, selected_hub_compounds, hub_db)
+            allow_reversible, search_id, hub_list_file, hub_db)
 
     print("starting search")
     alg_output = subprocess.call(["java", "-jar", "searches/HubPathwaySearch.jar", input_loc])
@@ -292,7 +292,7 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
         return None
 
     print("starting conversion")
-    converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc, selected_hub_compounds])
+    converter_output = subprocess.call(["python", "searches/hub_path_convert.py", output_loc, hub_list_file])
     print("converter_output", converter_output)
     if converter_output != 0:
         raise Exception("Converting Hub output to visualization format failed, check Celery worker logs.")
