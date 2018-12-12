@@ -284,7 +284,8 @@ def execute_hub_search(search_id, start, target, carbon_track, allow_reversible,
     input_loc, output_loc = generate_hub_config(start, compound_names[start], target, compound_names[target], carbon_track,
             allow_reversible, search_id, hub_list_file, hub_db)
 
-    print("starting search")
+    print("starting search with:")
+    print(input_loc)
     alg_output = subprocess.call(["java", "-jar", "searches/HubPathwaySearch.jar", input_loc])
     print("alg_output", alg_output)
     if alg_output != 0:
