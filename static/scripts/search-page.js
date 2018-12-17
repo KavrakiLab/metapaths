@@ -1,7 +1,10 @@
 $(function () {
     $('[data-toggle="popover"]').popover({container: 'body'});
 
-    var alg_options = [{ id: 0, text: 'Hub Search' }, { id: 1, text: 'LPAT' }, { id: 2, text: 'MetaGraph' }];
+    var alg_options = [{ id: 0, text: 'Hub Search' }, 
+                        { id: 1, text: 'LPAT' }];
+                        //{ id: 2, text: 'MetaGraph' }
+                        
 
     $("#algorithm").select2({data: alg_options});
     $("#algorithm").on("select2:select", function(e) {
@@ -16,15 +19,15 @@ $(function () {
 
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
 
-    var hubdb_options = [{id:'HubT_out_50;hub_list_out_50.txt', text:"50 Hubs (Out-Degree)"}, 
+    var hubdb_options = [{id:'HubT_out_20;hub_list_out_20.txt',text:"20 Hubs (Out-Degree)"},
                          //{id:'HubT_in;hub_list_in.txt',text:"47 Hubs (In-degree)"},
                          //{id:'HubT_out;hub_list_out.txt',text:"47 Hubs (Out-degree)"},
-                         {id:'HubT_out_20;hub_list_out_20.txt',text:"20 Hubs (Out-Degree)"},
+                         {id:'HubT_out_50;hub_list_out_50.txt', text:"50 Hubs (Out-Degree)"},
                          {id:'HubT_in_50;hub_list_in_50.txt',text:"50 Hubs (In-Degree)"},
                          {id:'HubT_io_50;hub_list_io_50.txt',text:"50 Hubs (Degree)"},
                          {id:'HubT_Araki;Araki_2015.txt',text:"139 Hubs (Araki et al. 2015)"}];
     $("#hub-db").select2({data: hubdb_options});
-    $("#hub-db").val("HubT_all_edges_2;hub_list.txt").trigger("change");
+    $("#hub-db").val("HubT_out_50;hub_list_out_50.txt").trigger("change");
 
     $.get("/get_compound_names").done(function(results_json) {
         var formatted_compounds = format_compounds(JSON.parse(results_json));
