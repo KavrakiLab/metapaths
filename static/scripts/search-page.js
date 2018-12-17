@@ -16,10 +16,12 @@ $(function () {
 
     $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
 
-    var hubdb_options = [{id:'HubT_all_edges_2;hub_list.txt', text:"47 Hubs (Degree)"}, 
+    var hubdb_options = [{id:'HubT_out_50;hub_list_out_50.txt', text:"50 Hubs (Out-Degree)"}, 
                          //{id:'HubT_in;hub_list_in.txt',text:"47 Hubs (In-degree)"},
                          //{id:'HubT_out;hub_list_out.txt',text:"47 Hubs (Out-degree)"},
-                         {id:'HubT_small_20;hub_list_20.txt',text:"20 Hubs (Degree)"},
+                         {id:'HubT_out_20;hub_list_out_20.txt',text:"20 Hubs (Out-Degree)"},
+                         {id:'HubT_in_50;hub_list_in_50.txt',text:"50 Hubs (In-Degree)"},
+                         {id:'HubT_io_50;hub_list_io_50.txt',text:"50 Hubs (Degree)"},
                          {id:'HubT_Araki;Araki_2015.txt',text:"139 Hubs (Araki et al. 2015)"}];
     $("#hub-db").select2({data: hubdb_options});
     $("#hub-db").val("HubT_all_edges_2;hub_list.txt").trigger("change");
