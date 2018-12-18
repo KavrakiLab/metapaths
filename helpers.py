@@ -127,8 +127,8 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     hub_db_object = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
     hub_cursor = hub_db_object.cursor()
 
-    canonical_links = set([])
-    canonical_cmpds = set([])
+    canonical_links = list()
+    canonical_cmpds = list()
 
     for string_path in string_pathways:
         if string_path == "":
