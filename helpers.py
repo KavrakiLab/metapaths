@@ -182,10 +182,10 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
                 min_len_num_hubs = get_min_len_and_num_hub_paths(hub_cursor, path_compounds[i][0:6], path_compounds[j][0:6])
                 hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + min_len_num_hubs)
             else:
-                print "length of path compounds"
-                print len(path_compounds)
-                print "length of path rxns"
-                print len(path_rxns)
+                logging.info("length of path compounds")
+                logging.info(path_compounds)
+                logging.info("length of path rxns")
+                logging.info(len(path_rxns))
                 links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + ",".join(path_rxns[rpair_idx]))
                 rpair_idx += 1
 
