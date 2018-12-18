@@ -140,7 +140,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         if len(tab_split_path) > 1:
             carbons_conserved = re.findall("[0-9]+=[0-9]+", tab_split_path[-1])
         if len(tab_split_path) == 3:
-            atp_used = int(tab_split_path[-2])
+            atp_used = int(tab_split_path[-2].replace(".0",""))
         if len(tab_split_path) == 4:
             hub_len = tab_split_path[1]
         path_compounds = regex.findall(string_path)
