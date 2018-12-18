@@ -147,6 +147,9 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
         path_rpairs = regex2.findall(string_path)
         path_rxns = []
 
+        if len(path_compounds) == 0 || len(path_rpairs) == 0:
+            continue
+
         for rpair in path_rpairs:
             if rpair not in rxn_db:
                 cursor.execute("SELECT KEGGReactionID FROM KEGGReactionsRpair WHERE KEGGRpairID='" + rpair + "'")
