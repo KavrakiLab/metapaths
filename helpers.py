@@ -53,7 +53,7 @@ def generate_hub_config(start, start_name, target, target_name, carbon_track, al
     config += "HUBSEARCHDEPTH\t10\n"
     config += "MAXRXNINHUBPATH\t10\n"
 
-    output_loc = "searches/output/" + search_id + "|" + start_name + " (" + start + ")|" + target_name + " (" + target + ")|" + hub_db + ".txt"
+    output_loc = "searches/output/" + search_id + "|" + start_name + " (" + start + ")|" + target_name + " (" + target + ")|Hub|" + hub_db + ".txt"
     output_loc = output_loc.replace(" ", "_")
     config += "OUTPUTDIR\t"+ output_loc + "\n"
 
