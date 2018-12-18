@@ -85,7 +85,7 @@ def get_canonical_cmpds(goal):
                 cmpd_pairs = re.findall("C[0-9]{5}-C[0-9]{5}",canonical_path)
                 canonical_cmpds.append(cmpd_pairs)
             return canonical_cmpds
-    return None
+    return ""
 
 
 def get_min_len_and_num_hub_paths(hub_cursor, hub1, hub2):
