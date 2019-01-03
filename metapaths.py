@@ -68,7 +68,7 @@ working_dir = "/usr/local/metapathssandbox/metapaths"
 #working_dir = "/mnt/c/Users/skim2/git/metapaths"
 
 
-B_HUBS_FILE = working_dir + "/searches/b_hub_file.txt"
+B_HUBS_FILE = working_dir + "/searches/"
 
 #
 # Routes
@@ -169,9 +169,9 @@ def load_results(search_id):
     if search_id in searches:
         search_result_file = searches[search_id]
         hub_db = search_result_file.split("|")[-1].replace(".txt", "")
-        return json.dumps(get_pathways_from_file(search_result_file, B_HUBS_FILE, hub_db))
+        return json.dumps(get_pathways_from_file(search_result_file, B_HUBS_FILE + hub_db + ".txt", hub_db))
     elif search_id + ".txt" in os.listdir("searches/output"):
-    	return json.dumps(get_pathways_from_file(search_id + ".txt", B_HUBS_FILE, hub_db))
+    	return json.dumps(get_pathways_from_file(search_id + ".txt", B_HUBS_FILE + hub_db + ".txt", hub_db))
     else:
         #print(search_id, "not in ", searches)
         return "500"
@@ -216,7 +216,7 @@ def file_upload():
     global tasks
 
     search_id = str(uuid.uuid4())
-    result = extract_pathways(request.args["file"], B_HUBS_FILE, request.args["hub_db"])
+    result = extract_pathways(request.args["file"], B_HUBS_FILE + request.args["hub_db"] + ".txt", request.args["hub_db"])
     tasks[search_id] = result.id
     return json.dumps({"search_id" : search_id});
 
