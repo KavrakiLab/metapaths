@@ -160,8 +160,8 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
 
             path_rxns.append(rxn_db[rpair])
 
-        #print path_compounds
-        #print path_rpairs
+        print path_compounds
+        print path_rpairs
         nodes = set([])
         links = []
         hub_nodes = set([])
