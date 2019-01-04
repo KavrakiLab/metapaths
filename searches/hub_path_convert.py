@@ -3,9 +3,15 @@ import re
 import string
 import sys
 import MySQLdb
+import pdb
 from get_ATP_usage import get_net_ATP_usage, get_all_KEGG_ReactionIDs, get_KEGG_ReactionID_from_RPAIR
 
-def convert_lpat(filename, hub_list, target_cmpd):
+def get_hubs_from_file(filename):
+	hub_file = open("searches/" + filename, "r")
+	return hub_file.read().split("\n")
+
+def convert_lpat(filename, input_hub_list, target_cmpd):
+	hub_list = input_hub_list
 	# Read the original file and then empty it out
 	f = open(filename, "r+")
 	content = f.read()
@@ -128,11 +134,12 @@ def convert_lpat(filename, hub_list, target_cmpd):
 
 						hub_path_id = raw_path[0][0:6] + "_" + raw_path[-1][0:6]               
 						if hub_path_id not in hub_path_len_dict[c_conserved]:
-							hub_path_len_dict[c_conserved][hub_path_id] = hub_path_len
-						else:
-							if hub_path_len < hub_path_len_dict[c_conserved][hub_path_id]:
-								hub_path_len_dict[c_conserved][hub_path_id] = hub_path_len
+							hub_path_len_dict[c_conserved][hub_path_id] = {}
 
+						hub_path_len_dict[c_conserved][hub_path_id][path] = hub_path_len
+
+							#if hub_path_len < hub_path_len_dict[c_conserved][hub_path_id]:
+							#	hub_path_len_dict[c_conserved][hub_path_id] = hub_path_len
 						hub_path_list[c_conserved].append(path)
 
 				elif(line[0] == "["):
@@ -187,7 +194,7 @@ def convert_lpat(filename, hub_list, target_cmpd):
 		db.close()
 		#print hub_path_list
 
-		hub_cutoff = 10
+		hub_cutoff = 1000
 		if len(first_path_list) == 0 and len(second_path_list) == 0:
 			print "looking at only hub to hub paths"
 			for cc in hub_path_list:
@@ -197,7 +204,8 @@ def convert_lpat(filename, hub_list, target_cmpd):
 					path = path_segs[0]
 					hub_path_id = path[0:6] + "_" + path[-10:-4]
 					if count < hub_cutoff:
-						f.write(path[:-1] + "\t" + str(hub_path_len_dict[cc][hub_path_id]) + "\t" + path_segs[1] + "\t" + cc + "\n")
+						#pdb.set_trace()
+						f.write(path[:-1] + "\t" + str(hub_path_len_dict[cc][hub_path_id][raw_path]) + "\t" + path_segs[1] + "\t" + cc + "\n")
 					else:
 						break
 					count += 1
@@ -235,7 +243,6 @@ def convert_lpat(filename, hub_list, target_cmpd):
 							if hub_path_id in visited_hub_path_ids:
 								continue
 							for path2_raw in second_path_list[cc2]:
-								count += 1
 								path2_segs = path2_raw.split("\t")
 								path2 = path2_segs[0]
 								if path2[0:6] != path1[-10:-4]:
@@ -245,7 +252,8 @@ def convert_lpat(filename, hub_list, target_cmpd):
 								atp_used += int(path2_segs[1])
 								visited_hub_path_ids.append(hub_path_id)
 								if count < hub_cutoff:
-									f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+									count += 1
+									f.write(path1[:-10] + path2[:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id][path]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
 								else:
 									break
 							#cc_str_dict[cc_str] += 1
@@ -275,7 +283,7 @@ def convert_lpat(filename, hub_list, target_cmpd):
 							path2 = path2_segs[0]
 							atp_used = int(path1_segs[1]) + int(path2_segs[1])
 							hub_path_id = path2[0:6] + "_" + path2[-10:-4]
-							f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+							f.write(path1 + path2[11:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id][path]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
 							
 							#cc_str_dict[cc_str] += 1
 					# for path1 in first_path_list[cc1]:
@@ -295,10 +303,11 @@ def convert_lpat(filename, hub_list, target_cmpd):
 							# elif cc_str_dict[cc_str] > 5:
 							# 	continue
 							# else:
-							
+							count1 = 0
 							for raw_path1_segs in first_path_list[cc1]:
+								count2 = 0
 								for raw_path2_segs in hub_path_list[cc2]:
-									count = 0
+									count3 = 0
 									for raw_path3_segs in second_path_list[cc3]:
 										path1_segs = raw_path1_segs.split("\t")
 										path2_segs = raw_path2_segs.split("\t")
@@ -308,11 +317,21 @@ def convert_lpat(filename, hub_list, target_cmpd):
 										path3 = path3_segs[0]
 										hub_path_id = path2[0:6] + "_" + path2[-10:-4]
 										atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
-										if count < hub_cutoff:
-											count += 1
-											f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
+										if count3 < hub_cutoff:
+											count3 += 1
+											f.write(path1 + path2[11:-10] + path3[:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id][raw_path2_segs]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
 										else:
 											break
+
+									if count2 < hub_cutoff:
+										count2 += 1
+									else:
+										break
+
+								if count1 < hub_cutoff:
+									count1 += 1
+								else:
+									break
 
 							#cc_str_dict[cc_str] += 1
 
