@@ -125,8 +125,11 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db="MetaDB_2015")
     cursor = db.cursor()
 
-    hub_db_object = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
-    hub_cursor = hub_db_object.cursor()
+    hub_cursor = None
+    
+    if hub_db != "LPAT":
+        hub_db_object = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
+        hub_cursor = hub_db_object.cursor()
 
     canonical_links = list()
     canonical_cmpds = list()
