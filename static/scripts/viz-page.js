@@ -666,6 +666,7 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
         } else if(hub_nodes != None) {
             if(hub_nodes.includes(node.id)) {
                 document.getElementById(node.id).classList.add("hub-node")
+            }
         }
 
     });
