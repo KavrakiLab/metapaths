@@ -126,7 +126,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     cursor = db.cursor()
 
     hub_cursor = None
-    
+
     if hub_db != "LPAT":
         hub_db_object = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
         hub_cursor = hub_db_object.cursor()
@@ -273,11 +273,19 @@ def get_pathways_from_file(pathways_filename, background_hubs_filename, hub_db):
     return extract_pathways(pathways_file.readlines(), background_hubs_filename, hub_db)
 
 
-def hub_paths_to_json(hub_src, hub_dst, hub_db, string_hub_pathways):
+def hub_paths_to_json(hub_src, hub_dst, hub_db, hub_map):
     pathways = []
     rxn_db = {}
     db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db="MetaDB_2015")
     cursor = db.cursor()
+
+    hub_db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
+    hub_cursor = hub_db.cursor()
+    print "SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map + "'"
+    cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map + "'")
+    string_hub_pathways = cursor.fetchall()
+    print string_hub_pathways
+
 
     # Finds compound IDs by extracting words that start with the letter 'C'
     regex = re.compile("C\w+")

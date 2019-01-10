@@ -148,11 +148,7 @@ def get_selected_hub_paths(hub_src, hub_dst, hub_map, hub_db):
     Returns visualization formatted JSON describing the pathways between the
     two hub compounds
     """
-    db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db=hub_db)
-    cursor = db.cursor()
-    print "SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map.replace(",",", ") + "'"
-    cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map.replace(",",", ") + "'")
-    results_json = hub_paths_to_json(hub_src, hub_dst, hub_db, cursor.fetchall())
+    results_json = hub_paths_to_json(hub_src, hub_dst, hub_db, hub_map.replace(",",", "))
     cursor.close()
     db.close()
     return results_json
