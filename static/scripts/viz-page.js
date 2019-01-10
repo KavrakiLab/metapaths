@@ -41,7 +41,7 @@ $( function() {
     $( "#min-atp-slider" ).slider({
 		min: -10,
 		max: 10,
-	    value: -1
+	    value: -2
     });
     
     // $(document).ready(function() {
