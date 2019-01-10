@@ -272,6 +272,10 @@ function set_mins_and_maxes(pathways) {
         }
     });
 
+    $( "#max-len-slider" ).slider({
+        value: min_path_length
+    });
+
 	$('#min-carbons-slider').slider("option", "max", max_atoms_conserved)
 	.each(function() {
         var opt = $(this).data().uiSlider.options;
