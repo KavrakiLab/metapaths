@@ -150,8 +150,8 @@ def get_selected_hub_paths(hub_src, hub_dst, hub_map, hub_db):
     """
     db = MySQLdb.connect(host="localhost", user=DB_USER, passwd=DB_PASSWD, db=hub_db)
     cursor = db.cursor()
-    print "SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map + "'"
-    cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map + "'")
+    print "SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map.replace(",",", ") + "'"
+    cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map.replace(",",", ") + "'")
     results_json = hub_paths_to_json(hub_src, hub_dst, hub_db, cursor.fetchall())
     cursor.close()
     db.close()
