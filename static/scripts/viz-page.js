@@ -466,11 +466,12 @@ function load_viz(data_graph) {
         });
 
 
-    var text_part = svg.append("text")
-    					.attr("x",75)
-    					.attr("y",75)
-    					.text("Num of Paths: " + data_graph.num_pathways)
-    					.attr("fill","black");
+    // Displays count of paths, removed since it didn't seem necessary
+    //var text_part = svg.append("text")
+    //					.attr("x",75)
+    //					.attr("y",75)
+    //					.text("Num of Paths: " + data_graph.num_pathways)
+    //					.attr("fill","black");
 
     var container = svg.append("g");
 
