@@ -189,14 +189,14 @@ def convert_lpat(filename, input_hub_list, target_cmpd):
 
 						tentative_cmpd = cleaned_item[0:6]
 						if cleaned_item[0] == "C" and tentative_cmpd in hub_list and tentative_cmpd != prev_item:
-							path += tentative_cmpd + "_HM_" + cleaned_item[6:] + ","
+							path += tentative_cmpd + "_HM_" + cleaned_item[6:].replace(":","=") + ","
 							prev_item = tentative_cmpd
 						#elif cleaned_item[0] == "R":
 						#    path += cleaned_item[0:7] + ","
 
 					end_info = raw_path[-1].split("_")[1]
 
-					path += end_info[0:6] + "_HE_" + end_info[6:] + "\t" + tab_split_line[3]
+					path += end_info[0:6] + "_HE_" + end_info[6:].replace(":","=") + "\t" + tab_split_line[3]
 					end_hub_list.append(raw_path[-1][0:6])
 
 					#print raw_path
