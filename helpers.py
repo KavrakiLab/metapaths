@@ -282,8 +282,8 @@ def hub_paths_to_json(hub_src, hub_dst, hub_db, hub_map):
     hub_db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
     hub_cursor = hub_db.cursor()
     print "SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map + "'"
-    cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map + "'")
-    string_hub_pathways = cursor.fetchall()
+    hub_cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + hub_map + "'")
+    string_hub_pathways = hub_cursor.fetchall()
     print string_hub_pathways
 
 
