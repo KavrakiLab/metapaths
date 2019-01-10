@@ -332,7 +332,7 @@ def convert_lpat(filename, input_hub_list, target_cmpd):
 								visited_hub_path_ids.append(hub_path_id)
 								if count < hub_cutoff:
 									count += 1
-									f.write(path1 + path2[9:] + "\t" + str(hub_path_len_dict[cc1][hub_path_id][path]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+									f.write(path1 + path2[9:-1] + "\t" + str(hub_path_len_dict[cc1][hub_path_id][path]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
 								else:
 									break
 							#cc_str_dict[cc_str] += 1
@@ -362,7 +362,7 @@ def convert_lpat(filename, input_hub_list, target_cmpd):
 							path2 = path2_segs[0]
 							atp_used = int(path1_segs[1]) + int(path2_segs[1])
 							hub_path_id = path2[0:6] + "_" + path2.split("_HE")[0][-6:]
-							f.write(path1 + path2[9:] + "\t" + str(hub_path_len_dict[cc2][hub_path_id][path]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
+							f.write(path1[:-1] + path2[9:] + "\t" + str(hub_path_len_dict[cc2][hub_path_id][path]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")
 							
 							#cc_str_dict[cc_str] += 1
 					# for path1 in first_path_list[cc1]:
@@ -398,7 +398,7 @@ def convert_lpat(filename, input_hub_list, target_cmpd):
 										atp_used = int(path1_segs[1]) + int(path2_segs[1]) + int(path3_segs[1])
 										if count3 < hub_cutoff:
 											count3 += 1
-											f.write(path1 + path2[9:] + path3[9:] + "\t" + str(hub_path_len_dict[cc2][hub_path_id][raw_path2_segs]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
+											f.write(path1[:-1] + path2[9:] + path3[9:-1] + "\t" + str(hub_path_len_dict[cc2][hub_path_id][raw_path2_segs]) + "\t" + str(atp_used) + "\t" + cc_str + "\n")        
 										else:
 											break
 
