@@ -31,8 +31,14 @@ function get_hub_pathways(pathways, hub_db) {
         //console.log(request_url);
 
         $.get(request_url).done(function (response) {
-            orig_hub_pathways[hub_link_id] = response;
-            hub_pathways[hub_link_id] = response;
+            // If the hub link id is in the dictionary, tack on the pathways
+            if(hub_link_id in orig_hub_pathways) {
+                Array.prototype.push.apply(orig_hub_pathways[hub_link_id]["pathways"], response["pathways"]);
+            }
+            else {
+                orig_hub_pathways[hub_link_id] = response;
+                hub_pathways[hub_link_id] = response;
+            }
         }).fail(function() {
             console.error("ERROR: Failed to retrieve hub information for: " + hub_link_id);
         });
