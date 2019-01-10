@@ -289,14 +289,13 @@ def hub_paths_to_json(hub_src, hub_dst, hub_db, hub_map):
     query_maps = set(re.findall("[0-9]+:[0:9]+", hub_map))
     string_hub_pathways = None
 
-    for item in cursor.fetchall():
+    for item in mappings:
         raw_mapping = item[0]
         maps = set(re.findall("[0-9]+:[0:9]+", raw_mapping))
         if maps == query_maps:
             print "SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + raw_mapping + "'"
             hub_cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst + " WHERE mapping ='" + raw_mapping + "'")
             string_hub_pathways = hub_cursor.fetchall()
-            print string_hub_pathways
 
     if string_hub_pathways == None:
         hub_cursor.execute("SELECT paths FROM " + hub_src + "_" + hub_dst)
