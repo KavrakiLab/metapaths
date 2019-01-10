@@ -114,9 +114,8 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
     all_hub_nodes = set([])
     all_hub_links = []
     # Finds compound IDs by extracting words that start with the letter 'C'
-    regex = re.compile(r"C\w+")
+    regex = re.compile("C\w+")
     regex2 = re.compile("RP[0-9]{5}")
-    regex3 = re.compile(r"\[.*?\]")
 
     start = None
     goal = None
@@ -144,9 +143,6 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
             atp_used = int(tab_split_path[-2].replace(".0",""))
         if len(tab_split_path) == 4:
             hub_len = tab_split_path[1]
-
-        print string_path
-        path_hub_link_mappings = regex3.findall(string_path)
         path_compounds = regex.findall(string_path)
         path_rpairs = regex2.findall(string_path)
         path_rxns = []
@@ -176,7 +172,6 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
             goal = path_compounds[-1]
 
         rpair_idx = 0
-        count = 0
 
         for i in range(len(path_compounds) - 1):
             j = i + 1
@@ -185,8 +180,7 @@ def extract_pathways(string_pathways, background_hubs_filename, hub_db):
                 hub_nodes.add(path_compounds[i])
                 hub_nodes.add(path_compounds[j])
                 min_len_num_hubs = get_min_len_and_num_hub_paths(hub_cursor, path_compounds[i][0:6], path_compounds[j][0:6])
-                hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + path_hub_link_mappings[count])
-                count += 1
+                hub_links.append(path_compounds[i][0:6] + "-" + path_compounds[j][0:6] + ":" + min_len_num_hubs)
             else:
                 #print "length of path compounds"
                 #print path_compounds
