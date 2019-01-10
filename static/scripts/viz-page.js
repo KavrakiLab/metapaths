@@ -663,8 +663,9 @@ function style_nodes(viz_graph, start, goal, hub_nodes) {
             node.fixed = true;
             node.fx = right_x;
             node.fy = mid_y;
-        } else if(hub_nodes.includes(node.id)) {
-            document.getElementById(node.id).classList.add("hub-node")
+        } else if(hub_nodes != None) {
+            if(hub_nodes.includes(node.id)) {
+                document.getElementById(node.id).classList.add("hub-node")
         }
 
     });
