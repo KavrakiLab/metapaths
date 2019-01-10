@@ -279,8 +279,8 @@ def hub_paths_to_json(hub_src, hub_dst, hub_db, hub_map):
     db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db="MetaDB_2015")
     cursor = db.cursor()
 
-    hub_db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
-    hub_cursor = hub_db.cursor()
+    hub_sql_db = MySQLdb.connect(host="localhost", user="MetaDBUser", passwd="meta", db=hub_db)
+    hub_cursor = hub_sql_db.cursor()
 
     #Get the correct mapping key
     hub_cursor.execute("SELECT mapping FROM " + hub_src + "_" + hub_dst)
