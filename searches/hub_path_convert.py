@@ -271,7 +271,7 @@ def convert_lpat(filename, input_hub_list, target_cmpd):
 		db.close()
 		#print hub_path_list
 
-		hub_cutoff = 1000
+		hub_cutoff = 10
 		if len(first_path_list) == 0 and len(second_path_list) == 0:
 			print "looking at only hub to hub paths"
 			for cc in hub_path_list:
