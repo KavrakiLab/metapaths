@@ -17,7 +17,7 @@ $(function () {
         }
     });
 
-    $("#algorithm").val("1").trigger("change"); // Set the default to LPAT
+    $("#algorithm").val("0").trigger("change"); // Set the default to LPAT
 
     var hubdb_options = [{id:'HubT_out_20;hub_list_out_20.txt',text:"20 Hubs (Out-Degree)"},
                          //{id:'HubT_in;hub_list_in.txt',text:"47 Hubs (In-degree)"},
