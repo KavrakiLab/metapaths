@@ -5,6 +5,7 @@
     * [Dependencies](#dependencies)
     * [Database Setup](#database-setup)
     * [Server Setup](#server-setup)
+    * [Server Update](#server-update)
 * [A Note On Usage](#a-note-on-usage)
 
 ## Overview
@@ -146,6 +147,26 @@ $ flask run
 The Flask server will initialize and the webapp will become available at
 [localhost:5000](http://localhost:5000)
 
+### Server Update
+If we make changes to the server's javascript or static .css or .html code,
+we can update the server by entering the following:
+```
+$ sudo /etc/init.d/apache2 reload
+```
+
+If we make changes to the python scripts, we can update the server using
+the following process:
+```
+$ killall ../bin/python2.7
+$ ../bin/celery multi start worker -A metapaths.celery  --loglevel=info --pidfile=../run/%n.pid --logfile=../log/%n%I.log
+export FLASK_APP=metapaths.py
+$ nohup flask run &
+$ ../bin/celery multi start worker  --loglevel=info --pidfile=../run/%n.pid --logfile=../log/%n%I.log
+sudo /etc/init.d/apache2 reload
+```
+The first line kills all existing celery workers. Then the next two lines
+recreates a celery worker for metapaths and restarts the Flask server.
+The last line restarts apache. 
 
 ### Deploying to a non-local server
 The whole metapaths web app can be deployed to the cloud using apache and
