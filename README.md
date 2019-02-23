@@ -162,7 +162,7 @@ $ ../bin/celery multi start worker -A metapaths.celery  --loglevel=info --pidfil
 export FLASK_APP=metapaths.py
 $ nohup flask run &
 $ ../bin/celery multi start worker  --loglevel=info --pidfile=../run/%n.pid --logfile=../log/%n%I.log
-sudo /etc/init.d/apache2 reload
+$ sudo /etc/init.d/apache2 reload
 ```
 The first line kills all existing celery workers. Then the next two lines
 recreates a celery worker for metapaths and restarts the Flask server.
